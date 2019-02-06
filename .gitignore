@@ -1,0 +1,15 @@
+# ignore IDE/hidden/OS cache files
+.*
+*~
+nbproject
+nb-configuration.xml
+Session.vim
+*.tmproj
+*.tmproject
+tmtags
+Thumbs.db
+Desktop.ini
+.DS_STORE
+
+# ignore Composer downloads
+/vendor/*
