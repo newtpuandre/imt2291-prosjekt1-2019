@@ -20,7 +20,7 @@
   <body>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="index.php">Navbar</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -28,7 +28,7 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="index.php">Hjem</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
@@ -37,21 +37,51 @@
             <a class="nav-link disabled" href="#">Disabled</a>
           </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+
+        <ul class = "navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                  Dropdown link
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Link 1</a>
+                  <a class="dropdown-item" href="#">Link 2</a>
+                  <a class="dropdown-item" href="#">Link 3</a>
+                </div>
+            </li>
+        </ul>
+        
       </div>
     </nav>
 
     <main role="main" class="container">
+        <div class="jumbotron">
+            <h1>NTNUTube</h1> 
+            <p>Her kan du søke etter videoer</p>
+            <p><form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>      
 
-      <div class="dummy-text">
-        <h1>The best website</h1>
-        <p class="lead">Something smart goes here</p>
-      </div>
+        <!-- Recommended video "view" will appear here -->
+
+        <h1 class="display-4" style="margin-top:15px">Nye opplastninger</h1> <!-- This will repeat for x amount of videos-->
+        <div class="row" style="margin-top:15px">
+            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid" style="border:2px solid black"></a></div>
+            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid" style="border:2px solid black"></div>
+            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid" style="border:2px solid black"></div>
+            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid" style="border:2px solid black"></div>
+        </div>
 
     </main><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="templates/js/popper.js"></script>
+    <script src="templates/js/bootstrap.min.js"></script>
 
  
   </body>
