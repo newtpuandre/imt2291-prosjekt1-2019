@@ -1,6 +1,6 @@
 <?php
 /*
-Twig renderer for index.html
+Twig renderer for login.html
 */
 require_once 'vendor/autoload.php';
 
@@ -12,4 +12,4 @@ $twig = new Twig_Environment($loader, array(
     //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
 ));
 
-echo $twig->render('index.html', $emptyArray);
+echo $twig->render('login.html', $emptyArray);
