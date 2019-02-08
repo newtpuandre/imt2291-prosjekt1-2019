@@ -5,6 +5,7 @@ Husk å velge å beholde rettigheter fra det originale repositoriet når dere op
 
 # Prosjektdeltakere #
 André Gyrud Gunhildberget
+
 Elisabeth Wåde-Bye
 
 # Oppgaveteksten # 
