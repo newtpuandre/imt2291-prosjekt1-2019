@@ -16,11 +16,18 @@
   </head>
 
   <body class="text-center">
-    <form class="form-signin" action = "inc/loginBd.php" method = "post">
+    <form class="form-signin" action = "login.php" method = "post">
+
+      {% if code == "feil" %}
+      <div class="alert alert-danger">
+        <strong>Feil!</strong> Brukernavnet, Epost eller passordet er feil.
+      </div>
+      {% endif %}
+
       <img class="mb-4" src="images/logo.svg"  alt="" width="72" height="72" >
       <h1 class="h3 mb-3 font-weight-normal">Vennligst log inn</h1>
       <label for="inputEmail" class="sr-only">Epost Addresse</label>
-      <input type="email" id="inputEmail" name="username" class="form-control" placeholder="Epost Addresse" required autofocus>
+      <input id="inputEmail" name="username" class="form-control" placeholder="Epost Addresse / Brukernavn" required autofocus>
       <label for="inputPassword" class="sr-only">Passord</label>
       <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Passord" required>
       <div class="checkbox mb-3">
@@ -28,7 +35,7 @@
           <input type="checkbox" value="remember-me"> Husk meg
         </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Log inn</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit" name="login">Log inn</button>
       <a href="register.php">Registrer deg her</a>
       <p class="mt-5 mb-3 text-muted">&copy; Something 2019</p>
     </form>

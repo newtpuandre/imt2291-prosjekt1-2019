@@ -39,16 +39,24 @@
         </ul>
 
         <ul class = "navbar-nav ml-auto">
+            {% if userinfo == "" %}
+            <a href= "login.php"><button class="btn btn-success" type="submit">Log inn</button></a>
+
+            <a href= "register.php"><button class="btn btn-success" type="submit" style="margin-left:15px">Register</button></a>
+
+            {% else %}
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                  Dropdown link
+                 {{ userinfo }} <!-- Prints users login name -->
                 </a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Link 1</a>
-                  <a class="dropdown-item" href="#">Link 2</a>
-                  <a class="dropdown-item" href="#">Link 3</a>
+                  <a class="dropdown-item" href="#">Min profil</a>
+                  <a class="dropdown-item" href="logout.php">Logg ut</a>
                 </div>
             </li>
+
+            {% endif %}
         </ul>
         
       </div>
