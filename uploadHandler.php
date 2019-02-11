@@ -1,6 +1,8 @@
 <?php
 /*
 Twig renderer for upload.html
+
+For å hente ut informasjon fra formen og sende til upload manager(som sender til DB)
 */
 require_once 'vendor/autoload.php';
 
