@@ -29,10 +29,10 @@ class DB
         return $this->dbh;
     }
 
-    public function findUser($m_username){ //m_username can also be password.
-        $sql = 'SELECT id, username, email, privileges FROM users WHERE username=:username OR email=:username';
+    public function findUser($m_email){
+        $sql = 'SELECT id, email, privileges FROM users WHERE email=:email';
         $sth = $this->dbh->prepare ($sql);
-        $sth->bindParam(':username', $m_username);
+        $sth->bindParam(':email', $m_email);
         $sth->execute();
         if ($row = $sth->fetch()) {
             return $row;
@@ -42,13 +42,13 @@ class DB
         }
     }
 
-    public function registerUser($m_username,$m_email,$m_password) {
+    public function registerUser($m_email,$m_password, $m_isTeacher) {
 
-        $sql = 'INSERT INTO users (username, email , password) values (?, ?, ?)';
+        $sql = 'INSERT INTO users (email , password, isTeacher) values (?, ?, ?)';
         $sth = $this->dbh->prepare($sql);
         // Use password_hash to encrypt password : http://php.net/manual/en/function.password-hash.php
-        $sth->execute (array ($m_username, $m_email,
-                          password_hash($m_password, PASSWORD_DEFAULT)));
+        $sth->execute (array ($m_email,
+                          password_hash($m_password, PASSWORD_DEFAULT),$m_isTeacher));
         if ($sth->rowCount()==1) {
             return true;
         } else {
@@ -56,15 +56,15 @@ class DB
         }
     }
 
-    public function loginUser($m_username,$m_password){
+    public function loginUser($m_email,$m_password){
 
-        $sql = 'SELECT password, id FROM users WHERE username=:username OR email=:username';
+        $sql = 'SELECT password, id FROM users WHERE email=:email';
         $sth = $this->dbh->prepare ($sql);
-        $sth->bindParam(':username', $_POST['username']);
+        $sth->bindParam(':email', $m_email);
         $sth->execute();
         if ($row = $sth->fetch()) { // get id and hashed password for given user
             // Use password_verify to check given password : http://php.net/manual/en/function.password-verify.php
-            if (password_verify($_POST['password'], $row['password'])) {
+            if (password_verify($m_password, $row['password'])) {
                 return true;
     
             } else {
@@ -76,7 +76,7 @@ class DB
     }
 
     public function gatherUsers(){
-        $sql = 'SELECT email, privileges FROM users ORDER BY id DESC ';
+        $sql = 'SELECT email, privileges, isTeacher FROM users ORDER BY id DESC ';
         $sth = $this->dbh->prepare ($sql);
         $sth->execute();
         if ($row = $sth->fetchAll()) {
@@ -87,11 +87,11 @@ class DB
         }
     }
 
-    public function updatePrivileges($m_username, $m_privilevel) {
-        $sql = 'UPDATE users SET PRIVILEGES = :privileges WHERE email=:username';
+    public function updatePrivileges($m_email, $m_privilevel) {
+        $sql = 'UPDATE users SET PRIVILEGES = :privileges WHERE email=:email';
         $sth = $this->dbh->prepare ($sql);
         $sth->bindParam(':privileges',$m_privilevel);
-        $sth->bindParam(':username', $m_username);
+        $sth->bindParam(':email', $m_email);
         $sth->execute();
         if ($row = $sth->fetch()) {
 

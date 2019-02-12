@@ -11,6 +11,12 @@
               <option id="2" value="1"{% if user.privileges == 1 %} selected="true" {% endif %}>Lærer</option>
               <option id="3" value="2"{% if user.privileges == 2 %} selected="true" {% endif %}>Administrator</option>
             </select>
+            <div class="form-check disabled">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" value="isTeacher" {% if user.isTeacher == 1 %} checked="true" {% endif %} disabled>
+                  Jeg er lærer.
+                </label>
+            </div>
             <button class="btn btn-primary" name="updateUser" type="submit" style="margin-top:15px">Oppdater</button>
             </form>
           </li>

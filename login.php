@@ -9,7 +9,7 @@ if (isset($_POST['login'])) {  // Log in user
     //Initalize a new database connection
     $db = new DB();
 
-    $loginStatus = $db->loginUser($_POST['username'],$_POST['password']);
+    $loginStatus = $db->loginUser($_POST['email'],$_POST['password']);
 
     if ($loginStatus) { //Everything went well
 
@@ -17,7 +17,7 @@ if (isset($_POST['login'])) {  // Log in user
         session_start();
     
         //All information we need for other sites need to be saved into the session variable.
-         $_SESSION["user"] = $_POST['username'];
+         $_SESSION["user"] = $_POST['email'];
     
         header('Location: index.php');
 

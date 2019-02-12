@@ -23,8 +23,8 @@ class Admin
         return $this->db->gatherUsers();
     }
 
-    public function updatePrivileges($m_username, $m_privlevel){ //Updates a specific users privilege
-        if($this->db->updatePrivileges($m_username,$m_privlevel)) {
+    public function updatePrivileges($m_email, $m_privlevel){ //Updates a specific users privilege
+        if($this->db->updatePrivileges($m_email,$m_privlevel)) {
             return true;
         } else {
             return false;

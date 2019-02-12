@@ -4,14 +4,13 @@ require_once 'db.php';
 class User
 {
 
-    private $username;
     private $email;
     private $privileges;
 
     private $db = null;
     private $dbh = null;
 
-    public function __construct($m_username) {
+    public function __construct($m_email) {
         //Grab userinfo from db
         //Initalize a new database connection
         $db = new DB();
@@ -20,8 +19,7 @@ class User
         $dbh = $db->getDBConnection();
 
         //Find user in DB and store info in class variables
-        $userArray = $db->findUser($m_username);
-        $this->username = $userArray['username'];
+        $userArray = $db->findUser($m_email);
         $this->email = $userArray['email'];
         $this->privileges = $userArray['privileges'];
 
