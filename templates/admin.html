@@ -41,48 +41,53 @@
         </ul>
 
         <ul class = "navbar-nav ml-auto">
-            {% if userinfo == "" %}
-            <a href= "login.php"><button class="btn btn-success" type="submit">Log inn</button></a>
+          {% if userinfo == "" %} <!-- Is user logged in? -->
+          <a href= "login.php"><button class="btn btn-success" type="submit">Log inn</button></a>
 
-            <a href= "register.php"><button class="btn btn-success" type="submit" style="margin-left:15px">Register</button></a>
+          <a href= "register.php"><button class="btn btn-success" type="submit" style="margin-left:15px">Register</button></a>
 
-            {% else %}
+          {% else %}
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                 {{ userinfo }} <!-- Prints users login name -->
-                </a>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Min profil</a>
-                  <a class="dropdown-item" href="logout.php">Logg ut</a>
-                </div>
-            </li>
-
+            {% if userprivileges == 2 %} <!-- Is user admin? -->
+              <a href= "uploadHandler.php"><button class="btn btn-success" type="submit" style="margin-left:15px">Last opp video</button></a>
+              <a href= "admin.php"><button class="btn btn-success" type="submit" style="margin-left:15px">Admin</button></a>
+            {% elseif userprivileges == 1%} <!-- Is user Teacher? -->
+              <a href= "uploadHandler.php"><button class="btn btn-success" type="submit" style="margin-left:15px">Last opp video</button></a>
             {% endif %}
-        </ul>
+
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+               {{ userinfo }} <!-- Prints users login name -->
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Min profil</a>
+                <a class="dropdown-item" href="logout.php">Logg ut</a>
+              </div>
+          </li>
+
+          {% endif %}
+      </ul>
         
       </div>
     </nav>
 
-    <main role="main" class="container">
-        <div class="jumbotron">
-            <h1>NTNUTube</h1> 
-            <p>Her kan du søke etter videoer</p>
-            <p><form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <main role="main" class="container">    
+      <h1 class="display-4" style="margin-top:15px">Brukeroversikt</h1>
+        <ul class="list-group">
+          {% for user in userlist %}
+          <li class="list-group-item">{{ user.email }}
+            <form action="admin.php" method="post">
+            <input type="hidden" id="email" name="email" value="{{ user.email }}">
+            <select class="form-control" name="privileges" style="margin-top:15px">
+              <option id="1" value="0" {% if user.privileges == 0 %} selected="true" {% endif %}>Student</option>
+              <option id="2" value="1"{% if user.privileges == 1 %} selected="true" {% endif %}>Lærer</option>
+              <option id="3" value="2"{% if user.privileges == 2 %} selected="true" {% endif %}>Administrator</option>
+            </select>
+            <button class="btn btn-primary" name="updateUser" type="submit" style="margin-top:15px">Oppdater</button>
             </form>
-        </div>      
-
-        <!-- Recommended video "view" will appear here -->
-
-        <h1 class="display-4" style="margin-top:15px">Nye opplastninger</h1> <!-- This will repeat for x amount of videos-->
-        <div class="row" style="margin-top:15px">
-            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid" style="border:2px solid black"></a></div>
-            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid" style="border:2px solid black"></div>
-            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid" style="border:2px solid black"></div>
-            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid" style="border:2px solid black"></div>
-        </div>
+          </li>
+          {% endfor %}
+        </ul>
 
     </main><!-- /.container -->
 

@@ -75,6 +75,31 @@ class DB
         }
     }
 
+    public function gatherUsers(){
+        $sql = 'SELECT email, privileges FROM users ORDER BY id DESC ';
+        $sth = $this->dbh->prepare ($sql);
+        $sth->execute();
+        if ($row = $sth->fetchAll()) {
+            return $row;
+            
+        } else {
+            return null;
+        }
+    }
+
+    public function updatePrivileges($m_username, $m_privilevel) {
+        $sql = 'UPDATE users SET PRIVILEGES = :privileges WHERE email=:username';
+        $sth = $this->dbh->prepare ($sql);
+        $sth->bindParam(':privileges',$m_privilevel);
+        $sth->bindParam(':username', $m_username);
+        $sth->execute();
+        if ($row = $sth->fetch()) {
+
+        } else {
+            return false;
+        }
+    }
+
 }
 
 

@@ -48,10 +48,10 @@
 
             {% else %}
 
-              {% if privileges == 2 %} <!-- Is user admin? -->
+              {% if userprivileges == 2 %} <!-- Is user admin? -->
                 <a href= "uploadHandler.php"><button class="btn btn-success" type="submit" style="margin-left:15px">Last opp video</button></a>
                 <a href= "admin.php"><button class="btn btn-success" type="submit" style="margin-left:15px">Admin</button></a>
-              {% elseif privileges == 1%} <!-- Is user Teacher? -->
+              {% elseif userprivileges == 1%} <!-- Is user Teacher? -->
                 <a href= "uploadHandler.php"><button class="btn btn-success" type="submit" style="margin-left:15px">Last opp video</button></a>
               {% endif %}
 

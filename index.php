@@ -14,8 +14,8 @@ if (isset($_SESSION['user'])) { //User is logged in
 
     $user = new User($_SESSION['user']);
 
-    //Get email from DB.
     $content['userinfo'] = $user->returnEmail();
+    $content['userprivileges'] = $user->getPrivileges();
     
 }
 

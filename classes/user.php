@@ -31,12 +31,17 @@ class User
 
     }
 
-    public function returnEmail(){
+    public function returnEmail(){ //Returns users email
         return $this->email;
     }
 
-    public function setPrivileges($m_privileges){
+    public function setPrivileges($m_privileges){ //Updates privileges INCOMPLETE
+        //Try to update DB record first
         $this->privileges = $m_privileges;
+    }
+
+    public function getPrivileges(){ //Get users privileges
+        return $this->privileges;
     }
 
 }
