@@ -3,20 +3,21 @@
         <div class="jumbotron">
             <h1>NTNUTube</h1> 
             <p>Her kan du søke etter videoer</p>
-            <p><form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <p><form class="form-inline my-2 my-lg-0" action="search.php" method="GET">
+            <input class="form-control mr-sm-2" type="text" name="search" placeholder="Eks. IMT2291.." aria-label="Søk" required>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Søk</button>
             </form>
+            </p>
         </div>      
 
         <!-- Recommended video "view" will appear here -->
 
         <h1 class="display-4" style="margin-top:15px">Nye opplastninger</h1> <!-- This will repeat for x amount of videos-->
         <div class="row" style="margin-top:15px">
-            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid" style="border:2px solid black"></a></div>
-            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid" style="border:2px solid black"></div>
-            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid" style="border:2px solid black"></div>
-            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid" style="border:2px solid black"></div>
+            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid"></a></div>
+            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid"></div>
+            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid"></div>
+            <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid"></div>
         </div>
 
     </main><!-- /.container -->
