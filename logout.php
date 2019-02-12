@@ -6,5 +6,5 @@ session_destroy();
 
 $_SESSION = array();  // Removes content of $_SESSION
 
-header("Location: login.php");
+header("Location: index.php");
 ?>

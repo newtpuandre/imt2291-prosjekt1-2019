@@ -3,7 +3,6 @@
 Twig renderer for index.html
 */
 require_once 'vendor/autoload.php';
-require_once 'classes/db.php';
 require_once 'classes/user.php';
 
 $content = array();
