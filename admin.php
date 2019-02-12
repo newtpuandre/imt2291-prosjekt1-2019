@@ -3,20 +3,16 @@
 Twig renderer for index.html
 */
 require_once 'vendor/autoload.php';
-require_once 'classes/db.php';
-require_once 'classes/user.php';
 
 $content = array();
 
 session_start();
 
-if (isset($_SESSION['user'])) { //User is logged in
+if (isset($_SESSION['user'])) { //User is logged in && is admin
 
-    $user = new User($_SESSION['user']);
+    $content['userinfo'] = $_SESSION['user'];
 
-    //Get email from DB.
-    $content['userinfo'] = $user->returnEmail();
-    
+
 }
 
 $loader = new Twig_Loader_Filesystem('./templates');

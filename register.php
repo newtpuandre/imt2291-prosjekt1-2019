@@ -10,17 +10,12 @@ if (isset($_POST['createNewUser'])) { // Create new user
 
     //Initalize a new database connection
     $db = new DB();
-    //Get an instance of the current connection
-    $dbh = $db->getDBConnection();
 
-    $sql = 'INSERT INTO users (username, email , password) values (?, ?, ?)';
-    $sth = $dbh->prepare ($sql);
-    // Use password_hash to encrypt password : http://php.net/manual/en/function.password-hash.php
-    $sth->execute (array ($_POST['username'], $_POST['email'],
-                          password_hash($_POST['password'], PASSWORD_DEFAULT)));
-    if ($sth->rowCount()==1) {
+    $registerStatus = $db->registerUser($_POST['username'],$_POST['password'],$_POST['email']);
+
+    if ($registerStatus) { //Everything went well
         header('Location: register.php?status=ok');
-    } else {
+    } else { //Something went wrong
         header('Location: register.php?status=feil');
     }
 

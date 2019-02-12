@@ -9,33 +9,24 @@ if (isset($_POST['login'])) {  // Log in user
     //Initalize a new database connection
     $db = new DB();
 
-    //Get an instance of the current connection
-    $dbh = $db->getDBConnection();
+    $loginStatus = $db->loginUser($_POST['username'],$_POST['password']);
 
-    $sql = 'SELECT password, id FROM users WHERE username=:username OR email=:username';
-    $sth = $dbh->prepare ($sql);
-    $sth->bindParam(':username', $_POST['username']);
-    $sth->execute();
-    if ($row = $sth->fetch()) { // get id and hashed password for given user
-        // Use password_verify to check given password : http://php.net/manual/en/function.password-verify.php
-        if (password_verify($_POST['password'], $row['password'])) {
-            //Login was successful! Start session below.
-            session_start();
+    if ($loginStatus) { //Everything went well
 
-            //All information we need for other sites need to be saved into the session variable.
-            $_SESSION["user"] = $_POST['username'];
+        //Login was successful! Start session below.
+        session_start();
+    
+        //All information we need for other sites need to be saved into the session variable.
+         $_SESSION["user"] = $_POST['username'];
+    
+        header('Location: index.php');
 
-            header('Location: index.php');
+    } else { //Something went wrong
 
-            //$loginStatus = "Bruker logget inn med brukerid={$row['id']}";
-        } else {
-            header('Location: login.php?status=feil');
-            //$loginStatus = 'Feil passord';
-        }
-    } else {
-        //$loginStatus = 'Ingen bruker med det brukernavnet';
         header('Location: login.php?status=feil');
+        
     }
+
 }
 
 $statusArray = array();

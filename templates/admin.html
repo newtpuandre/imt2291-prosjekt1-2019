@@ -41,19 +41,12 @@
         </ul>
 
         <ul class = "navbar-nav ml-auto">
-            {% if userinfo == "" %} <!-- Is user logged in? -->
+            {% if userinfo == "" %}
             <a href= "login.php"><button class="btn btn-success" type="submit">Log inn</button></a>
 
             <a href= "register.php"><button class="btn btn-success" type="submit" style="margin-left:15px">Register</button></a>
 
             {% else %}
-
-              {% if privileges == 2 %} <!-- Is user admin? -->
-                <a href= "uploadHandler.php"><button class="btn btn-success" type="submit" style="margin-left:15px">Last opp video</button></a>
-                <a href= "admin.php"><button class="btn btn-success" type="submit" style="margin-left:15px">Admin</button></a>
-              {% elseif privileges == 1%} <!-- Is user Teacher? -->
-                <a href= "uploadHandler.php"><button class="btn btn-success" type="submit" style="margin-left:15px">Last opp video</button></a>
-              {% endif %}
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
