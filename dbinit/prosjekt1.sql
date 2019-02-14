@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Server version:               5.7.23 - MySQL Community Server (GPL)
 -- Server OS:                    Win64
--- HeidiSQL Version:             10.1.0.5464
+-- HeidiSQL Version:             10.1.0.5479
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -16,6 +16,20 @@
 CREATE DATABASE IF NOT EXISTS `prosjekt1` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `prosjekt1`;
 
+-- Dumping structure for table prosjekt1.playlists
+CREATE TABLE IF NOT EXISTS `playlists` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ownerId` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `ownerid` (`ownerId`),
+  CONSTRAINT `ownerid` FOREIGN KEY (`ownerId`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
 -- Dumping structure for table prosjekt1.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -26,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

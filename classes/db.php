@@ -79,8 +79,8 @@ class DB
         $sql = 'SELECT email, privileges, isTeacher FROM users ORDER BY id DESC ';
         $sth = $this->dbh->prepare ($sql);
         $sth->execute();
-        if ($row = $sth->fetchAll()) {
-            return $row;
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
             
         } else {
             return null;
@@ -94,7 +94,57 @@ class DB
         $sth->bindParam(':email', $m_email);
         $sth->execute();
         if ($row = $sth->fetch()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    public function returnPlaylists($m_id){ //Returns ALL playlists
+        $sql = 'SELECT id, name, description, date FROM playlists WHERE ownerId=:id';
+        $sth = $this->dbh->prepare ($sql);
+        $sth->bindParam(':id', $m_id);
+        $sth->execute();
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return null;
+        }
+    }
+
+    public function insertPlaylist($m_ownerId,$m_name,$m_description){
+        $sql = 'INSERT INTO playlists (ownerid , name, description) values (?, ?, ?)';
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute (array ($m_ownerId,$m_name,$m_description));
+        if ($sth->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function returnPlaylist($m_id){ //Returns a single playlist with a specific id
+        $sql = 'SELECT id, ownerId, name, description, date FROM playlists WHERE id=:id';
+        $sth = $this->dbh->prepare ($sql);
+        $sth->bindParam(':id', $m_id);
+        $sth->execute();
+        if ($row = $sth->fetch()) {
+            return $row;
+        } else {
+            return null;
+        }
+    }
+
+    public function updatePlaylist($m_id, $m_ownerId, $m_name, $m_description){
+        $sql = 'UPDATE playlists SET name = :name, description= :description WHERE ownerId=:ownerId AND id=:id';
+        $sth = $this->dbh->prepare ($sql);
+        $sth->bindParam(':name',$m_name);
+        $sth->bindParam(':description', $m_description);
+        $sth->bindParam(':ownerId', $m_ownerId);
+        $sth->bindParam(':id', $m_id);
+        $sth->execute();
+        if ($row = $sth->fetch()) {
+            return true;
         } else {
             return false;
         }

@@ -1,10 +1,13 @@
 <?php
 
+require_once 'db.php';
+
+
 class Playlist
 {
 
-    public $title;
-    public $description;
+    private $title;
+    private $description;
 
 
     function __construct($title, $description) {
@@ -17,6 +20,16 @@ class Playlist
     }
 
     */
+
+    public function returnTitle(){
+        return $this->title;
+    }
+
+    public function returnDescription(){
+        return $this->description;
+    }
+
+
 }
 
 

@@ -4,6 +4,7 @@ require_once 'db.php';
 class User
 {
 
+    private $id;
     private $email;
     private $privileges;
 
@@ -20,6 +21,7 @@ class User
 
         //Find user in DB and store info in class variables
         $userArray = $db->findUser($m_email);
+        $this->id = $userArray['id'];
         $this->email = $userArray['email'];
         $this->privileges = $userArray['privileges'];
 
@@ -35,6 +37,10 @@ class User
 
     public function getPrivileges(){ //Get users privileges
         return $this->privileges;
+    }
+
+    public function returnId(){
+        return $this->id;
     }
 
 }
