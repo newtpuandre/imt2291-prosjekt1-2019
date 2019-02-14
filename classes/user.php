@@ -9,15 +9,11 @@ class User
     private $privileges;
 
     private $db = null;
-    private $dbh = null;
 
     public function __construct($m_email) {
         //Grab userinfo from db
         //Initalize a new database connection
         $db = new DB();
-
-        //Get an instance of the current connection
-        $dbh = $db->getDBConnection();
 
         //Find user in DB and store info in class variables
         $userArray = $db->findUser($m_email);
