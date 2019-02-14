@@ -123,10 +123,11 @@ class DB
         }
     }
 
-    public function returnPlaylist($m_id){ //Returns a single playlist with a specific id
-        $sql = 'SELECT id, ownerId, name, description, date FROM playlists WHERE id=:id';
+    public function returnPlaylist($m_id, $m_ownerId){ //Returns a single playlist with a specific id
+        $sql = 'SELECT id, ownerId, name, description, date FROM playlists WHERE id=:id AND ownerId=:ownerId';
         $sth = $this->dbh->prepare ($sql);
         $sth->bindParam(':id', $m_id);
+        $sth->bindParam(':ownerId', $m_ownerId);
         $sth->execute();
         if ($row = $sth->fetch()) {
             return $row;

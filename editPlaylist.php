@@ -41,7 +41,7 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
 } elseif (isset($_GET['update']) || isset($_POST['update'])) { //Update selected playlist
     $content['mode'] = 2;
 
-    $content['playlistItem'] = $db->returnPlaylist($_GET['update']);
+    $content['playlistItem'] = $db->returnPlaylist($_GET['update'], $content['userid']);
 
     if(isset($_POST['update'])) {
 
