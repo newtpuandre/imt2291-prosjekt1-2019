@@ -18,7 +18,7 @@
             <p>{{ item.description }}</p>
             <i>Opprettet <small>{{ item.date }}</small></i>
             <a href="editPlaylist.php?delete={{ item.id }}"><button type="button"
-                class="btn btn-danger float-right">Slett</button></a>
+                    class="btn btn-danger float-right">Slett</button></a>
         </li>
         {% endfor %}
     </ul>
@@ -26,7 +26,7 @@
 
     {% elseif mode == "1" %}
     <!-- Create new playlist -->
-    <a href="editPlaylist.php">Tilbake</a>
+    <a href="editPlaylist.php">← Tilbake</a>
     <h1 class="display-4" style="margin-top:15px">Opprett ny spilleliste</h1>
     <form action="editPlaylist.php" method="POST">
         <div class="form-group">
@@ -42,7 +42,7 @@
 
     {% elseif mode == "2" %}
     <!-- Edit playlist by id -->
-    <a href="editPlaylist.php">Tilbake</a>
+    <a href="editPlaylist.php">← Tilbake</a>
     <h1 class="display-4" style="margin-top:15px">Endre spilleliste</h1>
     <form action="editPlaylist.php" method="POST">
         <div class="form-group">
@@ -51,10 +51,25 @@
         </div>
         <div class="form-group">
             <label for="description">Beskrivelse</label>
-            <input class="form-control" name="description" id="description" value="{{ playlistItem.description }}" required>
+            <input class="form-control" rows="5" name="description" id="description"
+                value="{{ playlistItem.description }}" required>
         </div>
         <input hidden name="id" value="{{ playlistItem.id }}">
         <button type="submit" name="update" class="btn btn-primary">Oppdater spilleliste</button>
+
+        <h3 style="margin-top:25px">Videoer i denne spillelisten</h3>
+        <div class="media" style="margin-bottom:15px">
+            <img src="http://via.placeholder.com/320x180" class="align-self-center mr-3">
+
+            <div class="media-body">
+                <h4>Dummy Video 1</h4>
+                <p>Lorem ipsum...</p>
+            </div>
+
+            <a href=""><i class="fas fa-arrow-up float-right" style="margin-right:10px"></i></a>
+            <a href=""><i class="fas fa-arrow-down float-right" style="margin-right:10px"></i></a>
+        </div>
+
     </form>
 
     {% endif %}

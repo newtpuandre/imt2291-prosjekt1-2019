@@ -1,0 +1,48 @@
+{% include 'header.html' %}
+
+<main role="main" class="container">
+    <h1 class="display-4" style="margin-top:15px">Video Navn</h1>
+    <video style="display:block; margin: 0 auto;" poster="http://via.placeholder.com/1280x720" id="player" width="1280" playsinline controls>
+
+        <source src="/path/to/video.mp4" type="video/mp4">
+        <source src="/path/to/video.webm" type="video/webm">
+        <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default>
+
+    </video>
+    <!-- Video player-->
+    <!-- Ratings -->
+    <div class="container">
+        <!-- https://codepen.io/yaworek/pen/JJpEaZ -->
+        <div class="starrating d-flex justify-content-center flex-row-reverse">
+            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"></label>
+            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 star"></label>
+            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 star"></label>
+            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 star"></label>
+            <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 star"></label>
+
+        </div>
+    </div>
+
+    <!-- Comments -->
+    <h2>Kommentarer</h2>
+    <ul class="list-group">
+        <li class="list-group-item ">
+            <div class="media">
+                <div class="media-left media-middle">
+                    <img src="https://propertymarketersllc.com/wp-content/uploads/2018/05/profile-picture-placeholder.png"
+                        class="media-object" style="width:60px">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">brukernavn</h4>
+                    <p>En dum kommentar
+                    </p>
+                </div>
+            </div>
+        </li>
+    </ul>
+</main><!-- /.container -->
+
+</body>
+{% include 'footer.html' %}
+
+</html>
