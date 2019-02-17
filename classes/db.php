@@ -113,9 +113,9 @@ class DB
     }
 
     public function insertPlaylist($m_ownerId,$m_name,$m_description){
-        $sql = 'INSERT INTO playlists (ownerid , name, description) values (?, ?, ?)';
+        $sql = 'INSERT INTO playlists (ownerId , name, description) values (?, ?, ?)';
         $sth = $this->dbh->prepare($sql);
-        $sth->execute (array ($m_ownerId,$m_name,$m_description));
+        $sth->execute (array ($m_ownerId, $m_name, $m_description));
         if ($sth->rowCount()==1) {
             return true;
         } else {
