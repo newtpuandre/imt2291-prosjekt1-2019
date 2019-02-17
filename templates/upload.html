@@ -10,53 +10,57 @@
     <div class="row">
       <!-- Video information row -->
       <div class="col-sm-8">
-        <form action="uploadHandler.php">
+        <form action="videoUpload.php" method="POST" enctype="multipart/form-data">
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="upload_title">Tittel</label>
-              <input type="text" class="form-control" id="upload_title" placeholder="Tittel">
+              <input type="text" class="form-control" name="upload_title" placeholder="Tittel">
             </div>
-
           </div>
           <div class="form-group">
             <label for="upload_desc">Beskrivelse</label>
-            <input type="text" class="form-control" id="upload_desc" placeholder="Beskrivelse">
+            <input type="text" class="form-control" name="upload_desc" placeholder="Beskrivelse">
           </div>
           <div class="form-row">
               <div class="form-group col-md-6">
                   <label for="upload_course">Emne</label>
-                  <input class="form-control" type="text" placeholder="Emne" id="upload_course">
+                  <input class="form-control" type="text" placeholder="Emne" name="upload_course">
               </div>
             <div class="form-group col-md-6">
               <label for="upload_topic">Tema</label>
-              <input class="form-control" type="text" placeholder="Tema" id="upload_topic">
+              <input class="form-control" type="text" placeholder="Tema" name="upload_topic">
             </div>
           </div>
-
-
 
           <div class="form-row">
             <div class="input-group col-md-12">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroupFileAddon01">Opplasting</span>
+                <span class="input-group-text" id="inputGroupFileAddon01">Video</span>
               </div>
 
               <div class="custom-file">
-                <input type="file" class="custom-file-input" id="inputGroupFile01"
+                <input type="file" class="custom-file-input" name = "upload_video" id="inputGroupFile01"
                   aria-describedby="inputGroupFileAddon01">
-                <label class="custom-file-label" for="inputGroupFile01">Velg fil</label>
+                <label class="custom-file-label" for="inputGroupFile01">Velg video</label>
               </div>
             </div>
 
-            <div class="form-group col-md-12 mt-5">
+            <div class="input-group col-md-12 mt-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFileAddon01">Thumbnail</span>
+              </div>
 
-              <button class="btn btn-lg btn-success btn-block" type="submit">Last opp</button>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" name = "upload_thumbnail" id="inputGroupFile01"
+                  aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01">Velg thumbnail</label>
+              </div>
+            </div>
+            <div class="form-group col-md-12 mt-3">
+              <button class="btn btn-lg btn-success btn-block" name="upload_btn" type="submit">Last opp</button>
             </div>
           </div>
       </div>
-
-
-
       </form>
     </div>
   </div>

@@ -23,7 +23,7 @@ class User
 
     }
 
-   function __destruct() {
+    function __destruct() {
 
     }
 

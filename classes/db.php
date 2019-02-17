@@ -80,10 +80,21 @@ class DB
         $sth = $this->dbh->prepare ($sql);
         $sth->execute();
         if ($rows = $sth->fetchAll()) {
-            return $rows;
-            
+            return $rows;            
         } else {
             return null;
+        }
+    }
+
+    public function newVideo($user, $title, $desc, $topic, $course, $thumb_path, $video_path) {
+        $sql = 'INSERT INTO video (userid, title, description, topic, course, thumbnail_path, video_path) values (?, ?, ?, ?, ?, ?, ?)';
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute(array($user, $title, $desc, $topic, $course, $thumb_path, $video_path));
+
+        if ($sth->rowCount()==1) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -150,6 +161,8 @@ class DB
             return false;
         }
     }
+
+
 
 }
 
