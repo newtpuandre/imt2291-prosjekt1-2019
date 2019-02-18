@@ -1,43 +1,47 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="images/favicon.ico">
 
-    <title>Login</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="images/favicon.ico">
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <!-- style for this site -->
-    <link href="templates/css/loginregister.css" rel="stylesheet">
-  </head>
+  <title>Login</title>
 
-  <body class="text-center">
-    <form class="form-signin" action = "login.php" method = "post">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <!-- style for this site -->
+  <link href="templates/css/loginregister.css" rel="stylesheet">
+</head>
 
-      {% if code == "feil" %}
-      <div class="alert alert-danger">
-        <strong>Feil!</strong> Brukernavnet, Epost eller passordet er feil.
-      </div>
-      {% endif %}
+<body class="text-center">
 
-      <img class="mb-4" src="images/logo.svg"  alt="" width="72" height="72" >
-      <h1 class="h3 mb-3 font-weight-normal">Vennligst log inn</h1>
-      <label for="inputEmail" class="sr-only">Epost Addresse</label>
-      <input id="inputEmail" name="email" class="form-control" placeholder="Epost Addresse" required autofocus>
-      <label for="inputPassword" class="sr-only">Passord</label>
-      <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Passord" required>
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me"> Husk meg
-        </label>
-      </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit" name="login">Log inn</button>
-      <a href="register.php">Registrer deg her</a>
-      <p class="mt-5 mb-3 text-muted">&copy; Something 2019</p>
-    </form>
-  </body>
+  <form class="form-signin" action="login.php" method="post">
+    {% if code == "feil" %}
+    <div class="alert alert-danger">
+      <strong>Feil!</strong> Brukernavnet, Epost eller passordet er feil.
+    </div>
+    {% endif %}
+
+    <img class="mb-4" src="images/logo.svg" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Vennligst log inn</h1>
+    <label for="inputEmail" class="sr-only">Epost Addresse</label>
+    <input id="inputEmail" name="email" class="form-control" placeholder="Epost Addresse" required autofocus>
+    <label for="inputPassword" class="sr-only">Passord</label>
+    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Passord" required>
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Husk meg
+      </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" name="login">Log inn</button>
+    <a href="register.php">Registrer deg her</a></br>
+    <a href="index.php">← Tilbake til forsiden</a>
+    <p class="mt-5 mb-3 text-muted">&copy; Something 2019</p>
+  </form>
+</body>
+
 </html>

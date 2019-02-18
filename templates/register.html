@@ -1,48 +1,53 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="images/favicon.ico">
 
-    <title>Register</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="images/favicon.ico">
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <!-- style for this site -->
-    <link href="templates/css/loginregister.css" rel="stylesheet">
-  </head>
+  <title>Register</title>
 
-  <body class="text-center">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <!-- style for this site -->
+  <link href="templates/css/loginregister.css" rel="stylesheet">
+</head>
 
-    <form class="form-signin" action = "register.php" method = "post">
+<body class="text-center">
 
-            {% if code == "ok" %}
-            <div class="alert alert-success">
-                <strong>Suksess!</strong> Du er nå registrert.
-            </div>
-            {% elseif code == "feil" %}
-            <div class="alert alert-danger">
-                <strong>Feil!</strong> Det har oppstått en feil som forhindrer oss i å registrere deg.
-            </div>
-            {% endif %}
+  <form class="form-signin" action="register.php" method="post">
 
-      <img class="mb-4" src="images/logo.svg"  alt="" width="72" height="72" >
-      <h1 class="h3 mb-3 font-weight-normal">Registrering</h1>
-      <label for="inputEmail" class="sr-only">Epost Addresse</label>
-      <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Epost Addresse" required autofocus>
-      <label for="inputPassword" class="sr-only">Passord</label>
-      <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Passord" required>
-      <div class="checkbox mb-3">
-          <label>
-            <input type="checkbox" name="isTeacher" value="1"> Jeg er lærer.
-          </label>
-        </div>
-      <button class="btn btn-lg btn-primary btn-block" name="createNewUser" type="submit">Registrer meg</button>
-      <a href="login.php">Tilbake til innlogging</a>
-      <p class="mt-5 mb-3 text-muted">&copy; Something 2019</p>
-    </form>
-  </body>
+    {% if code == "ok" %}
+    <div class="alert alert-success">
+      <strong>Suksess!</strong> Du er nå registrert.
+    </div>
+    {% elseif code == "feil" %}
+    <div class="alert alert-danger">
+      <strong>Feil!</strong> Det har oppstått en feil som forhindrer oss i å registrere deg.
+    </div>
+    {% endif %}
+
+    <img class="mb-4" src="images/logo.svg" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Registrering</h1>
+    <label for="inputEmail" class="sr-only">Epost Addresse</label>
+    <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Epost Addresse" required
+      autofocus>
+    <label for="inputPassword" class="sr-only">Passord</label>
+    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Passord" required>
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" name="isTeacher" value="1"> Jeg er lærer.
+      </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" name="createNewUser" type="submit">Registrer meg</button>
+    <a href="login.php">Tilbake til innlogging</a></br>
+    <a href="index.php">← Tilbake til forsiden</a>
+    <p class="mt-5 mb-3 text-muted">&copy; Something 2019</p>
+  </form>
+</body>
+
 </html>
