@@ -56,8 +56,11 @@
         </div>
         <input hidden name="id" value="{{ playlistItem.id }}">
         <button type="submit" name="update" class="btn btn-primary">Oppdater spilleliste</button>
-
+    </form>
         <h3 style="margin-top:25px">Videoer i denne spillelisten</h3>
+    {% if playlistVideos == "" %}
+        <strong>Det er ingen videoer i denne spillelisten</strong>
+    {% else %}
         <div class="media" style="margin-bottom:15px">
             <img src="http://via.placeholder.com/320x180" class="align-self-center mr-3">
 
@@ -66,12 +69,11 @@
                 <p>Lorem ipsum...</p>
             </div>
 
-            <a href=""><i class="fas fa-arrow-up float-right" style="margin-right:10px"></i></a>
-            <a href=""><i class="fas fa-arrow-down float-right" style="margin-right:10px"></i></a>
+            <a href="editPlaylist.php?update={{ playlistItem.id }}&down=false"><i class="fas fa-arrow-up float-right" style="margin-right:10px"></i></a>
+            <a href="editPlaylist.php?update={{ playlistItem.id }}&down=true"><i class="fas fa-arrow-down float-right" style="margin-right:10px"></i></a>
         </div>
-
-    </form>
-
+     {% endif %}
+     <a href= "#"><button class="btn btn-success float-right">Legg til videoer i spilleliste</button></a>
     {% endif %}
 </main><!-- /.container -->
 
