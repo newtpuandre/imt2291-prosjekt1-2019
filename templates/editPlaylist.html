@@ -57,23 +57,66 @@
         <input hidden name="id" value="{{ playlistItem.id }}">
         <button type="submit" name="update" class="btn btn-primary">Oppdater spilleliste</button>
     </form>
-        <h3 style="margin-top:25px">Videoer i denne spillelisten</h3>
+    <h3 style="margin-top:25px">Videoer i denne spillelisten</h3>
     {% if playlistVideos == "" %}
-        <strong>Det er ingen videoer i denne spillelisten</strong>
+    <strong>Det er ingen videoer i denne spillelisten</strong>
     {% else %}
-        <div class="media" style="margin-bottom:15px">
-            <img src="http://via.placeholder.com/320x180" class="align-self-center mr-3">
+    <div class="media" style="margin-bottom:15px">
+        <img src="http://via.placeholder.com/320x180" class="align-self-center mr-3">
 
-            <div class="media-body">
-                <h4>Dummy Video 1</h4>
-                <p>Lorem ipsum...</p>
-            </div>
-
-            <a href="editPlaylist.php?update={{ playlistItem.id }}&down=false"><i class="fas fa-arrow-up float-right" style="margin-right:10px"></i></a>
-            <a href="editPlaylist.php?update={{ playlistItem.id }}&down=true"><i class="fas fa-arrow-down float-right" style="margin-right:10px"></i></a>
+        <div class="media-body">
+            <h4>Dummy Video 1</h4>
+            <p>Lorem ipsum...</p>
         </div>
-     {% endif %}
-     <a href= "#"><button class="btn btn-success float-right">Legg til videoer i spilleliste</button></a>
+
+        <a href="editPlaylist.php?update={{ playlistItem.id }}&down=false"><i class="fas fa-arrow-up float-right"
+                style="margin-right:10px"></i></a>
+        <a href="editPlaylist.php?update={{ playlistItem.id }}&down=true"><i class="fas fa-arrow-down float-right"
+                style="margin-right:10px"></i></a>
+    </div>
+    {% endif %}
+    <a href="editPlaylist.php?update={{ playlistItem.id }}&addVideos"><button class="btn btn-success float-right">Legg
+            til videoer i spilleliste</button></a>
+
+    {% elseif mode == "3" %}
+
+    <a href="editPlaylist.php?update={{ playlistItem.id }}">← Tilbake</a>
+    <h1 class="display-4" style="margin-top:15px">Legg til videoer i spilleliste : {{ playlistItem.name }}</h1>
+
+    {% if videos == " " %}
+    <strong>Du har ingen videoer lastet opp..</strong>
+
+    {% else %}
+    <form action="editPlaylist.php" method="POST">
+        <input type="hidden" id="playlistId" name="playlistId" value="{{ playlistItem.id }}">
+        <ul class="list-group">
+            {% for videoItem in videos %}
+            <li class="list-group-item">
+                <div class="media" style="margin-bottom:15px">
+                    <img src="http://via.placeholder.com/320x180" class="align-self-center mr-3">
+                    
+                    <div class="media-body">
+                        <h4>{{ videoItem.title }}</h4>
+                        <p>Beskrivelse: {{ videoItem.description }}</p>
+                        <p>Emne: {{ videoItem.course }}</p>
+                        <p>Tema: {{ videoItem.topic }}</p>
+                        <p>Dato lastet opp: {{ videoItem.time }}</p>
+                    </div>
+
+                    <div class="form-check float-right">
+                            <input class="form-check-input" type="checkbox" value="{{ videoItem.id }}" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                              <strong>Legg til i spillelisten</strong>
+                            </label>
+                          </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <button type="submit" name="addVideos" class="btn btn-success float-right" style="margin-top:20px">Oppdater spilleliste</button>
+    </form>
+    {% endif %}
+
     {% endif %}
 </main><!-- /.container -->
 
