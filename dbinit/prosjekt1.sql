@@ -27,7 +27,21 @@ CREATE TABLE IF NOT EXISTS `playlists` (
   UNIQUE KEY `id` (`id`),
   KEY `ownerid` (`ownerId`),
   CONSTRAINT `ownerid` FOREIGN KEY (`ownerId`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
+-- Dumping structure for table prosjekt1.playlistvideos
+CREATE TABLE IF NOT EXISTS `playlistvideos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `videoid` int(11) NOT NULL DEFAULT '0',
+  `playlistid` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `fk_videoid` (`videoid`),
+  KEY `fk_playlistid` (`playlistid`),
+  CONSTRAINT `fk_playlistid` FOREIGN KEY (`playlistid`) REFERENCES `playlists` (`id`),
+  CONSTRAINT `fk_videoid` FOREIGN KEY (`videoid`) REFERENCES `video` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 -- Dumping structure for table prosjekt1.users
@@ -43,21 +57,23 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
+-- Dumping structure for table prosjekt1.video
+CREATE TABLE IF NOT EXISTS `video` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) NOT NULL,
+  `title` varchar(64) NOT NULL,
+  `description` varchar(512) DEFAULT NULL,
+  `topic` varchar(64) DEFAULT NULL,
+  `course` varchar(64) DEFAULT NULL,
+  `thumbnail_path` varchar(255) DEFAULT NULL,
+  `video_path` varchar(255) DEFAULT NULL,
+  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `fk_userid` (`userid`),
+  CONSTRAINT `fk_userid` FOREIGN KEY (`userid`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-
-
-CREATE TABLE IF NOT EXISTS `video` ( 
- `id` int(11) NOT NULL AUTO_INCREMENT,
- `userid` int(11) NOT NULL,
- `title` VARCHAR(64) NOT NULL, 
- `description` VARCHAR(512), 
- `topic` VARCHAR(64),
- `course` VARCHAR(64),
- `thumbnail_path` VARCHAR(255),
- `video_path` VARCHAR(255), 
- `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-  PRIMARY KEY (`id`), 
-  FOREIGN KEY (`userid`) REFERENCES users(id) 
-  );
