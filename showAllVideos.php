@@ -25,30 +25,19 @@ $twig = new Twig_Environment($loader, array(
     //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
 ));
 
-if (!isset($_FILES['upload_video'])){
-    echo $twig->render('upload.html', $content);
-    exit();
-}
-
-if(isset($_POST['upload_btn'])) {
-    $title = $_POST['upload_title'];
-    $description = $_POST['upload_desc'];
-    $topic = $_POST['upload_topic'];
-    $course = $_POST['upload_course'];
-    $videofile = $_FILES['upload_video'];
-    $thumbnail = $_FILES['upload_thumbnail'];
-    
     $user = new User($_SESSION['user']);
     $uid = $user->returnId();
-    
+
     $video = new Video();
-    $res = $video->upload($uid, $title, $description, $topic, $course, $videofile, $thumbnail);
+    $res = $video->getAllUserVideos($uid);
 
     if($res) {
-        echo $twig->render('index.html', $content);
+       $content['result'] = $res;
+       echo $twig->render('showAllVideos.html', $content);
     } else {
-       echo("Ikke lastet opp!");
+       echo("Ingen videoer å vise.");
     } 
-}
 
-?>
+
+
+

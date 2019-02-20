@@ -5,18 +5,20 @@
     <div class="row pt-5 pb-5">
       <!-- Header Row -->
       <div class="col-sm">
-        <h2>Mine videoer</h2>
+        <h2>Alle videoer</h2>
       </div>
     </div>
 
     {% for video in result %}
     <div class="card flex-row flex-wrap">
       <div class="card-header border-0">
-          <img src="{{ video.thumbnail_path }}" alt="">
-        <!-- <img src="http://via.placeholder.com/320x180" alt=""> --->
+          <a href ="playVideo.php?id={{ video.id }}"><img src="{{ video.thumbnail_path }}" alt=""></a>
       </div>
       <div class="card-block">
-        <h4 class="video-title">{{ video.title }} </h4>
+        <a href ="playVideo.php?id={{ video.id }}>"><h4 class="video-title">{{ video.title }} </h4></a>
+        <!-- TODO 
+        <p class="card-text"><b>Lastet opp av: </b>{{ user }}</p>
+        -->
         <p class="card-text"><b>Emne: </b>{{ video.course }}</p>
         <p class="card-text"><b>Tema: </b>{{ video.topic }}</p>
         <p class="card-text"><b>Lastet opp: </b>{{ video.time }}</p>

@@ -25,12 +25,6 @@ $twig = new Twig_Environment($loader, array(
     //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
 ));
 
-
-  
-
-
-
-    
     $user = new User($_SESSION['user']);
     $uid = $user->returnId();
 
@@ -41,9 +35,9 @@ $twig = new Twig_Environment($loader, array(
         $content['result'] = $res;
        echo $twig->render('showUserVideos.html', $content);
     } else {
-       echo("Ikke lastet opp!");
+       echo("Ingen videoer å vise.");
     } 
 
 
-$db = new DB(); 
+
 
