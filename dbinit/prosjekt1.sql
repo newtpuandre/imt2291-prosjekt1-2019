@@ -16,6 +16,21 @@
 CREATE DATABASE IF NOT EXISTS `prosjekt1` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `prosjekt1`;
 
+-- Dumping structure for table prosjekt1.comment
+CREATE TABLE IF NOT EXISTS `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) NOT NULL DEFAULT '0',
+  `videoid` int(11) NOT NULL DEFAULT '0',
+  `comment` text NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `fk_useridComment` (`userid`),
+  KEY `fk_videoidComment` (`videoid`),
+  CONSTRAINT `fk_useridComment` FOREIGN KEY (`userid`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_videoidComment` FOREIGN KEY (`videoid`) REFERENCES `video` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
 -- Dumping structure for table prosjekt1.playlists
 CREATE TABLE IF NOT EXISTS `playlists` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -41,6 +56,21 @@ CREATE TABLE IF NOT EXISTS `playlistvideos` (
   KEY `fk_playlistid` (`playlistid`),
   CONSTRAINT `fk_playlistid` FOREIGN KEY (`playlistid`) REFERENCES `playlists` (`id`),
   CONSTRAINT `fk_videoid` FOREIGN KEY (`videoid`) REFERENCES `video` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
+-- Dumping structure for table prosjekt1.rating
+CREATE TABLE IF NOT EXISTS `rating` (
+  `id` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `videoid` int(11) NOT NULL,
+  `rating` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `fk_useridRating` (`userid`),
+  KEY `fk_videoidRating` (`videoid`),
+  CONSTRAINT `fk_useridRating` FOREIGN KEY (`userid`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_videoidRating` FOREIGN KEY (`videoid`) REFERENCES `video` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
