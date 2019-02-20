@@ -1,14 +1,15 @@
 {% include 'header.html' %}
 
 <main role="main" class="container">
-    <h1 class="display-4" style="margin-top:15px">Video Navn</h1>
-    <video style="display:block; margin: 0 auto;" poster="http://via.placeholder.com/1280x720" id="player" width="1280" playsinline controls>
-
-        <source src="/path/to/video.mp4" type="video/mp4">
-        <source src="/path/to/video.webm" type="video/webm">
+        {% for info in videoinfo %}
+    <h1 class="display-4" style="margin-top:15px">{{ info.title }}</h1>
+    <video style="display:block; margin: 0 auto;" poster="{{ info.thumbnail_path }}" id="player" height="720" width="1280" playsinline controls>
+        <source src="{{ info.video_path }}" type="video/mp4">
+        <!--<source src="{{ info.video_path }}" type="video/webm"> -->
         <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default>
 
     </video>
+    {% endfor %}
     <!-- Video player-->
     <!-- Ratings -->
     <div class="container">
@@ -23,6 +24,9 @@
         </div>
     </div>
 
+    <!-- Information about video -->
+
+    
     <!-- Comments -->
     <h2>Kommentarer</h2>
     <ul class="list-group">

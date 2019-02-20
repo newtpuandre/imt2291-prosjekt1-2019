@@ -121,6 +121,20 @@ class DB
         }
     }
 
+    public function returnVideo($m_videoid){
+        $sql = 'SELECT * FROM video WHERE id=:id';
+
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindParam(':id', $m_videoid);
+
+        $sth->execute();
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return null;
+        }
+    }
+
     public function returnAllVideos(){
         $sql = 'SELECT * FROM video ORDER BY time DESC';
 

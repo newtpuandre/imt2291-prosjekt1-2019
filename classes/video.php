@@ -86,6 +86,19 @@ class Video
         }
        
     }
+
+    public function getVideo($id){
+        $db = new DB();
+
+        $res = $db->returnVideo($id);
+
+        if($res) {
+            return $res;
+        }else {
+            print_r("failed!");
+        }
+    }
+    
     public function thumbnailResize($thumbnail, $new_width, $new_height, $output_path){
         $content = file_get_contents($thumbnail["tmp_name"]);
         
