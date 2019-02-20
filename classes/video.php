@@ -54,6 +54,22 @@ class Video
             return false;
         }        
     }   
+
+
+    public function getAllUserVideos($uid) {
+        $db = new DB();
+
+        $res = $db->returnVideos($uid);
+
+        if($res) {
+            return $res;
+        }else {
+
+            print_r("failed!");
+        }
+       
+
+    }
 }
 
 ?>
