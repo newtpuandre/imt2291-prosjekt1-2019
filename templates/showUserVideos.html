@@ -28,17 +28,39 @@
         <div class="card-block">
             <div class="card-block" >
               <button type="submit" class="btn btn-outline-primary" formaction="editVideo.php" name="button_edit">Rediger</button>
-              <button type="submit" class="btn btn-outline-primary" formaction="deleteVideo.php" name="button_delete">Slett</button>
+              <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal"  name="btn_delete">Slett</button>
             </div>
         </div>
       <div class="w-100"></div>
     </div>
-    </form>
-
-  {% endfor %}
   </div>
 
 
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Advarsel!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Er du sikker på at du vil slette denne videoen? ({{ video.title }})
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Angre</button>
+          <button type="submit" name="button_delete" formaction="deleteVideo.php" class="btn btn-primary">Slett</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+{% endfor %}
   </div>
 </body>
 
