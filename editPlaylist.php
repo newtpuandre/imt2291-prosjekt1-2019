@@ -51,8 +51,14 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
     if(isset($_POST['addVideos'])) {
 
         //Add videos
+        foreach ($_POST['videoids'] as &$value) {
+            //Add video to playlist here.
 
-       header("Location: editPlaylist.php?update=".$_POST['playlistId']);
+            //$db->AddVideoToPlaylist($_GET['update'],$playlistid);
+
+        }
+
+        header("Location: editPlaylist.php?update=".$_POST['playlistId']);
     }
 
     $content['mode'] = 3;
@@ -71,6 +77,8 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
     $content['mode'] = 2;
 
     $content['playlistItem'] = $db->returnPlaylist($_GET['update'], $content['userid']);
+    
+    //$content['playlistVideos'] = $db->returnPlaylistVideos($_GET['update']);
 
     if(isset($_POST['update'])) {
 
