@@ -1,8 +1,6 @@
 <?php
 /*
-Twig renderer for upload.html
-
-For å hente ut informasjon fra formen og sende til upload manager(som sender til DB)
+To delete video 
 */
 require_once 'vendor/autoload.php';
 require_once 'classes/user.php';
@@ -25,16 +23,9 @@ $twig = new Twig_Environment($loader, array(
     //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
 ));
 
-$user = new User($_SESSION['user']);
-$uid = $user->returnId();
-
-$video = new Video();
-$res = $video->getAllUserVideos($uid);
-
-if (isset($_POST['button_edit'])){
-    echo $twig->render('editVideo.html', $content);
+if (isset($_POST['button_delete'])) {   
+    $video = new Video();
+    $video->deleteVideo($_POST['video_id']);
 }
 
-$content['result'] = $res;
-echo $twig->render('showUserVideos.html', $content);
-
+header("Location: showUserVideos.php");

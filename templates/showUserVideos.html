@@ -10,22 +10,32 @@
     </div>
 
     {% for video in result %}
+    <form method="POST">
+    <input name="video_id" type="hidden" value="{{ video.id }}">
     <div class="card flex-row flex-wrap">
       <div class="card-header border-0">
-          <img src="{{ video.thumbnail_path }}" alt="">
+        <img src="{{ video.thumbnail_path }}" alt="">
         <!-- <img src="http://via.placeholder.com/320x180" alt=""> --->
       </div>
-      <div class="card-block">
-        <h4 class="video-title">{{ video.title }} </h4>
-        <p class="card-text"><b>Emne: </b>{{ video.course }}</p>
-        <p class="card-text"><b>Tema: </b>{{ video.topic }}</p>
-        <p class="card-text"><b>Lastet opp: </b>{{ video.time }}</p>
-        <p class="card-text"><b>Beskrivelse: </b>{{ video.description }}</p>
-      </div>
+    
+        <div class="card-block">
+          <h4 class="video-title">{{ video.title }} </h4>
+          <p class="card-text"><b>Emne: </b>{{ video.course }}</p>
+          <p class="card-text"><b>Tema: </b>{{ video.topic }}</p>
+          <p class="card-text"><b>Lastet opp: </b>{{ video.time }}</p>
+          <p class="card-text"><b>Beskrivelse: </b>{{ video.description }}</p>
+        </div>
+        <div class="card-block">
+            <div class="card-block" >
+              <button type="submit" class="btn btn-outline-primary" formaction="editVideo.php" name="button_edit">Rediger</button>
+              <button type="submit" class="btn btn-outline-primary" formaction="deleteVideo.php" name="button_delete">Slett</button>
+            </div>
+        </div>
       <div class="w-100"></div>
     </div>
+    </form>
 
-    {% endfor %}
+  {% endfor %}
   </div>
 
 

@@ -147,6 +147,19 @@ class DB
         }
     }
 
+    public function deleteVideo($m_videoid){
+        $sql = 'DELETE FROM video WHERE id=:videoid';
+        $sth = $this->dbh->prepare($sql);
+
+        $sth->bindParam(':videoid', $m_videoid);
+        $sth->execute();
+
+        if ($sth->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function updatePrivileges($m_email, $m_privilevel) {
         $sql = 'UPDATE users SET PRIVILEGES = :privileges WHERE email=:email';

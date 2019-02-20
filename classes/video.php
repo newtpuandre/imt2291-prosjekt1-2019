@@ -99,6 +99,26 @@ class Video
         }
     }
 
+    public function deleteVideo($videoid){
+        $db = new DB();
+        
+        /* Delete files */
+        $video = $this->getVideo($videoid);
+
+        unlink($video[0]['video_path']);
+        unlink($video[0]['thumbnail_path']);
+
+        /* Delete DB Entry */
+        $res = $db->deleteVideo($videoid);
+
+        if($res) {
+            return $res;
+        }else {
+            print_r("Failed deleting video!");
+        }
+
+
+    }
     public function thumbnailResize($thumbnail, $new_width, $new_height, $output_path){
         $content = file_get_contents($thumbnail["tmp_name"]);
         
