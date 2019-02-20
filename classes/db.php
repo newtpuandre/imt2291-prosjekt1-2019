@@ -137,20 +137,7 @@ class DB
 
     public function returnAllVideos(){
         $sql = 'SELECT * FROM video ORDER BY time DESC';
-
-       /* if( $m_startnum != "" && $m_endnum != "") {
-            $sql .= ' LIMIT :start, :end';
-        } 
-
-        */
-
         $sth = $this->dbh->prepare ($sql);
-
-        /*if($m_startnum != "" && $m_endnum != "") {
-            $sth->bindParam(':start', $m_startnum);
-            $sth->bindParam(':end', $m_endnum);
-        }
-        */
 
         $sth->execute();
         if ($rows = $sth->fetchAll()) {
@@ -225,8 +212,30 @@ class DB
         }
     }
 
+    public function newComment($user, $video, $comment) {
+        $sql = 'INSERT INTO comment (userid, videoid, comment) values (?, ?, ?)';
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute(array($user, $video, $comment));
 
+        if ($sth->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    public function returnAllComments($m_videoid){
+        $sql = 'SELECT * FROM comment WHERE videoid=:videoid';
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindParam(':videoid', $m_videoid);
+
+        $sth->execute();
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return null;
+        }
+    }
 }
 
 

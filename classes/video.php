@@ -95,10 +95,10 @@ class Video
         if($res) {
             return $res;
         }else {
-            print_r("failed!");
+            print_r("failed getting video!");
         }
     }
-    
+
     public function thumbnailResize($thumbnail, $new_width, $new_height, $output_path){
         $content = file_get_contents($thumbnail["tmp_name"]);
         

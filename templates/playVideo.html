@@ -1,14 +1,25 @@
 {% include 'header.html' %}
 
 <main role="main" class="container">
-        {% for info in videoinfo %}
+    {% for info in videoinfo %}
     <h1 class="display-4" style="margin-top:15px">{{ info.title }}</h1>
-    <video style="display:block; margin: 0 auto;" poster="{{ info.thumbnail_path }}" id="player" height="720" width="1280" playsinline controls>
+    <video style="display:block; margin: 0 auto;" poster="{{ info.thumbnail_path }}" id="player" height="720"
+        width="1280" playsinline controls>
         <source src="{{ info.video_path }}" type="video/mp4">
         <!--<source src="{{ info.video_path }}" type="video/webm"> -->
         <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default>
 
     </video>
+    <!-- Information about video -->
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ info.title }} - {{ info.course }} - {{ info.topic }}</h5>
+            <p class="card-text">Lastet opp: {{ info.time }}.</p>
+            <p class="card-text">{{ info.description }}.</p>
+        </div>
+    </div>
+
     {% endfor %}
     <!-- Video player-->
     <!-- Ratings -->
@@ -20,16 +31,24 @@
             <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 star"></label>
             <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 star"></label>
             <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 star"></label>
-
         </div>
     </div>
 
-    <!-- Information about video -->
-
-    
     <!-- Comments -->
     <h2>Kommentarer</h2>
+    <form class="form-group" action="playVideo.php" method="POST">
+        <div>
+            <input type="hidden" name="video_id" value="{{ video_id }}">
+            <label for="comment">Skriv en offentlig kommentar:</label>
+            <textarea name="comment_text"  class="form-control" rows="5" id="comment"></textarea>
+            <div class="text-right mt-1">
+                <button name="submit_btn" type="submit" class="btn btn-primary">Send inn</button>
+            </div>
+        </div>
+    </form>
+
     <ul class="list-group">
+        {% for comment in comments %}
         <li class="list-group-item ">
             <div class="media">
                 <div class="media-left media-middle">
@@ -38,12 +57,14 @@
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">brukernavn</h4>
-                    <p>En dum kommentar
+                    <p> {{ comment.comment }}
                     </p>
                 </div>
             </div>
         </li>
+        {% endfor %}
     </ul>
+
 </main><!-- /.container -->
 
 </body>
