@@ -32,7 +32,7 @@ $twig = new Twig_Environment($loader, array(
     $res = $video->getAllUserVideos($uid);
 
     if($res) {
-        $content['result'] = $res;
+       $content['result'] = $res;
        echo $twig->render('showAllVideos.html', $content);
     } else {
        echo("Ingen videoer å vise.");
