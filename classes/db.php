@@ -225,7 +225,7 @@ class DB
     }
 
     public function returnAllComments($m_videoid){
-        $sql = 'SELECT * FROM comment WHERE videoid=:videoid';
+        $sql = 'SELECT * FROM comment WHERE videoid=:videoid ORDER BY id DESC';
         $sth = $this->dbh->prepare($sql);
         $sth->bindParam(':videoid', $m_videoid);
 
