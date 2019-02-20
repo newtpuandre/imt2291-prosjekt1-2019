@@ -17,7 +17,9 @@ class Video
 
         /* TODO : Return meaningful error for all of these, for now, debug echos */
         if (file_exists($video_path) || file_exists($thumb_path)) {
-            echo "FILE EXISTS!!!";
+            echo "FILE EXISTS!\n";
+            print_r($video_path);
+            print_r($thumb_path);
             return false;
         }
 
@@ -31,7 +33,10 @@ class Video
             return false;
         }
 
-        if(move_uploaded_file($video["tmp_name"], $video_path) && move_uploaded_file($thumbnail["tmp_name"], $thumb_path)) {
+        /* Resize Thumbnail to 320x180 */
+        $this->thumbnailResize($thumbnail, 320, 180, $thumb_path);
+
+        if(move_uploaded_file($video["tmp_name"], $video_path) /* && move_uploaded_file($thumbnail["tmp_name"], $thumb_path)*/) {
             echo "The files uploaded successfully!";
 
             /* Inser info in database */
@@ -64,11 +69,38 @@ class Video
         if($res) {
             return $res;
         }else {
-
             print_r("failed!");
         }
        
+    }
 
+    public function getAllVideos() {
+        $db = new DB();
+
+        $res = $db->returnAllVideos();
+
+        if($res) {
+            return $res;
+        }else {
+            print_r("failed!");
+        }
+       
+    }
+    public function thumbnailResize($thumbnail, $new_width, $new_height, $output_path){
+        $content = file_get_contents($thumbnail["tmp_name"]);
+        
+        list($old_width, $old_height, $type, $attr) = getimagesize($thumbnail["tmp_name"]);
+        
+        $src_img = imagecreatefromstring(file_get_contents($thumbnail["tmp_name"]));
+        $dst_img = imagecreatetruecolor($new_width, $new_height);
+        
+        /* Copy and store */
+        imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $new_width, $new_height, $old_width, $old_height);
+        imagepng($dst_img, $output_path);
+
+        /* Clean up */
+        imagedestroy($src_img);
+        imagedestroy($dst_img);        
     }
 }
 

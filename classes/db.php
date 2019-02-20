@@ -99,7 +99,7 @@ class DB
     }
 
     public function returnVideos($m_userid, $m_startnum = "" ,$m_endnum = ""){ //Returns all videos a user "owns". Can limit with $start and $end
-        $sql = 'SELECT id, userid, title, description, topic, course, time FROM video WHERE userid=:userid';
+        $sql = 'SELECT id, userid, title, description, topic, course, time, thumbnail_path, video_path FROM video WHERE userid=:userid ORDER BY time DESC';
 
         if( $m_startnum != "" && $m_endnum != "") {
             $sql .= ' LIMIT :start, :end';
@@ -120,6 +120,32 @@ class DB
             return null;
         }
     }
+
+    public function returnAllVideos(){
+        $sql = 'SELECT * FROM video ORDER BY time DESC';
+
+       /* if( $m_startnum != "" && $m_endnum != "") {
+            $sql .= ' LIMIT :start, :end';
+        } 
+
+        */
+
+        $sth = $this->dbh->prepare ($sql);
+
+        /*if($m_startnum != "" && $m_endnum != "") {
+            $sth->bindParam(':start', $m_startnum);
+            $sth->bindParam(':end', $m_endnum);
+        }
+        */
+
+        $sth->execute();
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return null;
+        }
+    }
+
 
     public function updatePrivileges($m_email, $m_privilevel) {
         $sql = 'UPDATE users SET PRIVILEGES = :privileges WHERE email=:email';
