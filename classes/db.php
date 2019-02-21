@@ -273,7 +273,7 @@ class DB
     }
 
     public function returnPlaylistVideos($m_playlistId) {
-        $sql = 'SELECT id, videoid FROM playlistvideos WHERE playlistid=:playlistid ORDER BY position ASC';
+        $sql = 'SELECT id, videoid, position FROM playlistvideos WHERE playlistid=:playlistid ORDER BY position ASC';
         $sth = $this->dbh->prepare ($sql);
         $sth->bindParam(':playlistid', $m_playlistId);
         $sth->execute();
@@ -285,13 +285,13 @@ class DB
     }
 
     public function returnPlaylistVideo($m_playlistId, $m_videoid) { // Select ONE video from the playlist
-        $sql = 'SELECT id, videoid FROM playlistvideos WHERE playlistid=:playlistid AND videoid=:videoid';
+        $sql = 'SELECT id, videoid, position FROM playlistvideos WHERE playlistid=:playlistid AND videoid=:videoid';
         $sth = $this->dbh->prepare ($sql);
         $sth->bindParam(':playlistid', $m_playlistId);
         $sth->bindParam(':videoid', $m_videoid);
         $sth->execute();
         if ($row = $sth->fetch()) {
-            return true;
+            return $row;
         } else {
             return false;
         }
@@ -306,6 +306,20 @@ class DB
             return $row;
         } else {
             return null;
+        }
+    }
+
+    public function editPositionPlaylistVideo($m_playlistId, $m_videoId, $m_position) {
+        $sql = 'UPDATE playlistvideos SET position = :position WHERE videoid=:videoid AND playlistid=:playlistid';
+        $sth = $this->dbh->prepare ($sql);
+        $sth->bindParam(':position', $m_position);
+        $sth->bindParam(':videoid', $m_videoId);
+        $sth->bindParam(':playlistid', $m_playlistId);
+        $sth->execute();
+        if ($row = $sth->fetch()) {
+            return true;
+        } else {
+            return false;
         }
     }
 

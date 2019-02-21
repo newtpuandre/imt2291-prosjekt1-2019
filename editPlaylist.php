@@ -90,6 +90,16 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
         header("Location: editPlaylist.php?update=".$_POST['id']); //Refresh page to see changes
     }
 
+    if(isset($_GET['down'])){
+
+        if ($_GET['down'] == "true") {
+            $playlist->editPosition($_GET['update'], $_GET['id'], true);
+        } else { //false
+            $playlist->editPosition($_GET['update'], $_GET['id'], false);
+        }
+
+    }
+
     if(isset($_GET['delete'])) {
         
         //Delete video from playlist

@@ -94,9 +94,9 @@
             <p>Tema: {{ videoItem.topic }}</p>
             <p>Dato lastet opp: {{ videoItem.time }}</p>
         </div>
-        <a href="editPlaylist.php?update={{ playlistItem.id }}&down=false"><i class="fas fa-arrow-up float-right"
+        <a href="editPlaylist.php?update={{ playlistItem.id }}&down=false&id={{ videoItem.id }}"><i class="fas fa-arrow-up float-right"
                 style="margin-right:10px"></i></a>
-        <a href="editPlaylist.php?update={{ playlistItem.id }}&down=true"><i class="fas fa-arrow-down float-right"
+        <a href="editPlaylist.php?update={{ playlistItem.id }}&down=true&id={{ videoItem.id }}"><i class="fas fa-arrow-down float-right"
                 style="margin-right:10px"></i></a>
         <a href="" data-toggle="modal" data-target="#Modal{{ videoItem.id }}"><i class="fas fa-times float-right"
             style="margin-right:10px" data-toggle="modal" data-target="#modal{{ videoItem.id }}"></i></a>
