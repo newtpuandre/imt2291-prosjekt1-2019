@@ -52,11 +52,11 @@ CREATE TABLE IF NOT EXISTS `playlistvideos` (
   `playlistid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
-  KEY `fk_videoid` (`videoid`),
   KEY `fk_playlistid` (`playlistid`),
-  CONSTRAINT `fk_playlistid` FOREIGN KEY (`playlistid`) REFERENCES `playlists` (`id`),
-  CONSTRAINT `fk_videoid` FOREIGN KEY (`videoid`) REFERENCES `video` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `fk_videoid` (`videoid`),
+  CONSTRAINT `fk_playlistid` FOREIGN KEY (`playlistid`) REFERENCES `playlists` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_videoid` FOREIGN KEY (`videoid`) REFERENCES `video` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 -- Dumping structure for table prosjekt1.rating
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `video` (
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `fk_userid` (`userid`),
-  CONSTRAINT `fk_userid` FOREIGN KEY (`userid`) REFERENCES `users` (`id`)
+  CONSTRAINT `fk_userid` FOREIGN KEY (`userid`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
