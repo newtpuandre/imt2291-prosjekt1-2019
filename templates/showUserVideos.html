@@ -28,7 +28,7 @@
         <div class="card-block">
             <div class="card-block" >
               <button type="submit" class="btn btn-outline-primary" formaction="editVideo.php" name="button_edit">Rediger</button>
-              <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal"  name="btn_delete">Slett</button>
+              <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#Modal{{ video.id }}"  name="btn_delete">Slett</button>
             </div>
         </div>
       <div class="w-100"></div>
@@ -38,7 +38,7 @@
 
   
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="Modal{{ video.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -52,7 +52,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Angre</button>
-          <button type="submit" name="button_delete" formaction="deleteVideo.php" class="btn btn-primary">Slett</button>
+          <button type="submit" name="button_delete" formaction="deleteVideo.php" class="btn btn-danger">Slett</button>
         </div>
       </div>
     </div>
