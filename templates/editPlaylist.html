@@ -13,7 +13,8 @@
         {% for item in playlists %}
         <li class="list-group-item">
             <a href="editPlaylist.php?update={{ item.id }}"><button type="button"
-                    class="btn btn-primary float-right">Endre</button></a>
+              class="btn btn-primary float-right">Endre</button></a>
+          <p><img src="{{ item.thumbnail }}"></p>
             <h4>{{ item.name }}</h4>
             <p>{{ item.description }}</p>
             <i>Opprettet <small>{{ item.date }}</small></i>
