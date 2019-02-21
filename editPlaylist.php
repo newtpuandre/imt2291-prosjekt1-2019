@@ -4,6 +4,7 @@
 require_once 'vendor/autoload.php';
 require_once 'classes/user.php';
 require_once 'classes/db.php'; //Note to self. Remove and use video / playlist class instead
+require_once 'classes/playlist.php';
 
 $content = array();
 
@@ -30,6 +31,7 @@ if (isset($_SESSION['user'])) { //User is logged in
     }
 
     $db = new DB();
+    $playlist = new Playlist();
 }
 
 if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playlist
@@ -46,19 +48,23 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
 
     }
 
-}  elseif ((isset($_GET['update']) && isset($_GET['addVideos'])) || isset($_POST['addVideos'])) { //Add videos to playlist
+}  elseif (isset($_GET['addVideos']) || isset($_POST['addVideos'])) { //Add videos to playlist
 
     if(isset($_POST['addVideos'])) {
 
         //Add videos
         foreach ($_POST['videoids'] as &$value) {
-            //Add video to playlist here.
 
-            //$db->AddVideoToPlaylist($_GET['update'],$playlistid);
+            //Add videos to playlist
+            
+            $playlist->addVideoToPlaylist($_POST['playlistId'], $value);
+
+            //$db->AddVideoToPlaylist($_POST['playlistId'], $value);
 
         }
-
+        
         header("Location: editPlaylist.php?update=".$_POST['playlistId']);
+
     }
 
     $content['mode'] = 3;
@@ -76,10 +82,6 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
 }  elseif (isset($_GET['update']) || isset($_POST['update'])) { //Update selected playlist
     $content['mode'] = 2;
 
-    $content['playlistItem'] = $db->returnPlaylist($_GET['update'], $content['userid']);
-    
-    //$content['playlistVideos'] = $db->returnPlaylistVideos($_GET['update']);
-
     if(isset($_POST['update'])) {
 
         //Update playlist
@@ -87,6 +89,33 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
 
         header("Location: editPlaylist.php?update=".$_POST['id']); //Refresh page to see changes
     }
+
+    if(isset($_GET['delete'])) {
+        
+        //Delete video from playlist
+        $playlist->deleteVideoFromPlaylist($_GET['update'], $_GET['delete']);
+
+        header("Location: editPlaylist.php?update=".$_GET['update']);
+
+    }
+
+    $content['playlistItem'] = $db->returnPlaylist($_GET['update'], $content['userid']);
+
+    $idarray = $db->returnPlaylistVideos($_GET['update']);
+
+    $temp = $playlist->resolveVideos($_GET['update']);
+
+    if ($temp) {
+
+        $content['playlistVideos'] = $temp;
+
+    }
+
+} elseif (isset($_GET['deletePlaylist'])) {
+
+    $playlist->deletePlaylist($_GET['deletePlaylist'], $content['userid']);
+
+    header("Location: editPlaylist.php");
 
 } else { //No params sent
 

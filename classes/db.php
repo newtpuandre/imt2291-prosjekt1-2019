@@ -225,6 +225,90 @@ class DB
         }
     }
 
+    public function deletePlaylist($m_playlistId,$m_ownerId){
+
+        $sql = 'DELETE FROM playlists WHERE id=:id AND ownerId=:ownerId';
+        $sth = $this->dbh->prepare($sql);
+
+        $sth->bindParam(':id', $m_playlistId);
+        $sth->bindParam(':ownerId', $m_ownerId);
+        $sth->execute();
+
+        if ($sth->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public function deleteVideoFromPlaylist ($m_playlistId, $m_videoId){
+
+        $sql = 'DELETE FROM playlistvideos WHERE videoid=:videoId AND playlistid=:playlistId';
+        $sth = $this->dbh->prepare($sql);
+
+        $sth->bindParam(':playlistId', $m_playlistId);
+        $sth->bindParam(':videoId', $m_videoId);
+        $sth->execute();
+
+        if ($sth->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public function AddVideoToPlaylist($m_playlistid, $m_videoid, $m_position)
+    {
+        $sql = 'INSERT INTO playlistvideos (videoid, playlistid, position) values (?, ?, ?)';
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute(array($m_videoid,$m_playlistid,$m_position));
+
+        if ($sth->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function returnPlaylistVideos($m_playlistId) {
+        $sql = 'SELECT id, videoid FROM playlistvideos WHERE playlistid=:playlistid ORDER BY position ASC';
+        $sth = $this->dbh->prepare ($sql);
+        $sth->bindParam(':playlistid', $m_playlistId);
+        $sth->execute();
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return null;
+        }
+    }
+
+    public function returnPlaylistVideo($m_playlistId, $m_videoid) { // Select ONE video from the playlist
+        $sql = 'SELECT id, videoid FROM playlistvideos WHERE playlistid=:playlistid AND videoid=:videoid';
+        $sth = $this->dbh->prepare ($sql);
+        $sth->bindParam(':playlistid', $m_playlistId);
+        $sth->bindParam(':videoid', $m_videoid);
+        $sth->execute();
+        if ($row = $sth->fetch()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function returnNewestPlaylistVideo($m_playlistId) {
+        $sql = 'SELECT id, videoid, position FROM playlistvideos WHERE playlistid=:playlistid ORDER BY position DESC';
+        $sth = $this->dbh->prepare ($sql);
+        $sth->bindParam(':playlistid', $m_playlistId);
+        $sth->execute();
+        if ($row = $sth->fetch()) {
+            return $row;
+        } else {
+            return null;
+        }
+    }
+
     public function newComment($user, $video, $comment) {
         $sql = 'INSERT INTO comment (userid, videoid, comment) values (?, ?, ?)';
         $sth = $this->dbh->prepare($sql);

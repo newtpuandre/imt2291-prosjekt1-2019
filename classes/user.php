@@ -11,7 +11,6 @@ class User
     private $db = null;
 
     public function __construct($m_email) {
-        //Grab userinfo from db
         //Initalize a new database connection
         $db = new DB();
 

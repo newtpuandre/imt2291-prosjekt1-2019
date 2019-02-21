@@ -17,9 +17,30 @@
             <h4>{{ item.name }}</h4>
             <p>{{ item.description }}</p>
             <i>Opprettet <small>{{ item.date }}</small></i>
-            <a href="editPlaylist.php?delete={{ item.id }}"><button type="button"
-                    class="btn btn-danger float-right">Slett</button></a>
+            <button type="button"
+                    class="btn btn-danger float-right" data-toggle="modal" data-target="#modal{{ item.id }}">Slett</button>
         </li>
+
+    <!-- Delete playlist Modal -->
+  <div class="modal fade" id="modal{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModalLabel">Advarsel!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Er du sikker på at du vil slette spillelisten {{ item.name }}?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Angre</button>
+          <a href="editPlaylist.php?deletePlaylist={{ item.id }}"><button type="submit" name="button_delete" class="btn btn-danger">Slett</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
         {% endfor %}
     </ul>
     {% endif %}
@@ -61,21 +82,47 @@
     {% if playlistVideos == "" %}
     <strong>Det er ingen videoer i denne spillelisten</strong>
     {% else %}
+
+    {% for videoItem in playlistVideos %}
     <div class="media" style="margin-bottom:15px">
-        <img src="http://via.placeholder.com/320x180" class="align-self-center mr-3">
+        <img src="{{ videoItem.thumbnail }}" class="align-self-center mr-3">
 
         <div class="media-body">
-            <h4>Dummy Video 1</h4>
-            <p>Lorem ipsum...</p>
+            <h4>{{ videoItem.title }}</h4>
+            <p>Beskrivelse: {{ videoItem.description }}</p>
+            <p>Emne: {{ videoItem.course }}</p>
+            <p>Tema: {{ videoItem.topic }}</p>
+            <p>Dato lastet opp: {{ videoItem.time }}</p>
         </div>
-
         <a href="editPlaylist.php?update={{ playlistItem.id }}&down=false"><i class="fas fa-arrow-up float-right"
                 style="margin-right:10px"></i></a>
         <a href="editPlaylist.php?update={{ playlistItem.id }}&down=true"><i class="fas fa-arrow-down float-right"
                 style="margin-right:10px"></i></a>
-        <a href="editPlaylist.php?update={{ playlistItem.id }}&delete={{ playlistVideos.id }}"><i class="fas fa-times float-right"
-            style="margin-right:10px"></i></a>
+        <a href="" data-toggle="modal" data-target="#Modal{{ videoItem.id }}"><i class="fas fa-times float-right"
+            style="margin-right:10px" data-toggle="modal" data-target="#modal{{ videoItem.id }}"></i></a>
     </div>
+
+        <!-- Delete playlist Modal -->
+  <div class="modal fade" id="modal{{ videoItem.id }}" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModalLabel">Advarsel!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Er du sikker på at du vil slette <strong>{{ videoItem.title }}</strong> fra spillelisten <strong>{{ playlistItem.name }}</strong>?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Angre</button>
+          <a href="editPlaylist.php?update={{ playlistItem.id }}&delete={{ videoItem.id }}"><button type="submit" name="button_delete" class="btn btn-danger">Slett</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% endfor %}
     {% endif %}
     <a href="editPlaylist.php?update={{ playlistItem.id }}&addVideos"><button class="btn btn-success float-right">Legg
             til videoer i spilleliste</button></a>
