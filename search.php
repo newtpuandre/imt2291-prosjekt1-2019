@@ -1,6 +1,7 @@
 <?php
 require_once 'vendor/autoload.php';
 require_once 'classes/user.php';
+require_once 'classes/video.php';
 
 $content = array();
 
@@ -16,6 +17,12 @@ if (isset($_SESSION['user'])) { //User is logged in && is admin
 }
 
 $content['search'] = $_GET['search'];
+
+$prompt = $content['search'];
+
+$video = new Video();
+$content['result'] = $video->search($prompt);
+
 
 $loader = new Twig_Loader_Filesystem('./templates');
 $twig = new Twig_Environment($loader, array(

@@ -1,15 +1,31 @@
 {% include 'header.html' %}
 <main role="main" class="container">
+
         <h1 class="display-4" style="margin-top:15px;margin-bottom:15px">Resultater for søk: {{ search }}</h1>
-        <div class="media">
-            <img src="http://via.placeholder.com/320x180" class="align-self-start mr-3">
-            <div class="media-body">
-                  <h4>Video tittel</h4>
-                  <p>Video beskrivelse</p>
-            </div>
-        </div>
+
+        {% for video in result %}
+    <div class="card flex-row flex-wrap">
+      <div class="card-header border-0">
+          <a href ="playVideo.php?id={{ video.id }}"><img src="{{ video.thumbnail_path }}" alt=""></a>
+      </div>
+      <div class="card-block">
+        <a href ="playVideo.php?id={{ video.id }}"><h4 class="video-title">{{ video.title }}</h4></a>
+        <!-- TODO 
+        <p class="card-text"><b>Lastet opp av: </b>{{ user }}</p>
+        -->
+        <p class="card-text"><b>Emne: </b>{{ video.course }}</p>
+        <p class="card-text"><b>Tema: </b>{{ video.topic }}</p>
+        <p class="card-text"><b>Lastet opp: </b>{{ video.time }}</p>
+        <p class="card-text"><b>Beskrivelse: </b>{{ video.description }}</p>
+      </div>
+      <div class="w-100"></div>
+    </div>
+
+    {% endfor %}
 
     </main><!-- /.container -->
+
+  
 
     {% include 'footer.html' %}
  

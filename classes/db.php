@@ -179,6 +179,22 @@ class DB
         }
     }
 
+    //OR description LIKE :prompt OR topic LIKE %:prompt% OR course LIKE %:prompt%
+    public function searchVideo($m_prompt){
+        $sql = 'SELECT * FROM video WHERE title LIKE :prompt OR description LIKE :prompt OR topic LIKE :prompt OR course LIKE :prompt';
+        $sth = $this->dbh->prepare ($sql);
+        $param = "%" . $m_prompt . "%";
+        $sth->bindParam(':prompt', $param);
+
+        $sth->execute();
+
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return false;
+        }
+    }
+
     public function updateThumbnail($m_videoid, $m_thumb_path){
 
         $sql = 'UPDATE video SET thumbnail_path=:thumbnail_path WHERE id=:videoid';

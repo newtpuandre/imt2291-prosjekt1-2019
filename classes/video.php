@@ -199,6 +199,19 @@ class Video
         imagedestroy($src_img);
         imagedestroy($dst_img);        
     }
+
+    public function search($prompt){
+        $db = new DB();
+
+        $res = $db->searchVideo($prompt);
+
+        if($res) {
+            return $res;
+        }else {
+            print_r("failed searching!");
+        }
+
+    }
 }
 
 ?>
