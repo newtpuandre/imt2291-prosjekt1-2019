@@ -64,6 +64,8 @@ if(isset($_POST['submit_rating'])) {
 
     $ratinginfo = new Rating();
     $allRatings = $ratinginfo->getAllRatings($videoid);
+
+    if($allRatings > 0){
     $tmpRatings = $ratinginfo->getTotalRatings($videoid);
     $ratings = 0;
     $totalRatings = $tmpRatings[0][0];
@@ -78,6 +80,11 @@ if(isset($_POST['submit_rating'])) {
     $avgRating = number_format((float)$avgRating, 2, '.', '');
     $content['avg_rating'] = $avgRating;
     $content['total_rating'] = $totalRatings;
+
+    } else {
+        $content['avg_rating'] = 0;
+        $content['total_rating'] = 0;
+    }
 
 
 /* If id was not set in GET or POST */

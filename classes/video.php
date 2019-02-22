@@ -34,7 +34,7 @@ class Video
         }
 
         /* Resize Thumbnail to 1280x720 */
-        $this->thumbnailResize($thumbnail, 1280, 720, $thumb_path);
+        $this->thumbnailResize($thumbnail, 320, 180, $thumb_path);
 
         if(move_uploaded_file($video["tmp_name"], $video_path) /* && move_uploaded_file($thumbnail["tmp_name"], $thumb_path)*/) {
             echo "The files uploaded successfully!";
@@ -97,8 +97,8 @@ class Video
             }
     
            
-            /* Resize Thumbnail to 1280x720 */
-            $this->thumbnailResize($thumbnail, 1280, 720, $thumb_path);
+            /* Resize Thumbnail  */
+            $this->thumbnailResize($thumbnail, 180, 320, $thumb_path);
 
             if(move_uploaded_file($thumbnail["tmp_name"], $thumb_path)){
                 echo "The files uploaded successfully!";
