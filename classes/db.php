@@ -160,6 +160,40 @@ class DB
             return false;
         }
     }
+    
+    public function updateVideo($m_videoid, $m_title, $m_description, $m_topic, $m_course){
+
+        $sql = 'UPDATE video SET title =:title, description=:description, topic=:topic, course=:course WHERE id=:videoid';
+        $sth = $this->dbh->prepare ($sql);
+        $sth->bindParam(':title', $m_title);
+        $sth->bindParam(':videoid', $m_videoid);
+        $sth->bindParam(':description', $m_description);
+        $sth->bindParam(':topic', $m_topic);
+        $sth->bindParam(':course', $m_course);
+
+        $sth->execute();
+        if ($row = $sth->fetch()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateThumbnail($m_videoid, $m_thumb_path){
+
+        $sql = 'UPDATE video SET thumbnail_path=:thumbnail_path WHERE id=:videoid';
+        $sth = $this->dbh->prepare ($sql);
+        $sth->bindParam(':thumbnail_path', $m_thumb_path);
+        $sth->bindParam(':videoid', $m_videoid);
+
+        $sth->execute();
+        if ($row = $sth->fetch()) {
+            return true;
+        } else {
+            return false;
+        }
+          
+    }
 
     public function updatePrivileges($m_email, $m_privilevel) {
         $sql = 'UPDATE users SET PRIVILEGES = :privileges WHERE email=:email';

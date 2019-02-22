@@ -33,8 +33,8 @@ class Video
             return false;
         }
 
-        /* Resize Thumbnail to 320x180 */
-        $this->thumbnailResize($thumbnail, 320, 180, $thumb_path);
+        /* Resize Thumbnail to 1280x720 */
+        $this->thumbnailResize($thumbnail, 1280, 720, $thumb_path);
 
         if(move_uploaded_file($video["tmp_name"], $video_path) /* && move_uploaded_file($thumbnail["tmp_name"], $thumb_path)*/) {
             echo "The files uploaded successfully!";
@@ -60,7 +60,71 @@ class Video
         }        
     }   
 
+    public function updateVideo($videoid, $title, $description, $topic, $course, $thumbnail){
 
+
+        if(!$thumbnail['name']){
+
+            $db = new DB();
+            $res = $db->updateVideo($videoid, $title, $description, $topic, $course);
+
+        if ($res) {
+            echo "Database Success!";
+            return true;
+        } else {
+            echo "Failed to update database!";
+            return false;
+        }
+
+        }
+
+        else {
+        
+        $old_thumb = $this->getVideo($videoid);
+        if($old_thumb){
+        unlink($old_thumb[0]['thumbnail_path']);
+        }
+        $thumb_path = Video::$target_dir . basename($thumbnail["name"]);
+
+        $thumb_file_type = strtolower(pathinfo($thumb_path, PATHINFO_EXTENSION));
+
+        /* TODO : Return meaningful error for all of these, for now, debug echos */
+        
+
+            if ($thumb_file_type != "jpg" && $thumb_file_type != "png" && $thumb_file_type != "jpeg" && $thumb_file_type != "gif") {
+                echo "Thumb format must be jpg, png, jpeg or gif";
+                return false;
+            }
+    
+           
+            /* Resize Thumbnail to 1280x720 */
+            $this->thumbnailResize($thumbnail, 1280, 720, $thumb_path);
+
+            if(move_uploaded_file($thumbnail["tmp_name"], $thumb_path)){
+                echo "The files uploaded successfully!";
+            }
+            else{
+                return false;
+            }
+        
+            $db = new DB();
+            $res = $db->updateVideo($videoid, $title, $description, $topic, $course);
+            $thumbres = $db->updateThumbnail($videoid, $thumb_path);
+    
+            if ($res && thumbres) {
+                echo "Database Success!";
+                return true;
+            } else {
+                echo "Failed to update thumb and info to database!";
+                return false;
+            }
+    
+        }
+    
+    }  
+
+ 
+    
     public function getAllUserVideos($uid) {
         $db = new DB();
 
