@@ -20,19 +20,37 @@
         </div>
     </div>
 
-    {% endfor %}
+
+
     <!-- Video player-->
     <!-- Ratings -->
-    <div class="container">
-        <!-- https://codepen.io/yaworek/pen/JJpEaZ -->
-        <div class="starrating d-flex justify-content-center flex-row-reverse">
-            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"></label>
-            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 star"></label>
-            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 star"></label>
-            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 star"></label>
-            <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 star"></label>
+
+
+    <form action="playVideo.php" method="post">
+        <div class="row align-self-center">
+            
+                <!-- https://codepen.io/yaworek/pen/JJpEaZ -->
+                <div class="starrating d-flex justify-content-center flex-row-reverse">
+                    <div class="col ">
+                        <button type="submit" name="submit_rating" class="btn btn-success">Stem</button>
+                    </div>
+                    <input type="hidden" name="video_id" value="{{ info.id }}">
+                    <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 star"></label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 star"></label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 star"></label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 star"></label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"></label>
+                </div>
+            
         </div>
-    </div>
+        <div class="row align-self-center">
+                <p><i>{{avg_rating}} - {{ total_rating }} stemmer</i></p>
+        </div>
+    </form>
+
+
+    {% endfor %}
+
 
     <!-- Comments -->
     <h2>Kommentarer</h2>
@@ -40,12 +58,13 @@
         <div>
             <input type="hidden" name="video_id" value="{{ video_id }}">
             <label for="comment">Skriv en offentlig kommentar:</label>
-            <textarea name="comment_text"  class="form-control" rows="5" id="comment"></textarea>
+            <textarea name="comment_text" class="form-control" rows="5" id="comment"></textarea>
             <div class="text-right mt-1">
                 <button name="submit_btn" type="submit" class="btn btn-primary">Send inn</button>
             </div>
         </div>
     </form>
+
 
     <ul class="list-group">
         {% for comment in comments %}
@@ -56,7 +75,7 @@
                         class="media-object" style="width:60px">
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading">brukernavn</h4>
+                    <h4 class="media-heading"> Brukernavn </h4>
                     <p> {{ comment.comment }}
                     </p>
                 </div>

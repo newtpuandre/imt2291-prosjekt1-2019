@@ -4,6 +4,7 @@ require_once 'vendor/autoload.php';
 require_once 'classes/user.php';
 require_once 'classes/video.php';
 require_once 'classes/comment.php';
+require_once 'classes/rating.php';
 
 
 $content = array();
@@ -15,6 +16,7 @@ if (isset($_SESSION['user'])) { //User is logged in
     $user = new User($_SESSION['user']);
     $content['userinfo'] = $user->returnEmail();
     $content['userprivileges'] = $user->getPrivileges();
+    $content['uid'] = $user->returnId();
     
     
 }
@@ -35,14 +37,48 @@ if(isset($_POST['submit_btn'])) {
     $comment_txt = $_POST['comment_text'];
 
     $comment = new Comment();
-    $uid = $content['userinfo'];
-    $res = $comment->addComment($uid, $videoid, $comment_txt);
+    $uid = $content['uid'];
+    $comment->addComment($uid, $videoid, $comment_txt);
+}
+
+if(isset($_POST['submit_rating'])) {
+    $video = new Video();
+    $videoid = $_POST['video_id'];   
+    $content['videoinfo'] = $video->getVideo($videoid);
+
+    if(isset($_POST['rating'])){
+        $video_rating = $_POST['rating'];
+    } else {
+        $video_rating = 0;
+    }
+    $rating = new Rating();
+    $uid = $content['uid'];
+    $rating->addRating($uid, $videoid, $video_rating);
 
 }
 
-$commentinfo = new Comment();
-$content['comments'] = $commentinfo->getAllComments($videoid);
-$content['video_id'] = $videoid;
+    $commentinfo = new Comment();
+    $content['comments'] = $commentinfo->getAllComments($videoid);
+    $content['video_id'] = $videoid;
+
+
+    $ratinginfo = new Rating();
+    $allRatings = $ratinginfo->getAllRatings($videoid);
+    $tmpRatings = $ratinginfo->getTotalRatings($videoid);
+    $ratings = 0;
+    $totalRatings = $tmpRatings[0][0];
+
+
+    
+   foreach($allRatings as $value){
+        $ratings += $value[0];
+    }
+
+    $avgRating = $ratings/(float)$totalRatings; //TODO: CALCULATE THIS
+    $avgRating = number_format((float)$avgRating, 2, '.', '');
+    $content['avg_rating'] = $avgRating;
+    $content['total_rating'] = $totalRatings;
+
 
 /* If id was not set in GET or POST */
 if ($videoid == -1) { //Need a video id inorder for the site to have any purpose..

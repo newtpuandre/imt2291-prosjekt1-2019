@@ -128,11 +128,11 @@ class DB
         $sth->bindParam(':id', $m_videoid);
 
         $sth->execute();
-        if ($rows = $sth->fetchAll()) {
-            return $rows;
-        } else {
-            return null;
+
+        if ($row = $sth->fetchAll()) {
+            return $row;
         }
+
     }
 
     public function returnAllVideos(){
@@ -323,10 +323,10 @@ class DB
         }
     }
 
-    public function newComment($user, $video, $comment) {
+    public function newComment($m_user, $m_video, $m_comment) {
         $sql = 'INSERT INTO comment (userid, videoid, comment) values (?, ?, ?)';
         $sth = $this->dbh->prepare($sql);
-        $sth->execute(array($user, $video, $comment));
+        $sth->execute(array($m_user, $m_video, $m_comment));
 
         if ($sth->rowCount()==1) {
             return true;
@@ -337,6 +337,47 @@ class DB
 
     public function returnAllComments($m_videoid){
         $sql = 'SELECT * FROM comment WHERE videoid=:videoid ORDER BY id DESC';
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindParam(':videoid', $m_videoid);
+
+        $sth->execute();
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return null;
+        }
+    }
+
+    public function newRating($m_user, $m_video, $m_rating) {
+        $sql = 'INSERT INTO rating (userid, videoid, rating) values ( ?, ?, ?)';
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute(array($m_user, $m_video, $m_rating));
+
+        if ($sth->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    
+
+    
+    public function returnAllRatings($m_videoid){
+        $sql = 'SELECT rating FROM rating WHERE videoid=:videoid';
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindParam(':videoid', $m_videoid);
+
+        $sth->execute();
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return null;
+        }
+    }
+
+    public function returnTotalRatings($m_videoid){
+        $sql = 'SELECT COUNT(*) FROM rating WHERE videoid=:videoid';
         $sth = $this->dbh->prepare($sql);
         $sth->bindParam(':videoid', $m_videoid);
 

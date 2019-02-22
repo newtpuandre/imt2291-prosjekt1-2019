@@ -25,11 +25,10 @@ $twig = new Twig_Environment($loader, array(
     //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
 ));
 
-    $user = new User($_SESSION['user']);
-    $uid = $user->returnId();
+
 
     $video = new Video();
-    $res = $video->getAllUserVideos($uid);
+    $res = $video->getAllVideos();
 
     if($res) {
        $content['result'] = $res;
