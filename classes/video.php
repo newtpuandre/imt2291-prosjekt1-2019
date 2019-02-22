@@ -212,6 +212,18 @@ class Video
         }
 
     }
+
+    public function getAllVideoCourses(){
+        $db = new DB();
+
+        $res = $db->returnAllCourses();
+
+        if($res) {
+            return $res;
+        }else {
+            print_r("Failed getting courses!");
+        }
+    }
 }
 
 ?>

@@ -195,6 +195,33 @@ class DB
         }
     }
 
+    public function searchVideoCourse($m_prompt){
+        $sql = 'SELECT * FROM video WHERE course LIKE :prompt';
+        $sth = $this->dbh->prepare ($sql);
+        $param = "%" . $m_prompt . "%";
+        $sth->bindParam(':prompt', $param);
+
+        $sth->execute();
+
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return false;
+        }
+    }
+
+    public function returnAllCourses(){
+        $sql = 'SELECT COUNT(*), course FROM video GROUP BY course';
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute();
+
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return false;
+        }
+    }
+
     public function updateThumbnail($m_videoid, $m_thumb_path){
 
         $sql = 'UPDATE video SET thumbnail_path=:thumbnail_path WHERE id=:videoid';
