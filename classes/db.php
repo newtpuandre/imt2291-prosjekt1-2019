@@ -252,7 +252,7 @@ class DB
     }
 
     public function returnPlaylists($m_id){ //Returns ALL playlists
-        $sql = 'SELECT id, name, description, date, thumbnail FROM playlists WHERE ownerId=:id';
+        $sql = 'SELECT id, name, description, thumbnail, date FROM playlists WHERE ownerId=:id';
         $sth = $this->dbh->prepare ($sql);
         $sth->bindParam(':id', $m_id);
         $sth->execute();
@@ -274,11 +274,10 @@ class DB
         }
     }
 
-    public function returnPlaylist($m_id, $m_ownerId){ //Returns a single playlist with a specific id
-        $sql = 'SELECT id, ownerId, name, description, date, thumbnail FROM playlists WHERE id=:id AND ownerId=:ownerId';
+    public function returnPlaylist($m_id){ //Returns a single playlist with a specific id
+        $sql = 'SELECT id, ownerId, name, description, date, thumbnail FROM playlists WHERE id=:id';
         $sth = $this->dbh->prepare ($sql);
         $sth->bindParam(':id', $m_id);
-        $sth->bindParam(':ownerId', $m_ownerId);
         $sth->execute();
         if ($row = $sth->fetch()) {
             return $row;
@@ -369,6 +368,17 @@ class DB
         $sth->execute();
         if ($row = $sth->fetch()) {
             return $row;
+        } else {
+            return false;
+        }
+    }
+
+    public function returnAllPlaylists(){
+        $sql = 'SELECT id, ownerid, name, description, thumbnail, date FROM playlists';
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute();
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
         } else {
             return false;
         }

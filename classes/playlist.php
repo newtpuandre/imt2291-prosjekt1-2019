@@ -73,8 +73,7 @@ class Playlist
 
         $this->db->deleteVideoFromPlaylist($m_playlistid, $m_videoid);
 
-        //REMEMBER TO KEEP POSITIONS IN ORDER
-        //find and edit all videoes with pos > removed && do pos-1 > 1
+        //find and edit all videoes with pos > removed && do pos-1 as long as pos > 1
 
         if(count($temp) == 1) { //Last element in list. Do nothing
             return false;
@@ -87,6 +86,10 @@ class Playlist
                 break;
             } 
         }
+
+         if ($i == -1) { //Did not find a element larger than deleted. Something went wrong.
+             return false;
+         }
 
         for ($j = $i; $j < count($temp); $j++) {
             $this->db->editPositionPlaylistVideo($m_playlistid, $temp[$j]['videoid'], $temp[$j]['position']-1); //Move selected item down one
@@ -148,6 +151,34 @@ class Playlist
 
         }
 
+    }
+
+    public function insertPlaylist($m_ownerId, $m_name, $m_description){
+        return $this->db->insertPlaylist($m_ownerId, $m_name, $m_description);
+    }
+
+    public function returnPlaylist($m_id){
+        return $this->db->returnPlaylist($m_id);
+    }
+
+    public function returnPlaylists($m_id){
+        return $this->db->returnPlaylists($m_id);
+    }
+
+    public function returnVideos($m_userid){
+        return $this->db->returnVideos($m_userid);
+    }
+
+    public function returnPlaylistVideos($m_playlistId){
+        return $this->db->returnPlaylistVideos($m_playlistId);
+    }
+
+    public function updatePlaylist($m_id, $m_ownerId, $m_name, $m_description){
+        return $this->db->updatePlaylist($m_id, $m_ownerId, $m_name, $m_description);
+    }
+
+    public function returnAllPlaylists(){ //Should only be used on sites where all playlists should be shown!
+        return $this->db->returnAllPlaylists();
     }
 
 }

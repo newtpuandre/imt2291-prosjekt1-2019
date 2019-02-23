@@ -1,6 +1,7 @@
 <?php
 require_once 'vendor/autoload.php';
 require_once 'classes/user.php';
+require_once 'classes/playlist.php';
 
 $content = array();
 
@@ -14,6 +15,32 @@ if (isset($_SESSION['user'])) { //User is logged in
     $content['userprivileges'] = $user->getPrivileges();
     
 }
+
+/*
+MODE Variable:
+$content['mode'] is not set : Default overview of playlists
+$content['mode'] = 1; : Show videos in the playlists
+*/
+
+$playlist = new Playlist();
+
+if (isset($_GET['show'])) {
+
+    $content['mode'] = 1;
+
+    $content['currentPlaylist'] = $playlist->resolveVideos($_GET['show']);
+    $content['playlistInfo'] = $playlist->returnPlaylist($_GET['show']);
+
+
+} elseif (isset($_GET['subscribe'])) {
+
+    //Get subscriptions
+    
+} else {
+    $content['playlists'] = $playlist->returnAllPlaylists();
+}
+
+
 
 $loader = new Twig_Loader_Filesystem('./templates');
 $twig = new Twig_Environment($loader, array(

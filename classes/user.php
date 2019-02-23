@@ -12,10 +12,10 @@ class User
 
     public function __construct($m_email) {
         //Initalize a new database connection
-        $db = new DB();
+        $this->db = new DB();
 
         //Find user in DB and store info in class variables
-        $userArray = $db->findUser($m_email);
+        $userArray = $this->db->findUser($m_email);
         $this->id = $userArray['id'];
         $this->email = $userArray['email'];
         $this->privileges = $userArray['privileges'];

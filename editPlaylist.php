@@ -3,7 +3,6 @@
 
 require_once 'vendor/autoload.php';
 require_once 'classes/user.php';
-require_once 'classes/db.php'; //Note to self. Remove and use video / playlist class instead
 require_once 'classes/playlist.php';
 
 $content = array();
@@ -30,7 +29,6 @@ if (isset($_SESSION['user'])) { //User is logged in
         header("Location: index.php");
     }
 
-    $db = new DB();
     $playlist = new Playlist();
 }
 
@@ -40,11 +38,9 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
     if (isset($_POST['createNew'])){
 
         //Insert new playlist into the db
-        if ($db->insertPlaylist($content['userid'], $_POST['name'], $_POST['description'])) {
-            header("Location: editPlaylist.php");
-        } else {
-            //error
-        }
+        $playlist->insertPlaylist($content['userid'], $_POST['name'], $_POST['description']);
+        header("Location: editPlaylist.php");
+
 
     }
 
@@ -56,10 +52,7 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
         foreach ($_POST['videoids'] as &$value) {
 
             //Add videos to playlist
-            
             $playlist->addVideoToPlaylist($_POST['playlistId'], $value);
-
-            //$db->AddVideoToPlaylist($_POST['playlistId'], $value);
 
         }
         
@@ -70,12 +63,12 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
     $content['mode'] = 3;
 
     //Get information about current playlist
-    $content['playlistItem'] = $db->returnPlaylist($_GET['update'], $content['userid']);
+    $content['playlistItem'] = $playlist->returnPlaylist($_GET['update']);
 
 
     //Load videos and present them
     //$content['videos'] = $db->returnVideos($content['userid'], 0, 20); //Only show 20 at a time 
-    $content['videos'] = $db->returnVideos($content['userid']);
+    $content['videos'] = $playlist->returnVideos($content['userid']);
 
 
 
@@ -85,7 +78,7 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
     if(isset($_POST['update'])) {
 
         //Update playlist
-        $db->updatePlaylist($_POST['id'],$content['userid'],$_POST['name'],$_POST['description']);
+        $playlist->updatePlaylist($_POST['id'],$content['userid'],$_POST['name'],$_POST['description']);
 
         header("Location: editPlaylist.php?update=".$_POST['id']); //Refresh page to see changes
     }
@@ -109,9 +102,9 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
 
     }
 
-    $content['playlistItem'] = $db->returnPlaylist($_GET['update'], $content['userid']);
+    $content['playlistItem'] = $playlist->returnPlaylist($_GET['update']);
 
-    $idarray = $db->returnPlaylistVideos($_GET['update']);
+    $idarray = $playlist->returnPlaylistVideos($_GET['update']);
 
     $temp = $playlist->resolveVideos($_GET['update']);
 
@@ -130,7 +123,7 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
 } else { //No params sent
 
     //Load playlists
-    $content['playlists'] = $db->returnPlaylists($content['userid']);
+    $content['playlists'] = $playlist->returnPlaylists($content['userid']);
 
 }
 

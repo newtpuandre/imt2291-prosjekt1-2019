@@ -1,79 +1,59 @@
 {% include 'header.html' %}
 <main role="main" class="container">
 
+    {% if mode == "" %}
     <h1 class="display-4" style="margin-top:15px">Tilgjengelige spillelister</h1>
+        {% if playlists == "" %}
+        <strong>Det finnes ingen spillelister. Sjekk igjen senere</strong>
+        {% else %}
 
-    <div class="row" style="margin-top:30px">
-        <div class="col">
-            <div class="card" style="width:300px">
-                <img class="card-img-top" src="http://via.placeholder.com/320x180" alt="Card image">
-                <div class="card-body">
-                    <h4 class="card-title">Spilleliste 1</h4>
-                    <p class="card-text">Beskrivelse</p>
-                    <a href="#" class="btn btn-primary">Se spilleliste</a>
-                    <a href="#" class="btn btn-primary float-right">Abonner</a>
+            {% for item in playlists %}
+
+                {% if loop.index % 3 == 1 %}
+                <div class="row" style="margin-top:30px">
+                {% endif %}
+
+                    <div class="col">
+                        <div class="card" style="width:300px">
+                            <img class="card-img-top" src="{{ item.thumbnail }}" alt="Card image">
+                             <div class="card-body">
+                                <h4 class="card-title">{{ item.name }}</h4>
+                                <p class="card-text">{{ item.description }}</p>
+                                <a href="playlist.php?show={{ item.id }}" class="btn btn-primary">Se spilleliste</a>
+                                <a href="playlist.php?subscribe={{ item.id }}" class="btn btn-primary float-right">Abonner</a>
+                            </div>
+                        </div>
+                    </div>
+
+                {% if loop.index % 3 == 0 or loop.last %}
                 </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card" style="width:300px">
-                <img class="card-img-top" src="http://via.placeholder.com/320x180" alt="Card image">
-                <div class="card-body">
-                    <h4 class="card-title">Spilleliste 2</h4>
-                    <p class="card-text">Beskrivelse</p>
-                    <a href="#" class="btn btn-primary">Se spilleliste</a>
-                    <a href="#" class="btn btn-primary float-right">Abonner</a>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card" style="width:300px">
-                <img class="card-img-top" src="http://via.placeholder.com/320x180" alt="Card image">
-                <div class="card-body">
-                    <h4 class="card-title">Spilleliste 3</h4>
-                    <p class="card-text">Beskrivelse</p>
-                    <a href="#" class="btn btn-primary">Se spilleliste</a>
-                    <a href="#" class="btn btn-primary float-right">Abonner</a>
-                </div>
-            </div>
+                {% endif %}
+
+            {% endfor %}
+        {% endif %}
+
+    {% elseif mode == 1 %}
+        <a href="playlist.php">← Tilbake</a>
+        <h1 class="display-4" style="margin-top:15px">Videoer i spilleliste : {{ playlistInfo.name }}</h1>
+        {% if currentPlaylist == "" %}
+        <strong>Det finnes ingen videoer i denne spillelisten...</strong>
+        {% else %}
+            {% for videoItem in currentPlaylist %}
+    <div class="media" style="margin-bottom:15px">
+        <a href = "playVideo.php?id={{ videoItem.id }}"><img src="{{ videoItem.thumbnail_path }}" class="align-self-center mr-3"></a>
+
+        <div class="media-body">
+            <h4>{{ videoItem.title }}</h4>
+            <p>Beskrivelse: {{ videoItem.description }}</p>
+            <p>Emne: {{ videoItem.course }}</p>
+            <p>Tema: {{ videoItem.topic }}</p>
+            <p>Dato lastet opp: {{ videoItem.time }}</p>
         </div>
     </div>
+            {% endfor %}
 
-    <div class="row" style="margin-top:30px">
-            <div class="col">
-                <div class="card" style="width:300px">
-                    <img class="card-img-top" src="http://via.placeholder.com/320x180" alt="Card image">
-                    <div class="card-body">
-                        <h4 class="card-title">Spilleliste 4</h4>
-                        <p class="card-text">Beskrivelse</p>
-                        <a href="#" class="btn btn-primary">Se spilleliste</a>
-                        <a href="#" class="btn btn-primary float-right">Abonner</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" style="width:300px">
-                    <img class="card-img-top" src="http://via.placeholder.com/320x180" alt="Card image">
-                    <div class="card-body">
-                        <h4 class="card-title">Spilleliste 5</h4>
-                        <p class="card-text">Beskrivelse</p>
-                        <a href="#" class="btn btn-primary">Se spilleliste</a>
-                        <a href="#" class="btn btn-primary float-right">Abonner</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" style="width:300px">
-                    <img class="card-img-top" src="http://via.placeholder.com/320x180" alt="Card image">
-                    <div class="card-body">
-                        <h4 class="card-title">Spilleliste 6</h4>
-                        <p class="card-text">Beskrivelse</p>
-                        <a href="#" class="btn btn-primary">Se spilleliste</a>
-                        <a href="#" class="btn btn-primary float-right">Abonner</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% endif %}
+    {% endif %}
 
 </main><!-- /.container -->
 
