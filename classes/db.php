@@ -348,6 +348,18 @@ class DB
         }
     }
 
+    public function getSubscribedPlaylists($m_userid) {
+        $sql = 'SELECT id, userid, playlistid FROM subscriptions WHERE userid=:userid';
+        $sth = $this->dbh->prepare ($sql);
+        $sth->bindParam(':userid', $m_userid);
+        $sth->execute();
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return null;
+        }
+    }
+
     public function subscribeToPlaylist($m_playlistid, $m_userid){
         $sql = 'INSERT INTO subscriptions (playlistid , userid) values (?, ?)';
         $sth = $this->dbh->prepare($sql);
@@ -503,9 +515,6 @@ class DB
         }
     }
 
-    
-
-    
     public function returnAllRatings($m_videoid){
         $sql = 'SELECT rating FROM rating WHERE videoid=:videoid';
         $sth = $this->dbh->prepare($sql);
@@ -531,6 +540,19 @@ class DB
             return null;
         }
     }
+
+    public function getNewVideos(){
+        $sql = 'SELECT id, title, description, topic, course, thumbnail_path FROM video ORDER BY id DESC LIMIT 8';
+        $sth = $this->dbh->prepare($sql);
+
+        $sth->execute();
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return null;
+        }
+    }
+
 }
 
 

@@ -192,6 +192,24 @@ class Playlist
         return $this->db->unsubscribeToPlaylist($m_playlistid, $m_userid);
     }
 
+    public function getSubscribedPlaylists($m_userid){
+        $temp = $this->db->getSubscribedPlaylists($m_userid);
+        
+        if (!empty($temp)) {
+            foreach ($temp as &$value) {
+                $playlist = $this->db->returnPlaylist($value['playlistid']);
+                //array_push($return, $playlist);
+                $return[] = $playlist; //Get subarray of the temp array
+            }
+
+            return $return;
+
+        } else {
+            return false;
+        }
+
+    }
+
 }
 
 

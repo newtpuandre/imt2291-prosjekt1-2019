@@ -224,6 +224,18 @@ class Video
             print_r("Failed getting courses!");
         }
     }
+
+    public function getNewVideos(){ //Get the 8 newest videos uploaded.
+        $db = new DB();
+
+        $res = $db->getNewVideos();
+
+        if ($res) {
+            return $res;
+        } else {
+            print_r("Failed to get new videos!");
+        }
+    }
 }
 
 ?>

@@ -12,23 +12,41 @@
         </p>
     </div>
 
-    <h1 class="display-4" style="margin-top:15px">Abonnerte spillelister</h1> <!-- This will repeat for x amount of videos-->
-    <div class="row" style="margin-top:15px">
-        <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid"></a></div>
-        <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid"></div>
-        <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid"></div>
-        <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid"></div>
-    </div>
-
-    <!-- Recommended video "view" will appear here -->
-
     <h1 class="display-4" style="margin-top:15px">Nye opplastninger</h1> <!-- This will repeat for x amount of videos-->
+    {% if newVideos == "" %}
+    <strong>Ingen videoer er lastet opp</strong>
+    {% else %}
+    {% for item in newVideos %}
+
+    {% if loop.index % 4 == 1 %}
     <div class="row" style="margin-top:15px">
-        <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid"></a></div>
-        <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid"></div>
-        <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid"></div>
-        <div class="col-sm-3"><img src="http://via.placeholder.com/320x180" class="img-fluid"></div>
+    {% endif %}
+
+    <div class="col-sm-3"><a href = "playVideo.php?id={{ item.id }}"><img src="{{ item.thumbnail_path }}" class="img-fluid"></a><strong>{{ item.title }} - {{ item.course }}</strong></div>
+
+    {% if loop.index % 4 == 0 or loop.last %}
     </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    <h1 class="display-4" style="margin-top:15px">Abonnerte spillelister</h1> <!-- This will repeat for x amount of videos-->
+    {% if subscribedPlaylists == "" %}
+    <strong>Du har ikke abonnerte på noen spillelister enda. Trykk <a href="playlist.php">HER</a> For å abonnere til en / flere spillelister.</strong>
+    {% else %}
+    {% for subItem in subscribedPlaylists %}
+
+    {% if loop.index % 4 == 1 %}
+    <div class="row" style="margin-top:15px">
+    {% endif %}
+
+    <div class="col-sm-3"><a href = "playlist.php?show={{ subItem.id }}"><img src="{{ subItem.thumbnail }}" class="img-fluid"></a><strong>{{ subItem.name }}</strong></div>
+
+    {% if loop.index % 4 == 0 or loop.last %}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    <!-- Recommended video "view" will appear here -->
 
 </main><!-- /.container -->
 
