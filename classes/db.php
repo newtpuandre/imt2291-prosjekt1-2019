@@ -318,6 +318,62 @@ class DB
 
     }
 
+    public function countSubscribers($m_playlistId){
+        $sql = 'SELECT count(*) AS numSubs FROM subscriptions WHERE playlistid=:playlistid';
+        $sth = $this->dbh->prepare($sql);
+
+        $sth->bindParam(':playlistid', $m_playlistId);
+        $sth->execute();
+
+        if ($row = $sth->fetch()) {
+            return $row;
+        } else {
+            return false;
+        }
+
+    }
+
+    public function returnSubscriptionStatus($m_playlistid, $m_userid){
+        $sql = 'SELECT userid FROM subscriptions WHERE playlistid=:playlistid AND userid=:userid';
+        $sth = $this->dbh->prepare($sql);
+
+        $sth->bindParam(':playlistid', $m_playlistid);
+        $sth->bindParam(':userid', $m_userid);
+        $sth->execute();
+
+        if ($row = $sth->fetch()) {
+            return $row;
+        } else {
+            return false;
+        }
+    }
+
+    public function subscribeToPlaylist($m_playlistid, $m_userid){
+        $sql = 'INSERT INTO subscriptions (playlistid , userid) values (?, ?)';
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute (array ($m_playlistid, $m_userid));
+        if ($sth->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function unsubscribeToPlaylist($m_playlistid, $m_userid) {
+        $sql = 'DELETE FROM subscriptions WHERE playlistid=:playlistid AND userid=:userid';
+        $sth = $this->dbh->prepare($sql);
+
+        $sth->bindParam(':playlistid', $m_playlistid);
+        $sth->bindParam(':userid', $m_userid);
+        $sth->execute();
+
+        if ($sth->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        } 
+    }
+
     public function deleteVideoFromPlaylist ($m_playlistId, $m_videoId){
 
         $sql = 'DELETE FROM playlistvideos WHERE videoid=:videoId AND playlistid=:playlistId';

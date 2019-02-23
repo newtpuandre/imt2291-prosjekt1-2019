@@ -20,7 +20,6 @@
                                 <h4 class="card-title">{{ item.name }}</h4>
                                 <p class="card-text">{{ item.description }}</p>
                                 <a href="playlist.php?show={{ item.id }}" class="btn btn-primary">Se spilleliste</a>
-                                <a href="playlist.php?subscribe={{ item.id }}" class="btn btn-primary float-right">Abonner</a>
                             </div>
                         </div>
                     </div>
@@ -35,6 +34,14 @@
     {% elseif mode == 1 %}
         <a href="playlist.php">← Tilbake</a>
         <h1 class="display-4" style="margin-top:15px">Videoer i spilleliste : {{ playlistInfo.name }}</h1>
+        <p> Spilleliste abonnementer: {{ subscriberNum.numSubs }}</br>
+            {% if subscribed == "true" %}
+            <a href="playlist.php?show={{ playlistInfo.id }}&unsubscribe={{ playlistInfo.id }}" class="btn btn-danger">Avslutt abonnement</a>
+            {% else %}
+            <a href="playlist.php?show={{ playlistInfo.id }}&subscribe={{ playlistInfo.id }}" class="btn btn-success">Abonner</a>
+            {% endif %}
+
+        </p>
         {% if currentPlaylist == "" %}
         <strong>Det finnes ingen videoer i denne spillelisten...</strong>
         {% else %}

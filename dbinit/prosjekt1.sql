@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `rating` (
 -- Data exporting was unselected.
 -- Dumping structure for table prosjekt1.subscriptions
 CREATE TABLE IF NOT EXISTS `subscriptions` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `userid` int(11) DEFAULT NULL,
   `playlistid` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `subscriptions` (
   KEY `fk_sub_playlistid` (`playlistid`),
   CONSTRAINT `fk_sub_playlistid` FOREIGN KEY (`playlistid`) REFERENCES `playlists` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_sub_userid` FOREIGN KEY (`userid`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 -- Dumping structure for table prosjekt1.users

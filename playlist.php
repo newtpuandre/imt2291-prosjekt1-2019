@@ -13,6 +13,7 @@ if (isset($_SESSION['user'])) { //User is logged in
 
     $content['userinfo'] = $user->returnEmail();
     $content['userprivileges'] = $user->getPrivileges();
+    $content['userid'] = $user->returnId();
     
 }
 
@@ -31,12 +32,27 @@ if (isset($_GET['show'])) {
     $content['currentPlaylist'] = $playlist->resolveVideos($_GET['show']);
     $content['playlistInfo'] = $playlist->returnPlaylist($_GET['show']);
 
+    //Get subscription number
+    $content['subscriberNum'] = $playlist->countSubscribers($_GET['show']);
 
-} elseif (isset($_GET['subscribe'])) {
+    //Get subscription status
+    $content['subscribed'] = $playlist->returnSubscriptionStatus($_GET['show'], $content['userid']);
 
-    //Get subscriptions
-    
-} else {
+
+    if(isset($_GET['subscribe'])) {
+
+        $playlist->subscribeToPlaylist($_GET['show'], $content['userid']);
+
+        header("Location: playlist.php?show=".$_GET['show']);
+
+    } elseif (isset($_GET['unsubscribe'])) { 
+
+        $playlist->unsubscribeToPlaylist($_GET['show'], $content['userid']);
+
+        header("Location: playlist.php?show=".$_GET['show']);
+    }
+
+}  else {
     $content['playlists'] = $playlist->returnAllPlaylists();
 }
 

@@ -4,8 +4,6 @@ require_once 'db.php';
 class Playlist
 {
 
-    private $title;
-    private $description;
 
     private $db = null;
 
@@ -15,14 +13,6 @@ class Playlist
     }
 
     function __destruct() {
-    }
-
-    public function returnTitle(){
-        return $this->title;
-    }
-
-    public function returnDescription(){
-        return $this->description;
     }
 
     public function resolveVideos($m_playlistid){
@@ -179,6 +169,27 @@ class Playlist
 
     public function returnAllPlaylists(){ //Should only be used on sites where all playlists should be shown!
         return $this->db->returnAllPlaylists();
+    }
+
+    public function countSubscribers($m_playlistid){
+        return $this->db->countSubscribers($m_playlistid);
+    }
+
+    public function returnSubscriptionStatus($m_playlistid, $m_userid){
+        $temp = $this->db->returnSubscriptionStatus($m_playlistid, $m_userid);
+        if ($temp['userid'] == $m_userid) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function subscribeToPlaylist($m_playlistid, $m_userid){
+        return $this->db->subscribeToPlaylist($m_playlistid, $m_userid);
+    }
+
+    public function unsubscribeToPlaylist($m_playlistid, $m_userid){
+        return $this->db->unsubscribeToPlaylist($m_playlistid, $m_userid);
     }
 
 }
