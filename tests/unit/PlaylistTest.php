@@ -1,6 +1,6 @@
 <?php 
 
-class PlaylistTests extends \Codeception\Test\Unit
+class PlaylistTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
