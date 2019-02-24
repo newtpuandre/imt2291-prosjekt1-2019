@@ -36,10 +36,12 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
     $content['mode'] = 1;
 
     if (isset($_POST['createNew'])){
-
         //Insert new playlist into the db
-        $playlist->insertPlaylist($content['userid'], $_POST['name'], $_POST['description']);
-        header("Location: editPlaylist.php");
+        $res = $playlist->insertPlaylist($content['userid'], $_POST['name'], $_POST['description'], $_FILES['thumbnail_file']);
+        if ($res) {
+            header("Location: editPlaylist.php");
+        }
+
 
 
     }
@@ -78,7 +80,7 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
     if(isset($_POST['update'])) {
 
         //Update playlist
-        $playlist->updatePlaylist($_POST['id'],$content['userid'],$_POST['name'],$_POST['description']);
+        $playlist->updatePlaylist($_POST['id'],$content['userid'],$_POST['name'],$_POST['description'], $_FILES['thumbnail_file']);
 
         header("Location: editPlaylist.php?update=".$_POST['id']); //Refresh page to see changes
     }

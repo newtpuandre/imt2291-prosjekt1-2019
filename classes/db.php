@@ -263,10 +263,10 @@ class DB
         }
     }
 
-    public function insertPlaylist($m_ownerId,$m_name,$m_description){
-        $sql = 'INSERT INTO playlists (ownerId , name, description) values (?, ?, ?)';
+    public function insertPlaylist($m_ownerId,$m_name,$m_description, $m_thumbnail){
+        $sql = 'INSERT INTO playlists (ownerId , name, description, thumbnail) values (?, ?, ?, ?)';
         $sth = $this->dbh->prepare($sql);
-        $sth->execute (array ($m_ownerId, $m_name, $m_description));
+        $sth->execute (array ($m_ownerId, $m_name, $m_description, $m_thumbnail));
         if ($sth->rowCount()==1) {
             return true;
         } else {
@@ -286,13 +286,25 @@ class DB
         }
     }
 
-    public function updatePlaylist($m_id, $m_ownerId, $m_name, $m_description){
-        $sql = 'UPDATE playlists SET name = :name, description= :description WHERE ownerId=:ownerId AND id=:id';
+    public function updatePlaylist($m_id, $m_ownerId, $m_name, $m_description, $m_thumbnail = null){
+
+        if ($m_thumbnail) {
+            $sql = 'UPDATE playlists SET name = :name, description= :description, thumbnail=:thumbnail WHERE ownerId=:ownerId AND id=:id';
+        } else {
+            $sql = 'UPDATE playlists SET name = :name, description= :description WHERE ownerId=:ownerId AND id=:id';
+        }
+
+
         $sth = $this->dbh->prepare ($sql);
         $sth->bindParam(':name',$m_name);
         $sth->bindParam(':description', $m_description);
         $sth->bindParam(':ownerId', $m_ownerId);
         $sth->bindParam(':id', $m_id);
+
+        if ($m_thumbnail){
+            $sth->bindParam(':thumbnail', $m_thumbnail);
+        }
+
         $sth->execute();
         if ($row = $sth->fetch()) {
             return true;

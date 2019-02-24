@@ -50,7 +50,7 @@
     <!-- Create new playlist -->
     <a href="editPlaylist.php">← Tilbake</a>
     <h1 class="display-4" style="margin-top:15px">Opprett ny spilleliste</h1>
-    <form action="editPlaylist.php" method="POST">
+    <form action="editPlaylist.php" enctype="multipart/form-data" method="POST">
         <div class="form-group">
             <label for="playlist">Navn på spillelisten</label>
             <input class="form-control" name="name" id="playlistName" required>
@@ -59,6 +59,12 @@
             <label for="description">Beskrivelse</label>
             <input class="form-control" name="description" id="description" required>
         </div>
+
+        <div style="margin-bottom:10px">
+          <p>Thumbnail</p>
+          <input id="thumbupload" name="thumbnail_file" type="file" /> 
+        </div>
+
         <button type="submit" name="createNew" class="btn btn-primary">Lag spilleliste</button>
     </form>
 
@@ -66,7 +72,7 @@
     <!-- Edit playlist by id -->
     <a href="editPlaylist.php">← Tilbake</a>
     <h1 class="display-4" style="margin-top:15px">Endre spilleliste</h1>
-    <form action="editPlaylist.php" method="POST">
+    <form action="editPlaylist.php" enctype="multipart/form-data" method="POST">
         <div class="form-group">
             <label for="playlist">Navn på spillelisten</label>
             <input class="form-control" name="name" id="playlistName" value="{{ playlistItem.name }}" required>
@@ -75,6 +81,10 @@
             <label for="description">Beskrivelse</label>
             <input class="form-control" rows="5" name="description" id="description"
                 value="{{ playlistItem.description }}" required>
+        </div>
+        <div style="margin-bottom:10px">
+          <p>Thumbnail</p>
+          <input id="thumbupload" name="thumbnail_file" type="file" /> 
         </div>
         <input hidden name="id" value="{{ playlistItem.id }}">
         <button type="submit" name="update" class="btn btn-primary">Oppdater spilleliste</button>

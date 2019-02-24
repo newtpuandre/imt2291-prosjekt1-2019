@@ -3,7 +3,7 @@ require_once 'db.php';
 
 class Playlist
 {
-
+    static private $target_dir = "uploads/";
 
     private $db = null;
 
@@ -143,8 +143,33 @@ class Playlist
 
     }
 
-    public function insertPlaylist($m_ownerId, $m_name, $m_description){
-        return $this->db->insertPlaylist($m_ownerId, $m_name, $m_description);
+    public function insertPlaylist($m_ownerId, $m_name, $m_description, $m_thumbnail){
+
+        if(!$m_thumbnail['name']) {
+            echo("<center><strong>Du må laste opp en thumbnail</strong></center>");
+            return false;
+        }
+
+        $thumb_path = Playlist::$target_dir . basename($m_thumbnail["name"]);
+
+        $thumb_file_type = strtolower(pathinfo($thumb_path, PATHINFO_EXTENSION));
+
+        /* TODO : Return meaningful error for all of these, for now, debug echos */
+        if (file_exists($thumb_path)) {
+            echo "FILE EXISTS!\n";
+            print_r($thumb_path);
+            return false;
+        }
+
+        if ($thumb_file_type != "jpg" && $thumb_file_type != "png" && $thumb_file_type != "jpeg" && $thumb_file_type != "gif") {
+            echo "Thumb format must be jpg, png, jpeg or gif";
+            return false;
+        }
+
+        /* Resize Thumbnail to 320x180 */
+        $this->thumbnailResize($m_thumbnail, 320, 180, $thumb_path);
+
+        return $this->db->insertPlaylist($m_ownerId, $m_name, $m_description, $thumb_path);
     }
 
     public function returnPlaylist($m_id){
@@ -163,8 +188,33 @@ class Playlist
         return $this->db->returnPlaylistVideos($m_playlistId);
     }
 
-    public function updatePlaylist($m_id, $m_ownerId, $m_name, $m_description){
-        return $this->db->updatePlaylist($m_id, $m_ownerId, $m_name, $m_description);
+    public function updatePlaylist($m_id, $m_ownerId, $m_name, $m_description, $m_thumbnail){
+
+        if (!$m_thumbnail['name']) { //
+            return $this->db->updatePlaylist($m_id, $m_ownerId, $m_name, $m_description);
+        } else {
+            $thumb_path = Playlist::$target_dir . basename($m_thumbnail["name"]);
+
+            $thumb_file_type = strtolower(pathinfo($thumb_path, PATHINFO_EXTENSION));
+    
+            /* TODO : Return meaningful error for all of these, for now, debug echos */
+            if (file_exists($thumb_path)) {
+                echo "FILE EXISTS!\n";
+                print_r($thumb_path);
+                return false;
+            }
+    
+            if ($thumb_file_type != "jpg" && $thumb_file_type != "png" && $thumb_file_type != "jpeg" && $thumb_file_type != "gif") {
+                echo "Thumb format must be jpg, png, jpeg or gif";
+                return false;
+            }
+    
+            /* Resize Thumbnail to 320x180 */
+            $this->thumbnailResize($m_thumbnail, 320, 180, $thumb_path);
+
+            return $this->db->updatePlaylist($m_id, $m_ownerId, $m_name, $m_description, $thumb_path);
+        }
+    
     }
 
     public function returnAllPlaylists(){ //Should only be used on sites where all playlists should be shown!
@@ -209,6 +259,24 @@ class Playlist
         }
 
     }
+
+    public function thumbnailResize($thumbnail, $new_width, $new_height, $output_path){
+        $content = file_get_contents($thumbnail["tmp_name"]);
+        
+        list($old_width, $old_height, $type, $attr) = getimagesize($thumbnail["tmp_name"]);
+        
+        $src_img = imagecreatefromstring(file_get_contents($thumbnail["tmp_name"]));
+        $dst_img = imagecreatetruecolor($new_width, $new_height);
+        
+        /* Copy and store */
+        imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $new_width, $new_height, $old_width, $old_height);
+        imagepng($dst_img, $output_path);
+    
+        /* Clean up */
+        imagedestroy($src_img);
+        imagedestroy($dst_img);        
+    }
+
 
 }
 
