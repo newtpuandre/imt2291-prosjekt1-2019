@@ -29,6 +29,7 @@ class UserTest extends \Codeception\Test\Unit
     }
 
     // tests
+
     public function testReturnEmail()
     {
         $test_email = "test@test.test";
@@ -64,6 +65,13 @@ class UserTest extends \Codeception\Test\Unit
         $password = "something";
 
         $this->assertTrue($this->db->loginUser($email, $password));
+    }
+
+    public function testRegisterUser(){
+        $email = "tester@tester.tester";
+        $password = "somethingpassword";
+
+        $this->assertTrue($this->db->registerUser($email,$password, true));
     }
 
 }
