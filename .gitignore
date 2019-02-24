@@ -13,3 +13,6 @@ Desktop.ini
 
 # ignore Composer downloads
 /vendor/*
+
+#Project specific content
+/uploads/*
