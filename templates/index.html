@@ -22,8 +22,12 @@
     <div class="row" style="margin-top:15px">
     {% endif %}
 
-    <div class="col-sm-3"><a href = "playVideo.php?id={{ item.id }}"><img src="{{ item.thumbnail_path }}" class="img-fluid"></a><strong>{{ item.title }} - {{ item.course }}</strong></div>
-
+    <div class="col-sm-3">
+            <div class="card">
+                    <div class="card-body">
+        <a href = "playVideo.php?id={{ item.id }}"><img src="{{ item.thumbnail_path }}" class="img-fluid"></a><strong>{{ item.title }} - {{ item.course }}</strong></div>
+    </div>
+</div>
     {% if loop.index % 4 == 0 or loop.last %}
     </div>
     {% endif %}
@@ -38,8 +42,12 @@
     {% if loop.index % 4 == 1 %}
     <div class="row" style="margin-top:15px">
     {% endif %}
-
-    <div class="col-sm-3"><a href = "playlist.php?show={{ subItem.id }}"><img src="{{ subItem.thumbnail }}" class="img-fluid"></a><strong>{{ subItem.name }}</strong></div>
+    <div class="col-sm-3">
+    <div class="card">
+        <div class="card-body">
+            <a href = "playlist.php?show={{ subItem.id }}"><img src="{{ subItem.thumbnail }}" class="img-fluid"></a><strong>{{ subItem.name }}</strong></div>
+    </div>
+    </div>
 
     {% if loop.index % 4 == 0 or loop.last %}
     </div>
