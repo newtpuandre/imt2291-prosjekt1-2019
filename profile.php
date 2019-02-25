@@ -47,7 +47,7 @@ if (isset($_POST['button_update'])) {
     }
     
 
-    $user->updateUser($content['uid'], $name, $username, $hashed_password, $profilepic);
+    $user->updateUser($content['uid'], $name, $username, $password, $profilepic);
 
 
 }
