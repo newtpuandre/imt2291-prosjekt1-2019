@@ -30,7 +30,7 @@ class DB
     }
 
     public function findUser($m_email){
-        $sql = 'SELECT id, email, privileges FROM users WHERE email=:email';
+        $sql = 'SELECT id, email, privileges, name, picture_path FROM users WHERE email=:email';
         $sth = $this->dbh->prepare ($sql);
         $sth->bindParam(':email', $m_email);
         $sth->execute();
@@ -54,6 +54,26 @@ class DB
         } else {
             return false;
         }
+    }
+
+    public function updateUser($m_id, $m_name, $m_email, $m_password, $m_picture){
+
+        
+        $sql = 'UPDATE users SET name =:name, email=:email, password=:password, picture=:picture WHERE id=:id';
+        $sth = $this->dbh->prepare ($sql);
+        $sth->bindParam(':id', $m_id);
+        $sth->bindParam(':videoid', $m_videoid);
+        $sth->bindParam(':email', $m_email);
+        $sth->bindParam(':password', $m_password);
+        $sth->bindParam(':picture', $m_course);
+
+        $sth->execute(password_hash($m_password, PASSWORD_DEFAULT));
+        if ($row = $sth->fetch()) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     public function loginUser($m_email,$m_password){

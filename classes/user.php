@@ -22,12 +22,13 @@ class User
         $this->email = $userArray['email'];
         $this->privileges = $userArray['privileges'];
         $this->name = $userArray['name'];
-        $this->picture = $userArray['picture'];
+        $this->picture = $userArray['picture_path'];
     }
 
     function __destruct() {
 
     }
+
 
     public function returnEmail(){ //Returns users email
         return $this->email;
