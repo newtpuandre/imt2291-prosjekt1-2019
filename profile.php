@@ -37,7 +37,7 @@ if (isset($_POST['button_update'])) {
     $name = $_POST['update_name']; 
     $username = $_POST['update_username'];
     $password = $_POST['update_password'];
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
  
 
     if(!isset($_FILES['update_picture'])){
