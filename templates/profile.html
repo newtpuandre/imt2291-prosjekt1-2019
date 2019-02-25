@@ -1,0 +1,65 @@
+{% include 'header.html' %}
+<body>
+  <div class="container">
+    <div class="row pt-5 pb-5">
+      <!-- Header Row -->
+      <div class="col-sm">
+        <h2>Min profil</h2>
+      </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+          <div class="col-3">
+              <div class="media-left media-middle">
+                  <img src="https://propertymarketersllc.com/wp-content/uploads/2018/05/profile-picture-placeholder.png"
+                      class="media-object" style="width:180px">
+              </div>
+          </div>
+          <div class="col-9">
+              <div class="col-sm-8">
+                  <form action="videoUpload.php" method="POST" enctype="multipart/form-data">
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label for="upload_title"><b>Navn</b></label>
+                        <input type="text" class="form-control" name="update_name" placeholder="{{name}}">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="upload_desc"><b>Brukernavn/e-post</b></label>
+                      <input type="text" class="form-control" name="update_username" placeholder="{{ userinfo }}">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="upload_course">Passord</label>
+                            <input class="form-control" type="password" placeholder="******" name="update_password">
+                        </div>
+                        <div class="input-group col-md-12 mt-2">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="inputGroupFileAddon01">Profilbilde</span>
+                            </div>
+              
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" name = "update_picture" id="inputGroupFile01"
+                                aria-describedby="inputGroupFileAddon01">
+                              <label class="custom-file-label" for="inputGroupFile01">Velg profilbilde</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 mt-3">
+                            <button class="btn btn-lg btn-success btn-block" name="button_update" type="submit">Oppdater</button>
+                        </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+    
+</body>
+
+{% include 'footer.html' %}
+
+</html>

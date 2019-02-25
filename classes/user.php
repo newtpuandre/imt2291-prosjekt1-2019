@@ -7,6 +7,8 @@ class User
     private $id;
     private $email;
     private $privileges;
+    private $name;
+    private $picture;
 
     private $db = null;
 
@@ -19,7 +21,8 @@ class User
         $this->id = $userArray['id'];
         $this->email = $userArray['email'];
         $this->privileges = $userArray['privileges'];
-
+        $this->name = $userArray['name'];
+        $this->picture = $userArray['picture'];
     }
 
     function __destruct() {
@@ -36,6 +39,14 @@ class User
 
     public function returnId(){
         return $this->id;
+    }
+
+    public function returnName(){
+        return $this->name;
+    }
+
+    public function returnPicture(){
+        return $this->picture;
     }
 
 }
