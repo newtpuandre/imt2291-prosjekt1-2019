@@ -60,7 +60,7 @@ class DB
 
         $hashed_password = password_hash($m_password, PASSWORD_DEFAULT);
         
-        $sql = 'UPDATE users SET name =:name, email=:email, password=:password, picture=:picture WHERE id=:id';
+        $sql = 'UPDATE users SET name=:name, email=:email, password=:password, picture_path=:picture WHERE id=:id';
         $sth = $this->dbh->prepare ($sql);
         $sth->bindParam(':id', $m_id);
         $sth->bindParam(':name', $m_name);
