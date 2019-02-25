@@ -11,10 +11,8 @@ if (isset($_POST['createNewUser'])) { // Create new user
     //Initalize a new database connection
     $db = new DB();
 
-    print_r($_POST);
-
-    $registerStatus = $db->registerUser($_POST['email'],$_POST['password'],$_POST['isTeacher']);
-
+    $registerStatus = $db->registerUser($_POST['name'],$_POST['email'],$_POST['password'],$_POST['isTeacher']);
+    
     if ($registerStatus) { //Everything went well
         header('Location: register.php?status=ok');
     } else { //Something went wrong

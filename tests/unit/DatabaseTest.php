@@ -82,6 +82,10 @@ class DatabaseTest extends \Codeception\Test\Unit
         $this->assertTrue($returnArray[0]['email'] == $email);
     }
 
-    
+    public function testNewVideo()
+    {
+
+
+    }
 
 }

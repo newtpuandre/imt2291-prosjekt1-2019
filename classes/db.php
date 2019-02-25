@@ -42,12 +42,12 @@ class DB
         }
     }
 
-    public function registerUser($m_email,$m_password, $m_isTeacher) {
+    public function registerUser($m_name, $m_email,$m_password, $m_isTeacher) {
 
-        $sql = 'INSERT INTO users (email , password, isTeacher) values (?, ?, ?)';
+        $sql = 'INSERT INTO users (name, email, password, isTeacher) values (?, ?, ?, ?)';
         $sth = $this->dbh->prepare($sql);
         // Use password_hash to encrypt password : http://php.net/manual/en/function.password-hash.php
-        $sth->execute (array ($m_email,
+        $sth->execute (array ($m_name, $m_email,
                           password_hash($m_password, PASSWORD_DEFAULT),$m_isTeacher));
         if ($sth->rowCount()==1) {
             return true;
