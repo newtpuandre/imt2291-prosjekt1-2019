@@ -58,16 +58,17 @@ class DB
 
     public function updateUser($m_id, $m_name, $m_email, $m_password, $m_picture){
 
+        $hashed_password = password_hash($m_password, PASSWORD_DEFAULT);
         
         $sql = 'UPDATE users SET name =:name, email=:email, password=:password, picture=:picture WHERE id=:id';
         $sth = $this->dbh->prepare ($sql);
         $sth->bindParam(':id', $m_id);
-        $sth->bindParam(':videoid', $m_videoid);
+        $sth->bindParam(':name', $m_name);
         $sth->bindParam(':email', $m_email);
-        $sth->bindParam(':password', $m_password);
-        $sth->bindParam(':picture', $m_course);
+        $sth->bindParam(':password', $hashed_password);
+        $sth->bindParam(':picture', $m_picture);
 
-        $sth->execute(password_hash($m_password, PASSWORD_DEFAULT));
+        $sth->execute();
         if ($row = $sth->fetch()) {
             return true;
         } else {
