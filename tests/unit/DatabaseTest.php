@@ -47,16 +47,14 @@ class DatabaseTest extends \Codeception\Test\Unit
 
         $this->tester->haveInDatabase('users',['name' => $name, 'email' => $email, 'password' => $hashedPassword]);
 
-        
         $new_name = "name test";
         $new_email = "testemail";
         $new_picture = "test_picture";
-
         $password_hash = password_hash("somethingNew", PASSWORD_DEFAULT);
 
-        $this->assertTrue($this->db->updateUser("1", $new_name, $new_email, $password_hash, $new_picture));
+        $this->db->updateUser("1", $new_name, $new_email, $password_hash, $new_picture);
 
-        $this->tester->seeInDatabase('users',['id' => "1", 'name' => $new_name, 'email' => $new_email, 'password' => $password_hash, 'picture_path' => $new_picture]);
+        $this->tester->seeInDatabase('users',['id' => "1", 'name' => $new_name, 'email' => $new_email, 'password' =>  $password_hash, 'picture_path' => $new_picture]);
     }
 
     public function testRegisterUser()
