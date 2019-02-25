@@ -96,13 +96,13 @@ CREATE TABLE IF NOT EXISTS `users` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL DEFAULT '0',
   `password` varchar(255) NOT NULL DEFAULT '0',
-  `picture_path` varchar(255) NOT NULL,
+  `picture_path` varchar(255) DEFAULT 'https://propertymarketersllc.com/wp-content/uploads/2018/05/profile-picture-placeholder.png',
   `privileges` varchar(255) NOT NULL DEFAULT '0' COMMENT '0 = user, 1 = teacher, 2 = admin',
   `isTeacher` int(11) DEFAULT '0' COMMENT '0 = not checked, 1 = checked',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 -- Dumping structure for table prosjekt1.video
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `video` (
   PRIMARY KEY (`id`),
   KEY `fk_userid` (`userid`),
   CONSTRAINT `fk_userid` FOREIGN KEY (`userid`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

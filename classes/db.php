@@ -30,7 +30,7 @@ class DB
     }
 
     public function findUser($m_email){
-        $sql = 'SELECT id, email, privileges, name, picture_path FROM users WHERE email=:email';
+        $sql = 'SELECT id, name, email, picture_path, privileges FROM users WHERE email=:email';
         $sth = $this->dbh->prepare ($sql);
         $sth->bindParam(':email', $m_email);
         $sth->execute();
