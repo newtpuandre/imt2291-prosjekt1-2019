@@ -1,6 +1,7 @@
 <?php
 
 require_once './classes/admin.php';
+require_once './classes/db.php';
 
 class AdminTest extends \Codeception\Test\Unit
 {
