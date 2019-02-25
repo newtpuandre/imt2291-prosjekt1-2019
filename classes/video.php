@@ -236,6 +236,18 @@ class Video
             print_r("Failed to get new videos!");
         }
     }
+
+    public function searchVideoCourse($prompt){
+        $db = new DB();
+
+        $res = $db->searchVideoCourse($prompt);
+
+        if ($res) {
+            return $res;
+        } else {
+            print_r("Failed to get courses!");
+        }
+    }
 }
 
 ?>

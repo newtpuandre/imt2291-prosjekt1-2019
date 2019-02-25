@@ -12,11 +12,18 @@
         </div>
 
        <!-- Search form -->
-       <div class="md-form active-cyan-2 mb-3">
-            <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-        </div>
+       <form action="course.php" method="POST">
+       <div class="input-group mb-3">
+            <input type="text" class="form-control" name="search_prompt" placeholder="Søk i emner"  aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="submit" name="button_search"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </form>
 
-        <div class="list-group">
+
+
+        <div class="list-group ">
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">Emner</h5>
@@ -25,13 +32,16 @@
 
             {% for course in result %}
 
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        
+            <a href="topics.php?course={{course.course}}" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{ course.course }}</h5>
+                    <h5 class="mb-1" name="course">{{ course.course }}</h5>
                     <small class="text-muted">{{ course.0 }} video(er)</small>
                 </div>
             </a>
+  
            {% endfor %} 
+
         </div>
  
     </main><!-- /.container -->

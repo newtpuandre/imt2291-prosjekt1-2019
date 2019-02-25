@@ -21,18 +21,16 @@ if (isset($_SESSION['user'])) { //User is logged in
     
 }
 
-if (isset($_POST['button_search'])){
+if (isset($_GET['course'])){
 
     $video = new Video();
     
-    $prompt = $_POST['search_prompt'];
+    $content['course'] = $_GET['course'];
 
-    $content['result'] = $video->searchVideoCourse($prompt);
-
+    $content['result'] = $video->searchVideoCourse($content['course'] );
 
 } else {
-    $video = new Video();
-    $content['result'] = $video->getAllVideoCourses();
+    print_r("Ingen tema tilgjengelige.");
 }
 
 
@@ -41,4 +39,4 @@ $twig = new Twig_Environment($loader, array(
     //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
 ));
 
-echo $twig->render('course.html', $content);
+echo $twig->render('topics.html', $content);

@@ -1,0 +1,41 @@
+{% include 'header.html' %}
+
+<body>
+    <main role="main" class="container">
+
+            
+
+        <div class="row pt-5  pb-5">
+        <!-- Header Row -->
+            <div class="col-sm">
+                <h2>Temaer under emnet <b>{{ course }}</b></h2>
+            </div>
+        </div>
+
+        <div class="list-group ">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Tema</h5>
+                </div>
+            </a>
+
+            {% for course in result %}
+
+           
+            <a href="playVideo.php?id={{ course.id }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ course.topic }}</h5>
+                    <small class="text-muted">{{ course.time }}</small>
+                </div>
+            </a>
+            
+           {% endfor %} 
+
+        </div>
+ 
+    </main><!-- /.container -->
+
+</body>
+{% include 'footer.html' %}
+
+</html>

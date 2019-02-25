@@ -179,7 +179,7 @@ class DB
         }
     }
 
-    //OR description LIKE :prompt OR topic LIKE %:prompt% OR course LIKE %:prompt%
+    
     public function searchVideo($m_prompt){
         $sql = 'SELECT * FROM video WHERE title LIKE :prompt OR description LIKE :prompt OR topic LIKE :prompt OR course LIKE :prompt';
         $sth = $this->dbh->prepare ($sql);
@@ -196,7 +196,7 @@ class DB
     }
 
     public function searchVideoCourse($m_prompt){
-        $sql = 'SELECT * FROM video WHERE course LIKE :prompt';
+        $sql = 'SELECT COUNT(*), course, id, topic, time FROM video WHERE course LIKE :prompt';
         $sth = $this->dbh->prepare ($sql);
         $param = "%" . $m_prompt . "%";
         $sth->bindParam(':prompt', $param);
@@ -211,7 +211,7 @@ class DB
     }
 
     public function returnAllCourses(){
-        $sql = 'SELECT COUNT(*), course FROM video GROUP BY course';
+        $sql = 'SELECT COUNT(*), course,id, topic, time FROM video GROUP BY course';
         $sth = $this->dbh->prepare($sql);
         $sth->execute();
 
