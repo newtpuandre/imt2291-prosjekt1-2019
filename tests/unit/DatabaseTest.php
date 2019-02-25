@@ -24,12 +24,13 @@ class DatabaseTest extends \Codeception\Test\Unit
 
     public function testFindUser()
     {
+        $name = "name namesen";
         $email = "test@test.test";
         $password = "something";
         $privileges = "2";
 
         //Insert user into database
-        $this->tester->haveInDatabase('users',['email' => $email, 'password' => $password, 'privileges' => $privileges]);
+        $this->tester->haveInDatabase('users',['name' => $name, 'email' => $email, 'password' => $password, 'privileges' => $privileges]);
 
         //Check if function returns user
         $returnArray = $this->db->findUser($email);
@@ -39,40 +40,42 @@ class DatabaseTest extends \Codeception\Test\Unit
 
     public function testRegisterUser()
     {
+        $name = "name namesen";
         $email = "test@test.test";
         $password = "something";
         $isTeacher = true;
 
         //Register the user
-        $this->db->registerUser($email, $password, $isTeacher);
+        $this->db->registerUser($name, $email, $password, $isTeacher);
 
         //User is found in database
-        $this->tester->seeInDatabase('users',['email' => $email]);
+        $this->tester->seeInDatabase('users',['name' => $name, 'email' => $email]);
 
     }
 
     public function testLoginUser()
     {
-
+        $name = "name namesen";
         $email = "test@test.test";
         $password = "something";
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $this->tester->haveInDatabase('users',['email' => $email, 'password' => $hashedPassword]);
+        $this->tester->haveInDatabase('users',['name' => $name, 'email' => $email, 'password' => $hashedPassword]);
 
         $this->assertTrue($this->db->loginUser($email, $password));
 
     }
 
-    public function testGatherUsers(){
-
+    public function testGatherUsers()
+    {
+        $name = "name namesen";
         $email = "test@test.test";
         $password = "something";
         $privileges = "2";
 
         //Insert two users
-        $this->tester->haveInDatabase('users',['email' => $email, 'password' => $password, 'privileges' => $privileges]);
+        $this->tester->haveInDatabase('users',['name' => $name, 'email' => $email, 'password' => $password, 'privileges' => $privileges]);
 
         //Return user(s)
         $returnArray = $this->db->gatherUsers();

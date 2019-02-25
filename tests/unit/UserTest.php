@@ -14,13 +14,13 @@ class UserTest extends \Codeception\Test\Unit
     protected function _before()
     {
         //Register a user
-
+        $name = "name namesen";
         $email = "test@test.test";
         $password = "something";
 
 
         $this->db = new DB();
-        $this->db->registerUser($email, $password, true);
+        $this->db->registerUser($name ,$email, $password, true);
         
     }
 
@@ -68,10 +68,11 @@ class UserTest extends \Codeception\Test\Unit
     }
 
     public function testRegisterUser(){
+        $name = "name namesen";
         $email = "tester@tester.tester";
         $password = "somethingpassword";
 
-        $this->assertTrue($this->db->registerUser($email,$password, true));
+        $this->assertTrue($this->db->registerUser($name, $email,$password, true));
     }
 
 }

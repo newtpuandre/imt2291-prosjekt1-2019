@@ -14,13 +14,13 @@ class AdminTest extends \Codeception\Test\Unit
     protected function _before()
     {
         //Register a user
-
+        $name = "name namesen";
         $email = "test@test.test";
         $password = "something";
 
 
         $this->db = new DB();
-        $this->db->registerUser($email, $password, true);
+        $this->db->registerUser($name, $email, $password, true);
         
     }
 
