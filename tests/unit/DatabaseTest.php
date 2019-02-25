@@ -77,6 +77,7 @@ class DatabaseTest extends \Codeception\Test\Unit
         //Insert two users
         $this->tester->haveInDatabase('users',['name' => $name, 'email' => $email, 'password' => $password, 'privileges' => $privileges]);
 
+
         //Return user(s)
         $returnArray = $this->db->gatherUsers();
 
@@ -87,7 +88,126 @@ class DatabaseTest extends \Codeception\Test\Unit
 
     public function testNewVideo()
     {
+        $name = "name namesen";
+        $email = "test@test.test";
+        $password = "something";
 
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $name, 'email' => $email, 'password' => $password]);
+    
+
+        $userid = "1";
+        $title = "testvideo";
+        
+        $result = $this->db->newVideo($userid,$title,"desc","topic","course","nothing","nothing");
+
+        $this->assertTrue($result);
+
+        $this->tester->seeInDatabase('video', ['userid' => $userid, 'title' => $title]);
+
+    }
+
+    public function testReturnVideos()
+    {
+        $name = "name namesen";
+        $email = "test@test.test";
+        $password = "something";
+
+        $userid = "1";
+        $title = "testvideo";
+
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $name, 'email' => $email, 'password' => $password]);
+
+        $this->tester->haveInDatabase('video',['userid' => $userid, 'title' => $title]);
+
+        $returnArray = $this->db->returnVideos($userid);
+
+        $this->assertTrue($returnArray[0]['title'] == $title);
+    }
+
+    public function testReturnVideo()
+    {
+
+        $name = "name namesen";
+        $email = "test@test.test";
+        $password = "something";
+
+        $userid = "1";
+        $title = "testvideo";
+
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $name, 'email' => $email, 'password' => $password]);
+        
+        $this->tester->haveInDatabase('video',['userid' => $userid, 'title' => $title]);
+
+        $returnArray = $this->db->returnVideo("1");
+
+        $this->assertTrue($returnArray[0]['title'] == $title);
+
+    }
+
+    public function testReturnAllVideos()
+    {
+        $name = "name namesen";
+        $email = "test@test.test";
+        $password = "something";
+
+        $userid = "1";
+        $title = "testvideo";
+
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $name, 'email' => $email, 'password' => $password]);
+
+        $this->tester->haveInDatabase('video',['userid' => $userid, 'title' => $title]);
+
+        $returnArray = $this->db->returnAllVideos();
+
+        $this->assertTrue($returnArray[0]['title'] == $title);
+    }
+
+    public function testDeleteVideo() 
+    {
+        $name = "name namesen";
+        $email = "test@test.test";
+        $password = "something";
+
+        $userid = "1";
+        $title = "testvideo";
+
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $name, 'email' => $email, 'password' => $password]);
+
+        $this->tester->haveInDatabase('video',['userid' => $userid, 'title' => $title]);
+
+        $this->tester->seeInDatabase('video',['userid' => $userid, 'title' => $title]);
+
+        $this->db->deleteVideo("1");
+
+        $this->tester->dontSeeInDatabase('video',['userid' => $userid, 'title' => $title]);
+
+    }
+
+    public function testUpdateVideo()
+    {
+        $name = "name namesen";
+        $email = "test@test.test";
+        $password = "something";
+
+        $userid = "1";
+        $title = "testvideo";
+        $desc = "desc";
+        $topic = "topic";
+        $course = "course";
+
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $name, 'email' => $email, 'password' => $password]);
+
+        $this->tester->haveInDatabase('video',['userid' => $userid, 'title' => $title, 'description' => $desc, 'topic' => $topic, 'course' => $course]);
+
+        $this->db->updateVideo("1","newTitle","newDesc","newTopic","newCourse");
+
+        $this->tester->seeInDatabase('video',['userid' => $userid, 'title' => "newTitle", 'description' => "newDesc", 'topic' => "newTopic", 'course' => "newCourse"]);
 
     }
 
