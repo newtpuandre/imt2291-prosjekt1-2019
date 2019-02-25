@@ -33,29 +33,15 @@ class User
     }
 
     public function updateUser($uid, $name, $username, $password, $profilepic){
-        if(!$profilepic['name']){
-
-            $db = new DB();
-            $res = $db->updateUser($uid, $name, $username, $password, $profilepic);
-
-        if ($res) {
-            echo "Database Success!";
-            return true;
-        } else {
-            echo "Failed to update database!";
-            return false;
-        }
-
-        }
-
-        else {
+      
+        
         
         $old_picture = $this->returnPicture();
+
         if($old_picture){
 
-  
+        unlink($old_picture);
         
-        //unlink($old_picture[0]['picture_path']);
         }
         
         $picture_path = User::$target_dir . basename($profilepic["name"]);
@@ -95,7 +81,7 @@ class User
             }
     
             */
-        }
+        
 
     }
 

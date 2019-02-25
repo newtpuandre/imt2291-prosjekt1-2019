@@ -42,6 +42,9 @@ if (isset($_POST['button_update'])) {
 
     if(!isset($_FILES['update_picture'])){
         $profilepic = $content['user']['thumbnail_path'];
+        
+        $db = new DB();
+        $res = $db->updateUser($uid, $name, $username, $password, $profilepic);
     } else {
         $profilepic = $_FILES['update_picture'];
     }
