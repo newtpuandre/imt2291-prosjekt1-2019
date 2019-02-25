@@ -11,6 +11,9 @@ $content = array();
 
 session_start();
 
+$video = new Video();
+$playlist = new Playlist();
+
 if (isset($_SESSION['user'])) { //User is logged in
 
     $user = new User($_SESSION['user']);
@@ -19,12 +22,13 @@ if (isset($_SESSION['user'])) { //User is logged in
     $content['userprivileges'] = $user->getPrivileges();
     $content['userid'] = $user->returnId();
     
-    $video = new Video();
-    $playlist = new Playlist();
+    $content['subscribedPlaylists'] = $playlist->getSubscribedPlaylists($content['userid']);
 }
 
+
+
 $content['newVideos'] = $video->getNewVideos();
-$content['subscribedPlaylists'] = $playlist->getSubscribedPlaylists($content['userid']);
+
 
 $loader = new Twig_Loader_Filesystem('./templates');
 $twig = new Twig_Environment($loader, array(
