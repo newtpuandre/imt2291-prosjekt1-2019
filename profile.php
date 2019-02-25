@@ -20,7 +20,7 @@ if (isset($_SESSION['user'])) { //User is logged in
     $content['userprivileges'] = $user->getPrivileges();  
     $content['uid'] = $user->returnId();
     $content['name'] = $user->returnName();
-    $content['password'] = $user->returnPassword();
+    //$content['password'] = $user->returnPassword();
     $content['picture'] = $user->returnPicture();
 }
 
@@ -33,22 +33,23 @@ if (isset($_POST['button_update'])) {
     
     $name = $_POST['update_name']; 
     $username = $_POST['update_username'];
-    $password = $_POST['update_password'];
+   // $password = $_POST['update_password'];
     $profilepic = $_POST['update_picture'];
    
-    $content['videoinfo'] = $video->getVideo($videoid);
-  
-
-    if(!isset($_FILES['update_thumbnail'])){
+/*
+    if(!isset($_FILES['update_picture'])){
         $thumbnail = $content['videoinfo'][0]['thumbnail_path'];
     } else {
-        $thumbnail = $_FILES['update_thumbnail'];
+        $thumbnail = $_FILES['update_picture'];
     }
     
-    
-    $user->updateUser($videoid, $title, $description, $topic, $course, $thumbnail);
+    */
 
-    header("Location: profile.php"); 
+    $db = new DB();
+   
+    $db->updateUser($content['uid'], $name, $username, $password, $profilepic);
+
+
 }
 
 
