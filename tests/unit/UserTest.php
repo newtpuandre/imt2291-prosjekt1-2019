@@ -83,7 +83,8 @@ class UserTest extends \Codeception\Test\Unit
     }
 
     public function testRegisterUser(){
-        $this->assertTrue($this->db->registerUser($this->name, $this->email, $this->password, true));
+        $test_email = "test2@test2.test";
+        $this->assertTrue($this->db->registerUser($this->name, $test_email, $this->password, true));
     }
 
 }

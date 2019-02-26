@@ -16,6 +16,7 @@ class DatabaseTest extends \Codeception\Test\Unit
 
     //Video
     private $userid = "1";
+    private $videoid = "1";
     private $title = "testvideo";
     private $desc = "desc";
     private $topic = "topic";
@@ -180,7 +181,8 @@ class DatabaseTest extends \Codeception\Test\Unit
 
     }
 
-    public function testSearchVideo(){
+    public function testSearchVideo()
+    {
         //Add a user inorder for the relation to be correct
         $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
 
@@ -191,6 +193,45 @@ class DatabaseTest extends \Codeception\Test\Unit
         $this->assertTrue($returnArray[0]['title'] == $this->title);
     }
 
+    public function testSearchVideoCourse()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course]);
+
+        $returnArray = $this->db->searchVideoCourse($this->course);
+
+        $this->assertTrue($returnArray[0]['course'] == $this->course);
+
+    }
+
+    public function testReturnAllCourses()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course]);
+
+        $returnArray = $this->db->returnAllCourses();
+
+        $this->assertTrue($returnArray[0]['course'] == $this->course);
+    }
     
+    public function testUpdateThumbnail()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course]);
+
+        $return = $this->db->updateThumbnail("1", "uploads/testimage.png");
+
+        $this->assertTrue($return);
+
+    }
+
+
+
 
 }
