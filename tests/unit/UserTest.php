@@ -5,6 +5,14 @@ require_once './classes/db.php';
 
 class UserTest extends \Codeception\Test\Unit
 {
+
+    //Test related variables
+
+    //User
+    private $name = "name namesen";
+    private $email = "test@test.test";
+    private $password = "something";
+
     private $db = null;
     /**
      * @var \UnitTester
@@ -14,13 +22,8 @@ class UserTest extends \Codeception\Test\Unit
     protected function _before()
     {
         //Register a user
-        $name = "name namesen";
-        $email = "test@test.test";
-        $password = "something";
-
-
         $this->db = new DB();
-        $this->db->registerUser($name ,$email, $password, true);
+        $this->db->registerUser($this->name , $this->email, $this->password, true);
         
     }
 
@@ -37,42 +40,50 @@ class UserTest extends \Codeception\Test\Unit
         $user = new User($test_email);
         $email = $user->returnEmail();
 
-        $this->assertEquals($email, $test_email);
+        $this->assertEquals($this->email, $test_email);
     }
 
     public function testGetPrivileges(){
-        $email = "test@test.test";
+
         $test_privileges = "0";
 
-        $user = new User($email);
+        $user = new User($this->email);
         $privileges = $user->getPrivileges();
 
         $this->assertEquals($privileges, $test_privileges);
     }
 
-    public function testGetId(){
-        $email = "test@test.test";
+    public function testUpdateUser(){
+        $oldEmail = "test@test.test";
+
+        $newEmail = "newtest@newtest.newtest";
         $test_id = "1";
 
-        $user = new User($email);
+        $user = new User($oldEmail);
+        $mail = $user->returnEmail();
+
+        $user->updateUser($test_id, "", $newEmail, "" , "");
+
+        $user = new User($newEmail);
+        $this->assertTrue($newEmail, $user->returnEmail());
+
+    }
+
+    public function testGetId(){
+        $test_id = "1";
+
+        $user = new User($this->email);
         $id = $user->returnId();
 
         $this->assertEquals($id, $test_id);
     }
 
     public function testUserLogin(){
-        $email = "test@test.test";
-        $password = "something";
-
-        $this->assertTrue($this->db->loginUser($email, $password));
+        $this->assertTrue($this->db->loginUser($this->email, $this->password));
     }
 
     public function testRegisterUser(){
-        $name = "name namesen";
-        $email = "tester@tester.tester";
-        $password = "somethingpassword";
-
-        $this->assertTrue($this->db->registerUser($name, $email,$password, true));
+        $this->assertTrue($this->db->registerUser($this->name, $this->email, $this->password, true));
     }
 
 }
