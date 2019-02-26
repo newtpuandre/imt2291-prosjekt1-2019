@@ -545,6 +545,11 @@ class DatabaseTest extends \Codeception\Test\Unit
         $this->assertTrue($returnArray[0]['comment'] == $this->comment && $returnArray[0]['name'] == $this->name);
     }
 
+    public function testDeleteComment(){
+
+        //TODO !! 
+    }
+
     public function testNewRating()
     {
         //Add a user inorder for the relation to be correct
