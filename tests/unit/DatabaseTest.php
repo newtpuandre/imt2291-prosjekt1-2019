@@ -21,6 +21,14 @@ class DatabaseTest extends \Codeception\Test\Unit
     private $desc = "desc";
     private $topic = "topic";
     private $course = "course";
+    private $thumbnail ="testThumb";
+
+    //Playlist
+    private $playlistid = "1";
+    private $ownerid = "1";
+    private $playName = "playlistname";
+    private $playDesc = "playlistDesc";
+    private $playThumb = "thumbnail";
 
 
 
@@ -223,15 +231,289 @@ class DatabaseTest extends \Codeception\Test\Unit
         //Add a user inorder for the relation to be correct
         $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
 
-        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course]);
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
 
         $return = $this->db->updateThumbnail("1", "uploads/testimage.png");
 
-        $this->assertTrue($return);
+        $this->tester->seeInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => 'uploads/testimage.png']);
 
     }
 
+    public function testUpdatePrivileges()
+    {
+        //Add a user
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        $this->db->updatePrivileges($this->email, "2");
+
+        $this->tester->seeInDatabase('users', ['email' => $this->email, 'privileges' => "2"]);
+    }
+
+    public function testReturnPlaylists()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        $returnArray = $this->db->returnPlaylists($this->ownerid);
+
+        $this->assertTrue($returnArray[0]['name'] == $this->playName && $returnArray[0]['description'] == $this->playDesc);
+    }
+
+    public function testInsertPlaylist()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+        
+        $this->db->insertPlaylist($this->ownerid, $this->playName, $this->playDesc, $this->playThumb);
+
+        $this->tester->seeInDatabase('playlists',['name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+    }
+
+    
+    public function testReturnPlaylist()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        $return = $this->db->returnPlaylist($this->ownerid);
+
+        $this->assertTrue($return['name'] == $this->playName && $return['description'] == $this->playDesc);
+    }
 
 
+    public function testUpdatePlaylist()
+    {
+        $newName = "test";
+        $newDesc = "testDesc";
+        $newThumb = "testThumbnail";
+        
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        $this->db->updatePlaylist("1", $this->ownerid, $newName, $newDesc, $newThumb);
+
+        $this->tester->seeInDatabase('playlists',['name' => $newName, 'description' => $newDesc, 'thumbnail' => $newThumb]);
+    }
+
+    public function testDeletePlaylist()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        $this->db->deletePlaylist($this->playlistid, $this->ownerid);
+
+        $this->tester->dontSeeInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+    }
+
+    public function testCountSubscribers()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a playlist inorder for the relation to be correct
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        //Add a subscription
+        $this->tester->haveInDatabase('subscriptions', ['userid' => $this->userid, 'playlistid' => $this->playlistid]);
+
+        $return = $this->db->countSubscribers($this->playlistid);
+
+        $this->assertTrue($return['numSubs'] == "1");
+    }
+
+    public function testReturnSubscriptionStatus()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a playlist inorder for the relation to be correct
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        //Add a subscription
+        $this->tester->haveInDatabase('subscriptions', ['userid' => $this->userid, 'playlistid' => $this->playlistid]);
+
+        $return = $this->db->ReturnSubscriptionStatus($this->userid, $this->playlistid);
+
+        $this->assertTrue($return['userid'] == $this->userid);
+    }
+
+    public function testGetSubscribedPlaylists()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a playlist inorder for the relation to be correct
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        //Add a subscription
+        $this->tester->haveInDatabase('subscriptions', ['userid' => $this->userid, 'playlistid' => $this->playlistid]);
+
+        $returnArray = $this->db->GetSubscribedPlaylists($this->userid);
+
+        $this->assertTrue($returnArray[0]['userid'] == $this->userid && $returnArray[0]['playlistid'] == $this->playlistid);
+    }
+
+    public function testSubscribeToPlaylist()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a playlist inorder for the relation to be correct
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        $this->db->subscribeToPlaylist($this->playlistid, $this->ownerid);
+
+        $this->tester->seeInDatabase('subscriptions', ['userid' => $this->userid, 'playlistid' => $this->playlistid]);
+    }
+
+    public function testUnsubscribeToPlaylist()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a playlist inorder for the relation to be correct
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        //Add a subscription
+        $this->tester->haveInDatabase('subscriptions', ['userid' => $this->userid, 'playlistid' => $this->playlistid]);
+
+        $this->db->unsubscribeToPlaylist($this->playlistid, $this->ownerid);
+
+        $this->tester->dontSeeInDatabase('subscriptions', ['userid' => $this->userid, 'playlistid' => $this->playlistid]);
+    }
+
+    public function testDeleteVideoFromPlaylist()
+    {
+
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a playlist inorder for the relation to be correct
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        //Add a video inorder for the relation to be correct
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+
+        $this->tester->haveInDatabase('playlistvideos', ['videoid' => $this->videoid, 'playlistid' => $this->playlistid, 'position' => '1']);
+
+        $this->db->deleteVideoFromPlaylist($this->playlistid, $this->videoid);
+
+        $this->tester->dontSeeInDatabase('playlistvideos', ['videoid' => $this->videoid, 'playlistid' => $this->playlistid, 'position' => '1']);
+
+    }
+
+    public function testAddVideoToPlaylist()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a playlist inorder for the relation to be correct
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        //Add a video inorder for the relation to be correct
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+    
+        $this->db->addVideoToPlaylist($this->playlistid, $this->videoid, "1");
+
+        $this->tester->seeInDatabase('playlistvideos', ['videoid' => $this->videoid, 'playlistid' => $this->playlistid, 'position' => '1']);
+    }
+
+    public function testReturnPlaylistVideos()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a playlist inorder for the relation to be correct
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        //Add a video inorder for the relation to be correct
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+
+        $this->tester->haveInDatabase('playlistvideos', ['videoid' => $this->videoid, 'playlistid' => $this->playlistid, 'position' => '1']);
+
+        $returnArray = $this->db->returnPlaylistVideos($this->playlistid);
+
+        $this->assertTrue($returnArray[0]['videoid'] == $this->videoid && $returnArray[0]['position'] == "1");
+    }
+
+    public function testReturnPlaylistVideo()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a playlist inorder for the relation to be correct
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+        
+        //Add a video inorder for the relation to be correct
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+        
+        $this->tester->haveInDatabase('playlistvideos', ['videoid' => $this->videoid, 'playlistid' => $this->playlistid, 'position' => '1']);
+        
+        $return = $this->db->returnPlaylistVideo($this->playlistid, $this->videoid);
+        
+        $this->assertTrue($return['videoid'] == $this->videoid && $return['position'] == "1");
+    }
+
+    public function testReturnAllPlaylists()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a playlist inorder for the relation to be correct
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        $returnArray = $this->db->returnAllPlaylists();
+
+        $this->assertTrue($returnArray[0]['ownerid'] == $this->ownerid && $returnArray[0]['name'] == $this->playName);
+    }
+
+    public function testReturnNewestPlaylistVideo() 
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a playlist inorder for the relation to be correct
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        //Add a video inorder for the relation to be correct
+        $this->tester->haveInDatabase('video',['id' => "1", 'userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+        $this->tester->haveInDatabase('video',['id' => "2", 'userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+
+        $this->tester->haveInDatabase('playlistvideos', ['videoid' => "1", 'playlistid' => $this->playlistid, 'position' => '1']);
+        $this->tester->haveInDatabase('playlistvideos', ['videoid' => "2", 'playlistid' => $this->playlistid, 'position' => '2']);
+
+        $return = $this->db->returnNewestPlaylistVideo($this->playlistid);
+
+        $this->assertTrue($return['videoid'] == "2" && $return['position'] == "2");
+    }
+
+    public function testEditPositionPlaylistVideo()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a playlist inorder for the relation to be correct
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        //Add a video inorder for the relation to be correct
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+
+        $this->tester->haveInDatabase('playlistvideos', ['videoid' => $this->playlistid, 'playlistid' => $this->playlistid, 'position' => '1']);
+
+        $this->db->editPositionPlaylistVideo($this->playlistid, $this->videoid, "2");
+
+        $this->tester->seeInDatabase('playlistvideos', ['videoid' => $this->playlistid, 'playlistid' => $this->playlistid, 'position' => '2']);
+    }
+
+    
 
 }

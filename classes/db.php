@@ -270,7 +270,7 @@ class DB
         }
     }
 
-    public function returnPlaylists($m_id){ //Returns ALL playlists
+    public function returnPlaylists($m_id){ //Returns ALL playlists from one person
         $sql = 'SELECT id, name, description, thumbnail, date FROM playlists WHERE ownerId=:id';
         $sth = $this->dbh->prepare ($sql);
         $sth->bindParam(':id', $m_id);
