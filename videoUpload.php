@@ -17,7 +17,11 @@ if (isset($_SESSION['user'])) { //User is logged in
     $user = new User($_SESSION['user']);
 
     $content['userinfo'] = $user->returnEmail();
-    $content['userprivileges'] = $user->getPrivileges();    
+    $content['userprivileges'] = $user->getPrivileges();   
+    
+    if ($content['userprivileges'] < 1) { //Redirect if user isnt authorized
+        header("Location: index.php");
+    }
 }
 
 $loader = new Twig_Loader_Filesystem('./templates');
