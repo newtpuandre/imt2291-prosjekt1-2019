@@ -147,9 +147,21 @@ class Video
             return $res;
         }else {
             print_r("failed!");
-        }
-       
+        }       
     }
+
+    public function getAllVideosWithLecturers() {
+        $db = new DB();
+
+        $res = $db->returnAllVideosWithLecturers();
+        if($res) {
+            return $res;
+        }else {
+            print_r("failed!");
+        }    
+    }
+
+    
 
     public function getVideo($id){
         $db = new DB();

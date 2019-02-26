@@ -38,27 +38,13 @@ if (isset($_POST['button_update'])) {
     $username = $_POST['update_username'];
     $password = $_POST['update_password'];
 
- 
-
-    if(!isset($_FILES['update_picture'])){
-        $profilepic = $content['user']['thumbnail_path'];
-        
-        $db = new DB();
-        $res = $db->updateUser($uid, $name, $username, $password, $profilepic);
+    if($_FILES['update_picture']['name'] == ""){
+        $user->updateUser($content['uid'], $name, $username, $password, null);
     } else {
         $profilepic = $_FILES['update_picture'];
+        $user->updateUser($content['uid'], $name, $username, $password, $profilepic);
     }
-    
-
-    $user->updateUser($content['uid'], $name, $username, $password, $profilepic);
-
-
 }
-
-
-    
-
-
 
 
 echo $twig->render('profile.html', $content);

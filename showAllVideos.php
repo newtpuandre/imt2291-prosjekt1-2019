@@ -25,10 +25,9 @@ $twig = new Twig_Environment($loader, array(
     //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
 ));
 
-
-
     $video = new Video();
-    $res = $video->getAllVideos();
+    $res = $video->getAllVideosWithLecturers();   
+
 
     if($res) {
        $content['result'] = $res;

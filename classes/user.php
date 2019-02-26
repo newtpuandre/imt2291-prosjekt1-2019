@@ -33,27 +33,25 @@ class User
     }
 
     public function updateUser($uid, $name, $username, $password, $profilepic){
-      
+        /* Delete old picture if it is not the default picture and there is a new profile picture */
         $old_picture = $this->returnPicture();
-
-        if($old_picture){
-
-        $old_path = User::$target_dir . basename($old_picture["name"]);
-        unlink($old_path);
-        
+        if($old_picture && ($profilepic != null)) {
+            if ($old_picture != 'https://propertymarketersllc.com/wp-content/uploads/2018/05/profile-picture-placeholder.png') {
+                unlink($old_picture);
+            }
         }
-        
-        $picture_path = User::$target_dir . basename($profilepic["name"]);
-        $picture_file_type = strtolower(pathinfo($picture_path, PATHINFO_EXTENSION));
+    
+        /* Upload new image if provided */
+        $db = new DB();
+        if ($profilepic != null) {
+            $picture_path = User::$target_dir . basename($profilepic["name"]);
+            $picture_file_type = strtolower(pathinfo($picture_path, PATHINFO_EXTENSION));
 
-        /* TODO : Return meaningful error for all of these, for now, debug echos */
-        
-
+            /* TODO : Return meaningful error for all of these, for now, debug echos */
             if($picture_file_type != "jpg" && $picture_file_type != "png" && $picture_file_type != "jpeg" && $picture_file_type != "gif") {
                 echo"picture format must be jpg, png, jpeg or gif";
                 return false;
             }
-    
            
             /* Resize profilepic  */
             $this->pictureResize($profilepic, 180, 180, $picture_path);
@@ -64,24 +62,11 @@ class User
             else{
                 return false;
             }
-        
-            $db = new DB();
 
-
-            $res = $db->updateUser($uid, $name, $username, $password, $picture_path);
-            //$respictures = $db->updateprofilepic($videoipicture_path);
-    
-           /* if ($respictures) {
-                echo "Database Success!";
-                return true;
-            } else {
-                echo "Failed to updpicture and info to database!";
-                return false;
-            }
-    
-            */
-        
-
+            $db->updateUser($uid, $name, $username, $password, $picture_path);
+        } else {
+            $db->updateUser($uid, $name, $username, $password, $old_picture);
+        }
     }
 
     public function returnEmail(){ //Returns users email

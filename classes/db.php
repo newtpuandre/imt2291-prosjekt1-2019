@@ -64,6 +64,8 @@ class DB
         $sth->bindParam(':name', $m_name);
         $sth->bindParam(':email', $m_email);
         $sth->bindParam(':password', $m_password);
+
+        print_r($m_picture);
         $sth->bindParam(':picture', $m_picture);
 
         $sth->execute();
@@ -591,6 +593,19 @@ class DB
         $sth = $this->dbh->prepare($sql);
         $sth->bindParam(':id', $m_id);
 
+        $sth->execute();
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return null;
+        }
+    }
+
+    public function returnAllVideosWithLecturers() {
+        $sql = 'SELECT users.name, video.title, video.description, video.topic, video.course, video.thumbnail_path, video.video_path, video.time
+        FROM users JOIN video on video.userid = users.id;';
+        
+        $sth = $this->dbh->prepare($sql);
         $sth->execute();
         if ($rows = $sth->fetchAll()) {
             return $rows;
