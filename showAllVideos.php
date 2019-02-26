@@ -29,10 +29,12 @@ $twig = new Twig_Environment($loader, array(
     $res = $video->getAllVideosWithLecturers();
 
     /* Only show parts of the description */
-    foreach ($res as &$video) {
+    if($res){
+        foreach ($res as &$video) {
         $new_desc = substr($video['description'], 0, 80) . " [...]";
         $video['description'] = $new_desc;
-    }
+        }  
+    } 
 
     if($res) {
        $content['result'] = $res;
