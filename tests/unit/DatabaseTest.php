@@ -558,4 +558,77 @@ class DatabaseTest extends \Codeception\Test\Unit
         $this->tester->seeInDatabase('rating',['userid' => $this->userid, 'videoid' => $this->videoid, 'rating' => "5"]);
     }
 
+    public function testReturnAllRatings()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a video inorder for the relation to be correct
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+
+        $this->tester->haveInDatabase('rating',['userid' => $this->userid, 'videoid' => $this->videoid, 'rating' => "5"]);
+
+        $returnArray = $this->db->returnAllRatings($this->videoid);
+
+        $this->assertTrue($returnArray[0]['rating'] == "5");
+    }
+
+    public function testReturnTotalRatings()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+        $this->tester->haveInDatabase('users',['name' => "test2", 'email' => "test@test2.t", 'password' => $this->password]);
+
+        //Add a video inorder for the relation to be correct
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+
+        $this->tester->haveInDatabase('rating',['userid' => $this->userid, 'videoid' => $this->videoid, 'rating' => "5"]);
+        $this->tester->haveInDatabase('rating',['userid' => "2", 'videoid' => $this->videoid, 'rating' => "2"]);
+
+        $return = $this->db->returnTotalRatings($this->videoid);
+
+        $this->assertTrue($return[0]['COUNT(*)'] == "2");
+    }
+
+    public function testGetNewVideos()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a video inorder for the relation to be correct
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+
+        $returnArray = $this->db->getNewVideos();
+
+        $this->assertTrue($returnArray[0]['title'] == $this->title && $returnArray[0]['description'] == $this->desc);
+
+    }
+
+    public function testReturnLecturerName()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a video inorder for the relation to be correct
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+
+        $returnArray = $this->db->returnLecturerName($this->userid);
+
+        $this->assertTrue($returnArray[0]['name'] == $this->name);
+
+    }
+
+    public function testReturnAllVideosWithLecturers()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a video inorder for the relation to be correct
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+
+        $returnArray = $this->db->returnAllVideosWithLecturers();
+
+        $this->assertTrue($returnArray[0]['name'] == $this->name && $returnArray[0]['title'] == $this->title);
+    }
+
 }
