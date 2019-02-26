@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `playlistvideos` (
 -- Data exporting was unselected.
 -- Dumping structure for table prosjekt1.rating
 CREATE TABLE IF NOT EXISTS `rating` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `userid` int(11) NOT NULL,
   `videoid` int(11) NOT NULL,
   `rating` int(11) NOT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 -- Dumping structure for table prosjekt1.video
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `video` (
   PRIMARY KEY (`id`),
   KEY `fk_userid` (`userid`),
   CONSTRAINT `fk_userid` FOREIGN KEY (`userid`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

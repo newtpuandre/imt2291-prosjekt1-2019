@@ -30,6 +30,9 @@ class DatabaseTest extends \Codeception\Test\Unit
     private $playDesc = "playlistDesc";
     private $playThumb = "thumbnail";
 
+    //Comment
+    private $comment = "Comment";
+
 
 
     private $db = null;
@@ -514,6 +517,45 @@ class DatabaseTest extends \Codeception\Test\Unit
         $this->tester->seeInDatabase('playlistvideos', ['videoid' => $this->playlistid, 'playlistid' => $this->playlistid, 'position' => '2']);
     }
 
-    
+    public function testNewComment()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a video inorder for the relation to be correct
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+
+        $this->db->newComment($this->userid, $this->videoid, $this->comment);
+
+        $this->tester->seeInDatabase('comment',['userid' => $this->userid, 'videoid' => $this->videoid, 'comment' => $this->comment]);
+    }
+
+    public function testReturnAllComments()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a video inorder for the relation to be correct
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+
+        $this->tester->haveInDatabase('comment',['userid' => $this->userid, 'videoid' => $this->videoid, 'comment' => $this->comment]);
+
+        $returnArray = $this->db->returnAllComments($this->videoid);
+
+        $this->assertTrue($returnArray[0]['comment'] == $this->comment && $returnArray[0]['name'] == $this->name);
+    }
+
+    public function testNewRating()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        //Add a video inorder for the relation to be correct
+        $this->tester->haveInDatabase('video',['userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail]);
+
+        $this->db->newRating($this->userid, $this->videoid, "5");
+
+        $this->tester->seeInDatabase('rating',['userid' => $this->userid, 'videoid' => $this->videoid, 'rating' => "5"]);
+    }
 
 }
