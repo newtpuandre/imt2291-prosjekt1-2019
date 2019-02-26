@@ -17,4 +17,18 @@ class CommentTest extends \Codeception\Test\Unit
 
     // tests
     
+    public function testAddComment()
+    {
+
+    }
+
+    public function testGetAllComments()
+    {
+
+    }
+
+    public function testDeleteComment()
+    {
+
+    }
 }

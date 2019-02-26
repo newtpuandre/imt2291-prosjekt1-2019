@@ -536,6 +536,20 @@ class DB
         }
     }
 
+    public function deleteComment($m_commentid){
+
+        $sql = 'DELETE FROM comment WHERE id=:id';
+        $sth = $this->dbh->prepare($sql);
+
+        $sth->bindParam(':id', $m_commentid);
+        $sth->execute();
+
+        if ($sth->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function newRating($m_user, $m_video, $m_rating) {
         $sql = 'INSERT INTO rating (userid, videoid, rating) values ( ?, ?, ?)';
         $sth = $this->dbh->prepare($sql);

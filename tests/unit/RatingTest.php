@@ -17,4 +17,28 @@ class RatingTest extends \Codeception\Test\Unit
 
     // tests
     
+    public function testAddRating()
+    {
+
+    }
+
+    public function testUpdateRating()
+    {
+
+    }
+
+    public function testGetRating()
+    {
+
+    }
+
+    public function testGetAllRatings()
+    {
+
+    }
+
+    public function testGetTotalRatings()
+    {
+
+    }
 }

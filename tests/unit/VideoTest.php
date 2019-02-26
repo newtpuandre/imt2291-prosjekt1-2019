@@ -62,7 +62,8 @@ class VideoTest extends \Codeception\Test\Unit
 
     public function testGetAllVideosWithLecturers()
     {
-        
+   
+
     }
 
     public function testGetVideo()
@@ -76,11 +77,25 @@ class VideoTest extends \Codeception\Test\Unit
         $this->assertEquals($videoinfo[0]['description'], $this->desc);
         $this->assertEquals($videoinfo[0]['title'], $this->title);
         $this->assertEquals($videoinfo[0]['thumbnail_path'], $this->thumbnail);
+        $this->assertEquals($videoinfo[0]['id'], $this->userid);
+        $this->assertEquals($videoinfo[0]['userid'], $this->userid);
+        $this->assertEquals($videoinfo[0]['video_path'], $this->video);
+        $this->assertEquals($videoinfo[0]['topic'], $this->topic);
+        $this->assertEquals($videoinfo[0]['course'], $this->course);
+
+
     }
 
     public function testGetVideoLecturer()
     {
-        
+        $this->tester->haveInDatabase('users',['id' => $this->userid, 'name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+        $this->tester->haveInDatabase('video',['id' => $this->videoid, 'userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail, 'video_path' => $this->video]);
+    
+        $video = new Video();
+        $videoinfo = $video->getVideoLecturer($this->videoid);
+
+        $this->assertEquals($videoinfo[0]['name'], $this->name);
+
     }
 
     public function testDeleteVideo()
