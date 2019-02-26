@@ -65,7 +65,7 @@ class UserTest extends \Codeception\Test\Unit
         $user->updateUser($test_id, "", $newEmail, "" , "");
 
         $user = new User($newEmail);
-        $this->assertTrue($newEmail, $user->returnEmail());
+        $this->assertTrue($newEmail == $user->returnEmail());
 
     }
 
