@@ -64,6 +64,8 @@ class DB
         $sth->bindParam(':name', $m_name);
         $sth->bindParam(':email', $m_email);
         $sth->bindParam(':password', $m_password);
+
+        print_r($m_picture);
         $sth->bindParam(':picture', $m_picture);
 
         $sth->execute();
