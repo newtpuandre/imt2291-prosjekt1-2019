@@ -523,7 +523,7 @@ class DB
 
     public function returnAllComments($m_videoid){
       
-        $sql = 'SELECT users.name, users.picture_path, comment.comment FROM comment 
+        $sql = 'SELECT users.name, users.picture_path, comment.id, comment.comment FROM comment 
         JOIN users ON comment.userid = users.id WHERE videoid=:videoid ORDER BY comment.id DESC';
         $sth = $this->dbh->prepare($sql);
         $sth->bindParam(':videoid', $m_videoid);
@@ -645,7 +645,7 @@ class DB
     }
 
     public function returnAllVideosWithLecturers() {
-        $sql = 'SELECT users.name, video.title, video.description, video.topic, video.course, video.thumbnail_path, video.video_path, video.time
+        $sql = 'SELECT users.name, video.id, video.title, video.description, video.topic, video.course, video.thumbnail_path, video.video_path, video.time
         FROM users JOIN video on video.userid = users.id;';
         
         $sth = $this->dbh->prepare($sql);

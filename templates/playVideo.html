@@ -67,6 +67,9 @@
 
     <ul class="list-group">
         {% for comment in comments %}
+        <form action="playVideo.php" method="POST">
+            <input type="hidden" name="video_id" value="{{ video_id }}">
+            <input type="hidden" name="comment_id" value="{{ comment.id }}">
         <li class="list-group-item ">
             <div class="media">
                 <div class="media-left media-middle">
@@ -77,9 +80,12 @@
                     <h4 class="media-heading"> {{comment.name}} </h4>
                     <p> {{ comment.comment }}
                     </p>
+                    <button type="submit" name="button_delete" class="float-right btn btn-primary">Slett</button>
                 </div>
+        
             </div>
         </li>
+    </form>
         {% endfor %}
     </ul>
 

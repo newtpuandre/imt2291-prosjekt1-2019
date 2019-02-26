@@ -27,6 +27,7 @@ $twig = new Twig_Environment($loader, array(
 
     $video = new Video();
     $res = $video->getAllVideosWithLecturers();
+    $content['result'] = $res;
 
     /* Only show parts of the description */
     if($res){
@@ -37,7 +38,6 @@ $twig = new Twig_Environment($loader, array(
     } 
 
     if($res) {
-       $content['result'] = $res;
        echo $twig->render('showAllVideos.html', $content);
     } else {
        echo("Ingen videoer å vise.");

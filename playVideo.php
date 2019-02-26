@@ -66,6 +66,19 @@ if(isset($_POST['submit_rating'])) {
     
 }
 
+if(isset($_POST['button_delete'])){
+    $video = new Video();
+    $videoid = $_POST['video_id'];   
+    $content['videoinfo'] = $video->getVideo($videoid);
+
+    $comment = new Comment();
+    $commentid = $_POST['comment_id'];   
+
+    print_r($commentid);
+    $comment->deleteComment($commentid);
+}
+
+
     $commentinfo = new Comment();
     $content['comments'] = $commentinfo->getAllComments($videoid);
     $content['video_id'] = $videoid;

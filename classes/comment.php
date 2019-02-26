@@ -36,11 +36,12 @@ class Comment
 public function deleteComment($commentid){
 
     $db = new DB();
+
         
     $res = $db->deleteComment($commentid);
 
     if($res) {
-        return $res;
+        return true;
     }else {
         print_r("Failed deleting comment!");
     }
