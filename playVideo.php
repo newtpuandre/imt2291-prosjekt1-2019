@@ -27,6 +27,8 @@ if (isset($_GET['id'])) {
     $video = new Video();
     $videoid = $_GET['id'];   
     $content['videoinfo'] = $video->getVideo($videoid);
+    $content['lecturer'] = $video->getVideoLecturer($videoid);
+    $content['lecturer'] = $content['lecturer'][0]['name'];
 }
 
 if(isset($_POST['submit_btn'])) {

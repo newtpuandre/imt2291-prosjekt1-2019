@@ -163,6 +163,19 @@ class Video
         }
     }
 
+    public function getVideoLecturer($id){
+        $db = new DB();
+
+        $res = $db->returnLecturerName($id);
+
+        if($res) {
+            return $res;
+        }else {
+            print_r("failed getting lecturer!");
+        }
+    }
+
+
     public function deleteVideo($videoid){
         $db = new DB();
         
