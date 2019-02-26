@@ -586,6 +586,19 @@ class DB
         }
     }
 
+    public function returnLecturerName($m_id){
+        $sql = 'SELECT users.name FROM users JOIN video on video.userid = users.id WHERE video.id =:id;';
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindParam(':id', $m_id);
+
+        $sth->execute();
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return null;
+        }
+    }
+
 }
 
 
