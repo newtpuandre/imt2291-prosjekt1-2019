@@ -19,11 +19,13 @@
         <!-- TODO 
         <p class="card-text"><b>Lastet opp av: </b>{{ user }}</p>
         -->
-        <p class="card-text"><b>Emne: </b>{{ video.course }}</p>
-        <p class="card-text"><b>Tema: </b>{{ video.topic }}</p>
-        <p class="card-text"><b>Foreleser: </b>{{ video.name }}</p>
-        <p class="card-text"><b>Lastet opp: </b>{{ video.time }}</p>
-        <p class="card-text"><b>Beskrivelse: </b>{{ video.description }}</p>
+        <ul class="list-unstyled">
+          <li class="mt-1"><b>Emne: </b>{{ video.course }}</li>
+          <li class="mt-1"><b>Tema: </b>{{ video.topic }}</li>
+          <li class="mt-1"><b>Foreleser: </b>{{ video.name }}</li>
+          <li class="mt-1"><b>Lastet opp: </b>{{ video.time }}</li>
+          <li class="mt-1"><b>Beskrivelse: </b>{{ video.description }}</li>
+        </ul>
       </div>
       <div class="w-100"></div>
     </div>
