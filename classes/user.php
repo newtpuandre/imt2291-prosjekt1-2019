@@ -34,13 +34,12 @@ class User
 
     public function updateUser($uid, $name, $username, $password, $profilepic){
       
-        
-        
         $old_picture = $this->returnPicture();
 
         if($old_picture){
 
-        unlink($old_picture);
+        $old_path = User::$target_dir . basename($old_picture["name"]);
+        unlink($old_path);
         
         }
         
