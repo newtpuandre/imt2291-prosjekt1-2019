@@ -19,6 +19,35 @@ class Rating
             }
         
     }
+
+    public function updateRating($uid, $videoid, $rating){
+
+        $db = new DB();
+        
+        $res = $db->updateRating($uid, $videoid, $rating);
+        
+        if ($res) {
+            echo "Database Success!";
+            return true;
+        } else {
+             //echo "Failed to update rating to database!";
+            return false;
+        }
+    }
+
+    public function getRating($uid, $videoid){
+        $db = new DB();
+        
+        $res = $db->returnRating($uid, $videoid);
+        
+        if ($res) {
+            //echo "Database Success!";
+            return $res;
+        } else {
+             echo "Failed to get rating from database!";
+            return null;
+        }
+    }
         
     public function getAllRatings($videoid) {
             $db = new DB();

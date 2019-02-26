@@ -55,8 +55,15 @@ if(isset($_POST['submit_rating'])) {
     }
     $rating = new Rating();
     $uid = $content['uid'];
-    $rating->addRating($uid, $videoid, $video_rating);
+   
+    $prev = $rating->getRating($uid, $videoid);
 
+    if($prev != null){
+        $rating->updateRating($uid, $videoid, $video_rating);
+    } else {
+        $rating->addRating($uid, $videoid, $video_rating);
+    }
+    
 }
 
     $commentinfo = new Comment();

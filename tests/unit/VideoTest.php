@@ -1,5 +1,8 @@
 <?php 
 
+require_once './classes/db.php';
+require_once './classes/video.php';
+
 class VideoTest extends \Codeception\Test\Unit
 {
     /**

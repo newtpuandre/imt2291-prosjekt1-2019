@@ -64,8 +64,6 @@ class DB
         $sth->bindParam(':name', $m_name);
         $sth->bindParam(':email', $m_email);
         $sth->bindParam(':password', $m_password);
-
-        print_r($m_picture);
         $sth->bindParam(':picture', $m_picture);
 
         $sth->execute();
@@ -550,6 +548,37 @@ class DB
         }
     }
 
+    public function updateRating($m_uid, $m_videoid, $m_rating){
+        $sql = 'UPDATE rating SET rating=:rating WHERE userid=:userid AND videoid=:videoid';
+        $sth = $this->dbh->prepare($sql);
+
+        $sth->bindParam(':userid', $m_uid);
+        $sth->bindParam(':videoid', $m_videoid);
+        $sth->bindParam(':rating', $m_rating);
+
+        $sth->execute();
+        if ($row = $sth->fetch()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function returnRating($m_uid, $m_videoid){
+        $sql = 'SELECT rating FROM rating WHERE userid=:userid AND videoid=:videoid';
+        
+        $sth = $this->dbh->prepare($sql);
+
+        $sth->bindParam(':userid', $m_uid);
+        $sth->bindParam(':videoid', $m_videoid);
+        $sth->execute();
+        if ($row = $sth->fetch()) {
+            return $row;
+        } else {
+            return null;
+        }
+    }
+
     public function returnAllRatings($m_videoid){
         $sql = 'SELECT rating FROM rating WHERE videoid=:videoid';
         $sth = $this->dbh->prepare($sql);
@@ -613,7 +642,6 @@ class DB
             return null;
         }
     }
-
 }
 
 
