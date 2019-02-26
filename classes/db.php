@@ -599,6 +599,19 @@ class DB
         }
     }
 
+    public function returnAllVideosWithLecturers() {
+        $sql = 'SELECT users.name, video.title, video.description, video.topic, video.course, video.thumbnail_path, video.video_path, video.time
+        FROM users JOIN video on video.userid = users.id;';
+        
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute();
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return null;
+        }
+    }
+
 }
 
 

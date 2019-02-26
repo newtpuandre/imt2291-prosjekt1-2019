@@ -38,9 +38,9 @@ class User
 
         if($old_picture){
 
-        $old_path = User::$target_dir . basename($old_picture["name"]);
-        unlink($old_path);
-        
+            $old_path = User::$target_dir . basename($old_picture["name"]);
+            unlink($old_path);
+
         }
         
         $picture_path = User::$target_dir . basename($profilepic["name"]);
