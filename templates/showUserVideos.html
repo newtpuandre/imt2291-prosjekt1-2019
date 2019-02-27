@@ -49,10 +49,13 @@
         <div class="modal-body">
           Er du sikker på at du vil slette denne videoen? ({{ video.title }})
         </div>
+        <form method="POST" target="deleteVideo.php">
         <div class="modal-footer">
+            <input type="hidden" id="id" name="video_id" value="{{ video.id }}">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Angre</button>
           <button type="submit" name="button_delete" formaction="deleteVideo.php" class="btn btn-danger">Slett</button>
         </div>
+      </form>
       </div>
     </div>
   </div>
