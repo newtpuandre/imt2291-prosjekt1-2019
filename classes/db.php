@@ -511,7 +511,7 @@ class DB
     }
 
     public function returnAllPlaylists(){
-        $sql = 'SELECT id, ownerid, name, description, thumbnail, date FROM playlists';
+        $sql = 'SELECT users.name AS lectname, playlists.id, ownerid, playlists.name, description, thumbnail, date FROM playlists JOIN users';
         $sth = $this->dbh->prepare($sql);
         $sth->execute();
         if ($rows = $sth->fetchAll()) {
