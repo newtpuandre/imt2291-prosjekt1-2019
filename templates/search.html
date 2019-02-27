@@ -10,12 +10,11 @@
       </div>
       <div class="card-block">
         <a href ="playVideo.php?id={{ video.id }}"><h4 class="video-title">{{ video.title }}</h4></a>
-        <!-- TODO 
-        <p class="card-text"><b>Lastet opp av: </b>{{ user }}</p>
-        -->
+       
         <p class="card-text"><b>Emne: </b>{{ video.course }}</p>
         <p class="card-text"><b>Tema: </b>{{ video.topic }}</p>
         <p class="card-text"><b>Lastet opp: </b>{{ video.time }}</p>
+        <p class="card-text"><b>Lastet opp av: </b>{{ video.name }}</p>
         <p class="card-text"><b>Beskrivelse: </b>{{ video.description }}</p>
       </div>
       <div class="w-100"></div>

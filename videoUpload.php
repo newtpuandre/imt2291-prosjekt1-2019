@@ -58,8 +58,9 @@ if(isset($_POST['upload_btn'])) {
     if($res) {
         echo $twig->render('index.html', $content);
     } else {
-       echo("Ikke lastet opp!");
+        header("Location: editPlaylist.php?" . "&status=feil");
     } 
+
 }
 
 ?>

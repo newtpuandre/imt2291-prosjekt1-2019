@@ -1,6 +1,11 @@
 {% include 'header.html' %}
 <body>
   <div class="container">
+      {% if status == "feil" %}
+      <div class="alert alert-danger" role="alert">
+          <strong>Noe gikk galt!</strong> Prøv igjen senere...
+        </div>
+      {% endif %}
     <div class="row pt-5 pb-5">
       <!-- Header Row -->
       <div class="col-sm">

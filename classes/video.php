@@ -2,82 +2,103 @@
 
 require_once 'db.php';
 
+/**
+  *  class Video
+  */
+
 class Video
 {
     static private $target_dir = "uploads/";
 
     function __construct() { }
 
-    public function upload($uid, $title, $description, $topic, $course, $video, $thumbnail) {
+    /**
+     * @function upload
+     * @brief uploads video/thumbnail files and adds information to DB
+     * @param $uid
+     * @param string $title
+     * @param string $description
+     * @param string $topic
+     * @param string $course
+     * @param string $video
+     * @param string $thumbnail
+     * @return bool
+     */
 
+    public function upload($uid, $title, $description, $topic, $course, $video, $thumbnail) {
         
+        /* Get file types */
         $video_file_type = strtolower(pathinfo(Video::$target_dir . basename($video["name"]), PATHINFO_EXTENSION));
         $thumb_file_type = strtolower(pathinfo(Video::$target_dir . basename($thumbnail["name"]), PATHINFO_EXTENSION));
 
+        //Set video and thumbnail filepath
         $video_path = Video::$target_dir . uniqid() . "." . $video_file_type;
         $thumb_path = Video::$target_dir . uniqid() . "." . $thumb_file_type;
 
-        print_r($thumb_path);
-        /* TODO : Return meaningful error for all of these, for now, debug echos */
-        if (file_exists($video_path) || file_exists($thumb_path)) { //Should never happen with uniqid()
-            echo "FILE EXISTS!\n";
-            print_r($video_path);
-            print_r($thumb_path);
+        //Should never happen with uniqid()
+        if (file_exists($video_path) || file_exists($thumb_path)) { 
             return false;
         }
 
+        //Check for correct thumbnail file format
         if ($thumb_file_type != "jpg" && $thumb_file_type != "png" && $thumb_file_type != "jpeg" && $thumb_file_type != "gif") {
-            echo "Thumb format must be jpg, png, jpeg or gif";
             return false;
         }
 
+        //Check for correct video file format
         if ($video_file_type != "mp4") {
-            echo "Video must be mp4";
             return false;
         }
 
-        /* Resize Thumbnail to 1280x720 */
+        //Resize Thumbnail to 320x180
         $this->thumbnailResize($thumbnail, 320, 180, $thumb_path);
 
-        if(move_uploaded_file($video["tmp_name"], $video_path) /* && move_uploaded_file($thumbnail["tmp_name"], $thumb_path)*/) {
-            echo "The files uploaded successfully!";
-
-            /* Inser info in database */
+        //If the file uploaded successfully
+        if(move_uploaded_file($video["tmp_name"], $video_path)) {
+          
+            /* Insert into database */ 
             $db = new DB();
             $res = $db->newVideo($uid, $title, $description, $topic, $course, $thumb_path, $video_path);
 
             if ($res) {
-                echo "Database Success!";
                 return true;
             } else {
-                echo "Failed to insert to database!";
-
-                /* Make sure we delete uploaded files if database could not be updated! */
+                //Make sure we delete uploaded files if database could not be updated!
                 unlink($video_path);
                 unlink($thumb_path);
                 return false;
             }
         } else {
-            echo "Woops, couldn't upload.";
+            //If files didnt upload successfully
             return false;
         }        
     }   
 
-    public function updateVideo($videoid, $title, $description, $topic, $course, $thumbnail){
-
+    /**
+     * @function updateVideo
+     * @brief updates information about video in db
+     * @param $videoid
+     * @param string $title
+     * @param string $description
+     * @param string $topic
+     * @param string $course
+     * @param string $video
+     * @param string $thumbnail
+     * @return bool
+     */
+    
+     public function updateVideo($videoid, $title, $description, $topic, $course, $thumbnail){
 
         if(!$thumbnail['name']){
 
             $db = new DB();
             $res = $db->updateVideo($videoid, $title, $description, $topic, $course);
 
-        if ($res) {
-            echo "Database Success!";
-            return true;
-        } else {
-            echo "Failed to update database!";
-            return false;
-        }
+            if ($res) {
+                return true;
+            } else {
+                return false;
+            }
 
         }
 
@@ -127,7 +148,13 @@ class Video
     }  
 
  
-    
+    /**
+     * @function getAllUserVideos
+     * @brief returns all videos uploaded by one specific user
+     * @param $uid
+     * @return array|null
+     */
+
     public function getAllUserVideos($uid) {
         $db = new DB();
 
@@ -140,6 +167,12 @@ class Video
         }
        
     }
+
+    /**
+     * @function getAllVideos
+     * @brief returns all videos in database
+     * @return array|null
+     */
 
     public function getAllVideos() {
         $db = new DB();
@@ -164,7 +197,12 @@ class Video
         }    
     }
 
-    
+       /**
+     * @function getVideo
+     * @brief returns one specific video
+     * @param $id
+     * @return array|null
+     */
 
     public function getVideo($id){
         $db = new DB();
@@ -178,6 +216,13 @@ class Video
         }
     }
 
+    /**
+     * @function getVideoLecturer
+     * @brief returns the lecturer of one video
+     * @param $id
+     * @return array|null
+     */
+
     public function getVideoLecturer($id){
         $db = new DB();
 
@@ -190,7 +235,12 @@ class Video
         }
     }
 
-
+   /**
+     * @function deleteVideo
+     * @brief deletes specific video from db and disk
+     * @param $videoid
+     * @return bool
+     */
     public function deleteVideo($videoid){
         $db = new DB();
         
@@ -228,6 +278,12 @@ class Video
         imagedestroy($dst_img);        
     }
 
+    /**
+     * @function search
+     * @brief returns all videos where a column matches the prompt
+     * @param string $prompt
+     * @return array|null
+     */
     public function search($prompt){
         $db = new DB();
 
@@ -241,6 +297,12 @@ class Video
 
     }
 
+    /**
+     * @function getAllVideoCourses
+     * @brief returns the count and information of all courses
+     * @param $uid
+     * @return array|null
+     */
     public function getAllVideoCourses(){
         $db = new DB();
 
@@ -253,7 +315,12 @@ class Video
         }
     }
 
-    public function getNewVideos(){ //Get the 8 newest videos uploaded.
+   /**
+     * @function getNewVideos
+     * @brief returns the 8 newest videos uploaded
+     * @return array|null
+     */
+    public function getNewVideos(){
         $db = new DB();
 
         $res = $db->getNewVideos();
@@ -265,6 +332,11 @@ class Video
         }
     }
 
+     /**
+     * @function searchVideoCourse
+     * @brief returns video where the course matches the prompt
+     * @return array|null
+     */
     public function searchVideoCourse($prompt){
         $db = new DB();
 
