@@ -66,11 +66,12 @@ class RatingTest extends \Codeception\Test\Unit
     {
         $this->tester->haveInDatabase('users',['id' => $this->userid, 'name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
         $this->tester->haveInDatabase('video',['id' => $this->videoid, 'userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail, 'video_path' => $this->video]);
+        $this->tester->haveInDatabase('rating',['userid' => $this->userid, 'videoid' => $this->videoid, 'rating' => $this->rating]);
     
         $rating = new Rating();
         $ratinginfo = $rating->getRating($this->userid, $this->videoid);
 
-        $this->assertEquals($ratinginfo, $this->rating);
+        $this->assertEquals($ratinginfo[0], $this->rating);
     
 
     }

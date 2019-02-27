@@ -79,12 +79,14 @@ class UserTest extends \Codeception\Test\Unit
     }
 
     public function testReturnPicture(){
+        $user = new User($this->email);
         $test_picture = "https://propertymarketersllc.com/wp-content/uploads/2018/05/profile-picture-placeholder.png";
-        $this->assertTrue($this->user->returnPicture() == $test_picture);
+        $this->assertTrue($user->returnPicture() == $test_picture);
     }
     
     public function testReturnName(){
-        $this->assertTrue($this->user->returnName() == $this->name);
+        $user = new User($this->email);
+        $this->assertTrue($user->returnName() == $this->name);
     }
 
 }
