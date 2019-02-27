@@ -1,6 +1,10 @@
 {% include 'header.html' %}
 <main role="main" class="container">
-
+    {% if status == "feil" %}
+    <div class="alert alert-danger" role="alert">
+        <strong>Noe gikk galt!</strong> Prøv igjen senere...
+      </div>
+    {% endif %}
     {% if mode == "" %}
     <h1 class="display-4" style="margin-top:15px">Tilgjengelige spillelister</h1>
         {% if playlists == "" %}

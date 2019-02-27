@@ -41,19 +41,41 @@ if (isset($_GET['show'])) {
 
     if(isset($_GET['subscribe'])) {
 
-        $playlist->subscribeToPlaylist($_GET['show'], $content['userid']);
+        $res = $playlist->subscribeToPlaylist($_GET['show'], $content['userid']);
 
-        header("Location: playlist.php?show=".$_GET['show']);
+        print_r($res);
+        if ($res) {
+            header("Location: playlist.php?show=".$_GET['show']);
+        } else{
+            header("Location: playlist.php?show=".$_GET['show']."&status=feil");
+        }
+
 
     } elseif (isset($_GET['unsubscribe'])) { 
 
-        $playlist->unsubscribeToPlaylist($_GET['show'], $content['userid']);
+        $res = $playlist->unsubscribeToPlaylist($_GET['show'], $content['userid']);
 
-        header("Location: playlist.php?show=".$_GET['show']);
+        print_r($res);
+        if ($res) {
+            header("Location: playlist.php?show=".$_GET['show']);
+        } else {
+            header("Location: playlist.php?show=".$_GET['show']."&status=feil");
+        }
+
     }
 
 }  else {
-    $content['playlists'] = $playlist->returnAllPlaylists();
+    $res = $playlist->returnAllPlaylists();
+    if ($res) {
+        $content['playlists'] = $res;
+    } else {
+        $content['status'] = "feil";
+    }
+    //$content['playlists'] = $playlist->returnAllPlaylists();
+}
+
+if (isset($_GET['status'])) {
+    $content['status'] = $_GET['status'];
 }
 
 
