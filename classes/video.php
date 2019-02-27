@@ -111,8 +111,10 @@ class Video
             unlink($old_thumb[0]['thumbnail_path']);
         }
 
-        $thumb_path = Video::$target_dir . basename($thumbnail["name"]);
-        $thumb_file_type = strtolower(pathinfo($thumb_path, PATHINFO_EXTENSION));
+        $thumb_file_type = strtolower(pathinfo(Video::$target_dir . basename($thumbnail["name"]), PATHINFO_EXTENSION));
+
+        //Set video and thumbnail filepath
+        $thumb_path = Video::$target_dir . uniqid() . "." . $thumb_file_type;
 
        //Check thumbnail filetype
         if ($thumb_file_type != "jpg" && $thumb_file_type != "png" && $thumb_file_type != "jpeg" && $thumb_file_type != "gif") {
@@ -121,12 +123,7 @@ class Video
     
            
         //Resize thumbnail
-        $this->thumbnailResize($thumbnail, 180, 320, $thumb_path);
-
-        //Check if uploaded
-        if(!move_uploaded_file($thumbnail["tmp_name"], $thumb_path)){
-            return false;
-        }
+        $this->thumbnailResize($thumbnail, 320, 180, $thumb_path);
         
         $db = new DB();
 
