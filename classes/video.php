@@ -27,7 +27,7 @@ class Video
 
     public function upload($uid, $title, $description, $topic, $course, $video, $thumbnail) {
         
-        /* Get file types */
+        //Get file types
         $video_file_type = strtolower(pathinfo(Video::$target_dir . basename($video["name"]), PATHINFO_EXTENSION));
         $thumb_file_type = strtolower(pathinfo(Video::$target_dir . basename($thumbnail["name"]), PATHINFO_EXTENSION));
 
@@ -56,7 +56,7 @@ class Video
         //If the file uploaded successfully
         if(move_uploaded_file($video["tmp_name"], $video_path)) {
           
-            /* Insert into database */ 
+            //Insert into database
             $db = new DB();
             $res = $db->newVideo($uid, $title, $description, $topic, $course, $thumb_path, $video_path);
 
@@ -88,7 +88,7 @@ class Video
      */
     
      public function updateVideo($videoid, $title, $description, $topic, $course, $thumbnail){
-
+        //If there is no thumbnail to update
         if(!$thumbnail['name']){
 
             $db = new DB();
@@ -103,48 +103,44 @@ class Video
         }
 
         else {
-        
+        //Get the original thumbnail
         $old_thumb = $this->getVideo($videoid);
-        if($old_thumb){
-        unlink($old_thumb[0]['thumbnail_path']);
-        }
-        $thumb_path = Video::$target_dir . basename($thumbnail["name"]);
 
+        if($old_thumb){
+            //Delete original thumbnail
+            unlink($old_thumb[0]['thumbnail_path']);
+        }
+
+        $thumb_path = Video::$target_dir . basename($thumbnail["name"]);
         $thumb_file_type = strtolower(pathinfo($thumb_path, PATHINFO_EXTENSION));
 
-        /* TODO : Return meaningful error for all of these, for now, debug echos */
-        
-
-            if ($thumb_file_type != "jpg" && $thumb_file_type != "png" && $thumb_file_type != "jpeg" && $thumb_file_type != "gif") {
-                echo "Thumb format must be jpg, png, jpeg or gif";
-                return false;
-            }
-    
-           
-            /* Resize Thumbnail  */
-            $this->thumbnailResize($thumbnail, 180, 320, $thumb_path);
-
-            if(move_uploaded_file($thumbnail["tmp_name"], $thumb_path)){
-                echo "The files uploaded successfully!";
-            }
-            else{
-                return false;
-            }
-        
-            $db = new DB();
-            $res = $db->updateVideo($videoid, $title, $description, $topic, $course);
-            $thumbres = $db->updateThumbnail($videoid, $thumb_path);
-    
-            if ($res && thumbres) {
-                echo "Database Success!";
-                return true;
-            } else {
-                echo "Failed to update thumb and info to database!";
-                return false;
-            }
-    
+       //Check thumbnail filetype
+        if ($thumb_file_type != "jpg" && $thumb_file_type != "png" && $thumb_file_type != "jpeg" && $thumb_file_type != "gif") {
+            return false;
         }
     
+           
+        //Resize thumbnail
+        $this->thumbnailResize($thumbnail, 180, 320, $thumb_path);
+
+        //Check if uploaded
+        if(!move_uploaded_file($thumbnail["tmp_name"], $thumb_path)){
+            return false;
+        }
+        
+        $db = new DB();
+
+        //Update 
+        $res = $db->updateVideo($videoid, $title, $description, $topic, $course);
+        $thumbres = $db->updateThumbnail($videoid, $thumb_path);
+    
+        //If unsuccessful
+        if (!($res && $thumbres)){
+            return false;
+        }
+
+        return true;
+    }
     }  
 
  
@@ -163,9 +159,8 @@ class Video
         if($res) {
             return $res;
         }else {
-            print_r("failed!");
+            return null;
         }
-       
     }
 
     /**
@@ -182,9 +177,15 @@ class Video
         if($res) {
             return $res;
         }else {
-            print_r("failed!");
+            return null;
         }       
     }
+
+     /**
+     * @function getAllVideosWithLecturers
+     * @brief returns all videos in database with lecture names
+     * @return array|null
+     */
 
     public function getAllVideosWithLecturers() {
         $db = new DB();
@@ -193,7 +194,7 @@ class Video
         if($res) {
             return $res;
         }else {
-            print_r("failed!");
+            return null;
         }    
     }
 
@@ -212,7 +213,7 @@ class Video
         if($res) {
             return $res;
         }else {
-            print_r("failed getting video!");
+            return null;
         }
     }
 
@@ -231,7 +232,7 @@ class Video
         if($res) {
             return $res;
         }else {
-            print_r("failed getting lecturer!");
+            return null;
         }
     }
 
@@ -254,13 +255,21 @@ class Video
         $res = $db->deleteVideo($videoid);
 
         if($res) {
-            return $res;
+            return true;
         }else {
-            print_r("Failed deleting video!");
+            return false;
         }
-
-
     }
+
+     /**
+     * @function thumbnailResize
+     * @brief scales the thumbnail to a new size
+     * @param $thumbnail
+     * @param $new_width
+     * @param $new_height
+     * @param $output_path
+     */
+
     public function thumbnailResize($thumbnail, $new_width, $new_height, $output_path){
         $content = file_get_contents($thumbnail["tmp_name"]);
         
@@ -292,9 +301,8 @@ class Video
         if($res) {
             return $res;
         }else {
-            print_r("failed searching!");
+            return null; 
         }
-
     }
 
     /**
@@ -311,7 +319,7 @@ class Video
         if($res) {
             return $res;
         }else {
-            print_r("Failed getting courses!");
+            return null; 
         }
     }
 
@@ -328,7 +336,7 @@ class Video
         if ($res) {
             return $res;
         } else {
-            print_r("Failed to get new videos!");
+            return null;
         }
     }
 
@@ -345,7 +353,7 @@ class Video
         if ($res) {
             return $res;
         } else {
-            print_r("Failed to get courses!");
+            return null;
         }
     }
 }
