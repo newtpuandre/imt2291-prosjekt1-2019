@@ -28,6 +28,7 @@ class CommentTest extends \Codeception\Test\Unit
   //Comment
   private $comment = "Comment";
   private $commentid = "1";
+  private $commentid_alt = "2";
 
 
 
@@ -66,6 +67,16 @@ class CommentTest extends \Codeception\Test\Unit
 
     public function testGetAllComments()
     {
+        $this->tester->haveInDatabase('users',['id' => $this->userid, 'name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+        $this->tester->haveInDatabase('video',['id' => $this->videoid, 'userid' => $this->userid, 'title' => $this->title, 'description' => $this->desc, 'topic' => $this->topic, 'course' => $this->course, 'thumbnail_path' => $this->thumbnail, 'video_path' => $this->video]);
+        $this->tester->haveInDatabase('comment',['id' => $this->commentid, 'userid'=>$this->userid, 'videoid'=> $this->videoid, 'comment' =>$this->comment]);
+        $this->tester->haveInDatabase('comment',['id' => $this->commentid_alt, 'userid'=>$this->userid, 'videoid'=> $this->videoid, 'comment' =>$this->comment]);
+
+        $comment = new Comment();
+        $comments = $comment->getAllComments($this->videoid);
+   
+        /* Assert at vi fikk ut 2 ratings av de to vi har */
+        $this->tester->assertEquals(sizeof($comments), 2);
 
     }
 
