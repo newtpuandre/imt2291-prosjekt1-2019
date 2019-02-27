@@ -23,6 +23,10 @@ if (isset($_SESSION['user'])) { //User is logged in && is admin
 
     if ($content['userprivileges'] != 2) { //Redirect if user isnt authorized
         header("Location: index.php");
+    } else {
+        $admin = new Admin();
+        $return = $admin->countIAmTeacher();
+        $content['isTeacherCount'] = $return['num']; 
     }
 
 }
@@ -31,8 +35,16 @@ if (isset($_POST['updateUser'])) { //Update privileges of the selected user
     //Check if this went OK
     $admin->updatePrivileges($_POST['email'],$_POST['privileges']);
     header("Location: admin.php"); //Refresh the page inorder for the list to update
+
 }
 
+if (isset($_GET['remove'])) {
+    $admin->removeIAmTeacher($_GET['remove']);
+}
+
+if (isset($_GET['status'])) {
+    $content['status'] = "feil";
+}
 //
 
 

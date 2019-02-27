@@ -1,5 +1,10 @@
 {% include 'header.html' %}
     <main role="main" class="container">    
+        {% if status == "feil" %}
+        <div class="alert alert-danger" role="alert">
+            <strong>Noe gikk galt!</strong> Prøv igjen senere...
+          </div>
+        {% endif %}
       <h1 class="display-4" style="margin-top:15px">Brukeroversikt</h1>
         <ul class="list-group">
           {% for user in userlist %}
@@ -19,6 +24,9 @@
             </div>
             <button class="btn btn-primary" name="updateUser" type="submit" style="margin-top:15px">Oppdater</button>
             </form>
+            {% if user.isTeacher == 1 %}
+            <a href ="admin.php?remove={{ user.id }}"><button class="btn btn-danger" style="margin-top:5px">Fjerne 'Jeg er lærer'</button></a>
+            {% endif %}
           </li>
           {% endfor %}
         </ul>

@@ -5,6 +5,7 @@ require_once 'classes/user.php';
 require_once 'classes/video.php';
 require_once 'classes/comment.php';
 require_once 'classes/rating.php';
+require_once 'classes/admin.php';
 
 
 $content = array();
@@ -18,7 +19,11 @@ if (isset($_SESSION['user'])) { //User is logged in
     $content['userprivileges'] = $user->getPrivileges();
     $content['uid'] = $user->returnId();
     
-    
+    if ($content['userprivileges'] == "2") {
+        $admin = new Admin();
+        $return = $admin->countIAmTeacher();
+        $content['isTeacherCount'] = $return['num'];
+    }
 }
 
 if (isset($_POST['button_search'])){

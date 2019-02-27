@@ -264,6 +264,17 @@ class DatabaseTest extends \Codeception\Test\Unit
         $this->tester->seeInDatabase('users', ['email' => $this->email, 'privileges' => "2"]);
     }
 
+    public function testRemoveIAmTeacher()
+    {
+        //Add a user
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password, 'isTeacher' => "1"]);
+
+        $this->db->removeIAmTeacher($this->userid);
+
+        $this->tester->seeInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password, 'isTeacher' => "0"]);
+
+    }
+
     public function testReturnPlaylists()
     {
         //Add a user inorder for the relation to be correct

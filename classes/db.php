@@ -75,6 +75,29 @@ class DB
 
     }
 
+    public function removeIAmTeacher($m_id) {
+        $sql = 'UPDATE users SET isTeacher=0 WHERE id=:id';
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindParam('id', $m_id);
+        $sth->execute();
+        if ($row = $sth->fetch()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function countIAmTeacher(){
+        $sql = 'SELECT COUNT(*) AS num FROM users WHERE isTeacher=1';
+        $sth = $this->dbh->prepare ($sql);
+        $sth->execute();
+        if ($row = $sth->fetch()){
+            return $row;
+        } else {
+            return false;
+        }
+    }
+
     public function loginUser($m_email,$m_password){
 
         $sql = 'SELECT password, id FROM users WHERE email=:email';
@@ -95,7 +118,7 @@ class DB
     }
 
     public function gatherUsers(){
-        $sql = 'SELECT email, privileges, isTeacher FROM users ORDER BY id DESC ';
+        $sql = 'SELECT id, email, privileges, isTeacher FROM users ORDER BY id DESC ';
         $sth = $this->dbh->prepare ($sql);
         $sth->execute();
         if ($rows = $sth->fetchAll()) {

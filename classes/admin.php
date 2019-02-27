@@ -30,6 +30,14 @@ class Admin
             return false;
         }
     }
+
+    public function countIAmTeacher(){
+        return $this->db->countIAmTeacher();
+    }
+
+    public function removeIAmTeacher($m_id){
+        return $this->db->removeIAmTeacher($m_id);
+    }
 }
 
 ?>

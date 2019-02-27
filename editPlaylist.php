@@ -4,6 +4,7 @@
 require_once 'vendor/autoload.php';
 require_once 'classes/user.php';
 require_once 'classes/playlist.php';
+require_once 'classes/admin.php';
 
 $content = array();
 
@@ -27,6 +28,12 @@ if (isset($_SESSION['user'])) { //User is logged in
 
     if ($content['userprivileges'] < 1) { //Redirect if user isnt authorized
         header("Location: index.php");
+    }
+
+    if ($content['userprivileges'] == "2") {
+        $admin = new Admin();
+        $return = $admin->countIAmTeacher();
+        $content['isTeacherCount'] = $return['num'];
     }
 
     $playlist = new Playlist();

@@ -28,18 +28,36 @@ class AdminTest extends \Codeception\Test\Unit
     {
     }
 
-    public function testGatherUsers(){
+    public function testGatherUsers()
+    {
         $admin = new Admin();
         $users = $admin->gatherUsers();
 
         $this->assertTrue($users[0]['email'] == "test@test.test");
     }
 
-    public function testUpdatePrivileges(){
+    public function testUpdatePrivileges()
+    {
         $admin = new Admin();
         $admin->updatePrivileges("test@test.test", "2");
 
         $this->tester->seeInDatabase('users', ['email' => 'test@test.test', 'privileges' => '2']);
+    }
+
+    public function testCountIAmTeacher()
+    {
+        $count = $this->db->countIAmTeacher();
+
+        $this->assertTrue($count['num'] > 0);
+    }
+
+    public function testRemoveIAmTeacher()
+    {
+        $admin = new Admin();
+        $admin->removeIAmTeacher("1");
+
+        $this->tester->seeInDatabase('users', ['email' => 'test@test.test', 'isTeacher' => '0']);
+
     }
 
 }    

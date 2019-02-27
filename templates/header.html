@@ -60,7 +60,12 @@
                 <a href= "videoUpload.php"><button class="btn btn-success" type="submit" style="margin-right:15px">Last opp video</button></a>
                 <a href= "showUserVideos.php"><button class="btn btn-success" type="submit" style="margin-right:15px">Mine videoer</button></a>
                 <a href= "editPlaylist.php"><button class="btn btn-success" type="submit" style="margin-right:15px">Mine spillelister</button></a>
-                <a href= "admin.php"><button class="btn btn-success" type="submit" style="margin-right:15px">Admin</button></a>
+                <a href= "admin.php"><button class="btn btn-success" type="submit" style="margin-right:15px">Admin
+                  {% if isTeacherCount > 0 %}
+                  <span class="badge badge-danger" style="margin-left:5px">
+                  {{ isTeacherCount }}
+                  </span>
+                  {% endif %}</button></a>
               {% elseif userprivileges == 1%} <!-- Is user Teacher? -->
                 <a href= "videoUpload.php"><button class="btn btn-success" type="submit" style="margin-right:15px">Last opp video</button></a>
                 <a href= "showUserVideos.php"><button class="btn btn-success" type="submit" style="margin-right:15px">Mine videoer</button></a>
@@ -70,10 +75,8 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                  {{ userinfo }} <!-- Prints users login name -->
-                 <span class="badge badge-danger" style="margin-left:10px">1</span>
                 </a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Notifikasjoner <span class="badge badge-danger">1</span></a>
                   <a class="dropdown-item" href="profile.php">Min profil</a>
                   <a class="dropdown-item" href="logout.php">Logg ut</a>
                 </div>

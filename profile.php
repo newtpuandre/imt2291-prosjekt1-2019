@@ -8,6 +8,7 @@ require_once 'vendor/autoload.php';
 require_once 'classes/user.php';
 require_once 'classes/DB.php';
 require_once 'classes/video.php';
+require_once 'classes/admin.php';
 
 $content = array();
 
@@ -22,6 +23,12 @@ if (isset($_SESSION['user'])) { //User is logged in
     $content['name'] = $user->returnName();
     //$content['password'] = $user->returnPassword();
     $content['picture'] = $user->returnPicture();
+
+    if ($content['userprivileges'] == "2") {
+        $admin = new Admin();
+        $return = $admin->countIAmTeacher();
+        $content['isTeacherCount'] = $return['num'];
+    }
 }
 
 $loader = new Twig_Loader_Filesystem('./templates');
