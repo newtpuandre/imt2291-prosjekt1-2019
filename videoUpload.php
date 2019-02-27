@@ -1,9 +1,12 @@
 <?php
-/*
-Twig renderer for upload.html
 
-For å hente ut informasjon fra formen og sende til upload manager(som sender til DB)
-*/
+/**
+  *  Twig renderer for upload.html
+  *
+  * For uploading a video to the database
+  */
+
+
 require_once 'vendor/autoload.php';
 require_once 'classes/user.php';
 require_once 'classes/DB.php';
@@ -14,13 +17,15 @@ $content = array();
 
 session_start();
 
-if (isset($_SESSION['user'])) { //User is logged in
+/* If the user is logged in */
+if (isset($_SESSION['user'])) { 
     $user = new User($_SESSION['user']);
 
     $content['userinfo'] = $user->returnEmail();
     $content['userprivileges'] = $user->getPrivileges();   
     
-    if ($content['userprivileges'] < 1) { //Redirect if user isnt authorized
+    /*Redirect if the user isn't authorized*/
+    if ($content['userprivileges'] < 1) { 
         header("Location: index.php");
     }
 
@@ -36,6 +41,7 @@ $twig = new Twig_Environment($loader, array(
     //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
 ));
 
+/* If the upload video button isn't pressed */
 if (!isset($_FILES['upload_video'])){
     echo $twig->render('upload.html', $content);
     exit();
@@ -58,7 +64,7 @@ if(isset($_POST['upload_btn'])) {
     if($res) {
         echo $twig->render('index.html', $content);
     } else {
-        header("Location: editPlaylist.php?" . "&status=feil");
+        header("Location: videoUpload.php?" . "&status=feil");
     } 
 
 }
