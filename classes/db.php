@@ -57,7 +57,7 @@ class DB
     }
 
     public function updateUser($m_id, $m_name, $m_email, $m_password, $m_picture){
-        
+
         if ($m_password != null) {
             $sql = 'UPDATE users SET name=:name, email=:email, password=:password, picture_path=:picture WHERE id=:id';
         } else {
@@ -517,7 +517,7 @@ class DB
     }
 
     public function returnAllPlaylists(){
-        $sql = 'SELECT users.name AS lectname, playlists.id, ownerid, playlists.name, description, thumbnail, date FROM playlists JOIN users';
+        $sql = 'SELECT users.name AS lectname, playlists.id, ownerid, playlists.name, description, thumbnail, date FROM playlists JOIN users ON users.id = ownerid';
         $sth = $this->dbh->prepare($sql);
         $sth->execute();
         if ($rows = $sth->fetchAll()) {
