@@ -202,9 +202,9 @@ class Playlist
     public function updatePlaylist($m_id, $m_ownerId, $m_name, $m_description, $m_thumbnail){
 
         if (!$m_thumbnail['name']) { 
-            return $this->db->updatePlaylist($m_id, $m_ownerId, $m_name, $m_description);
+            $this->db->updatePlaylist($m_id, $m_ownerId, $m_name, $m_description);
         } else {
-            
+
             $thumb_file_type = strtolower(pathinfo(Playlist::$target_dir . basename($m_thumbnail["name"]), PATHINFO_EXTENSION));
             $thumb_path = Playlist::$target_dir . uniqid() . "." . $thumb_file_type;
     
@@ -223,9 +223,12 @@ class Playlist
             /* Resize Thumbnail to 320x180 */
             $this->thumbnailResize($m_thumbnail, 320, 180, $thumb_path);
 
-            return $this->db->updatePlaylist($m_id, $m_ownerId, $m_name, $m_description, $thumb_path);
+            
+            $this->db->updatePlaylist($m_id, $m_ownerId, $m_name, $m_description, $thumb_path);
         }
     
+        return true;
+        
     }
 
     public function returnAllPlaylists(){ //Should only be used on sites where all playlists should be shown!
