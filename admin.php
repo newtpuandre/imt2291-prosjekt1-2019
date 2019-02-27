@@ -40,6 +40,7 @@ if (isset($_POST['updateUser'])) { //Update privileges of the selected user
 
 if (isset($_GET['remove'])) {
     $admin->removeIAmTeacher($_GET['remove']);
+    header("Location: admin.php"); //Refresh the page inorder for the list to update
 }
 
 if (isset($_GET['status'])) {
