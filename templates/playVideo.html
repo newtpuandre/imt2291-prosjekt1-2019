@@ -80,7 +80,9 @@
                     <h4 class="media-heading"> {{comment.name}} </h4>
                     <p> {{ comment.comment }}
                     </p>
+                    {% if comment.email == userinfo %}
                     <button type="submit" name="button_delete" class="float-right btn btn-primary">Slett</button>
+                    {% endif %}
                 </div>
         
             </div>

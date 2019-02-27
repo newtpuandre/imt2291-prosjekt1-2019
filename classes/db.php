@@ -57,15 +57,21 @@ class DB
     }
 
     public function updateUser($m_id, $m_name, $m_email, $m_password, $m_picture){
-      
-        $sql = 'UPDATE users SET name=:name, email=:email, password=:password, picture_path=:picture WHERE id=:id';
+
+        if ($m_password != null) {
+            $sql = 'UPDATE users SET name=:name, email=:email, password=:password, picture_path=:picture WHERE id=:id';
+        } else {
+            $sql = 'UPDATE users SET name=:name, email=:email, picture_path=:picture WHERE id=:id';
+        }
+       
         $sth = $this->dbh->prepare ($sql);
         $sth->bindParam(':id', $m_id);
         $sth->bindParam(':name', $m_name);
         $sth->bindParam(':email', $m_email);
-        $sth->bindParam(':password', $m_password);
         $sth->bindParam(':picture', $m_picture);
-
+        if ($m_password != null) {
+            $sth->bindParam(':password', $m_password);
+        }
         $sth->execute();
         if ($row = $sth->fetch()) {
             return true;
@@ -511,7 +517,7 @@ class DB
     }
 
     public function returnAllPlaylists(){
-        $sql = 'SELECT users.name AS lectname, playlists.id, ownerid, playlists.name, description, thumbnail, date FROM playlists JOIN users';
+        $sql = 'SELECT users.name AS lectname, playlists.id, ownerid, playlists.name, description, thumbnail, date FROM playlists JOIN users ON users.id = ownerid';
         $sth = $this->dbh->prepare($sql);
         $sth->execute();
         if ($rows = $sth->fetchAll()) {

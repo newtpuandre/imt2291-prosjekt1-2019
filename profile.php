@@ -43,15 +43,20 @@ if (isset($_POST['button_update'])) {
     
     $name = $_POST['update_name']; 
     $username = $_POST['update_username'];
-    $password = $_POST['update_password'];
+
+    if ($_POST['update_password']) {
+        $password = $_POST['update_password'];
+    } else {
+        $password = null;
+    }
 
     if($_FILES['update_picture']['name'] == ""){
         $user->updateUser($content['uid'], $name, $username, $password, null);
-        header("Location: profile.php");
+        //header("Location: profile.php");
     } else {
         $profilepic = $_FILES['update_picture'];
         $user->updateUser($content['uid'], $name, $username, $password, $profilepic);
-        header("Location: profile.php");
+        //header("Location: profile.php");
     }
 }
 
