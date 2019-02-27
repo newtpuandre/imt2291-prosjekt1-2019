@@ -10,3 +10,5 @@ modules:
     enabled:
         # add a framework module here
         - \Helper\Functional
+        - PhpBrowser:
+            url: http://localhost/imt2291-prosjekt1-2019/
