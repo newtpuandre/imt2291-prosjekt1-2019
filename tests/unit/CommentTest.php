@@ -78,7 +78,7 @@ class CommentTest extends \Codeception\Test\Unit
         $comment = new Comment();
         $result = $comment->deleteComment($this->commentid);
 
-        $this->assertTrue($result);
-
+        $this->tester->dontSeeInDatabase('comment',['id' => $this->commentid, 'userid'=>$this->userid, 'videoid'=> $this->videoid, 'comment' =>$this->comment]);
+      
     }
 }
