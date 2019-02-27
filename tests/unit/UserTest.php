@@ -69,7 +69,7 @@ class UserTest extends \Codeception\Test\Unit
 
     }
 
-    public function testGetId(){
+    public function testReturnId(){
         $test_id = "1";
 
         $user = new User($this->email);
@@ -78,13 +78,13 @@ class UserTest extends \Codeception\Test\Unit
         $this->assertEquals($id, $test_id);
     }
 
-    public function testUserLogin(){
-        $this->assertTrue($this->db->loginUser($this->email, $this->password));
+    public function testReturnPicture(){
+        $test_picture = "https://propertymarketersllc.com/wp-content/uploads/2018/05/profile-picture-placeholder.png";
+        $this->assertTrue($this->user->returnPicture() == $test_picture);
     }
-
-    public function testRegisterUser(){
-        $test_email = "test2@test2.test";
-        $this->assertTrue($this->db->registerUser($this->name, $test_email, $this->password, true));
+    
+    public function testReturnName(){
+        $this->assertTrue($this->user->returnName() == $this->name);
     }
 
 }
