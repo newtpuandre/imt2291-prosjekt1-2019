@@ -95,8 +95,8 @@ class RatingTest extends \Codeception\Test\Unit
         $this->tester->haveInDatabase('rating',['userid' => $this->userid, 'videoid' => $this->videoid, 'rating' => $this->rating]);
         $this->tester->haveInDatabase('rating',['userid' => $this->userid_alt, 'videoid' => $this->videoid, 'rating' => $this->rating]);
 
-        $res = new Rating();
-        $ratings = $res->getAllRatings($this->videoid);
+        $rating = new Rating();
+        $ratings = $rating->getAllRatings($this->videoid);
    
         /* Assert at vi fikk ut 2 ratings av de to vi har */
         $this->tester->assertEquals(sizeof($ratings), 2);
