@@ -33,7 +33,14 @@ class User
     }
 
     public function updateUser($uid, $name, $username, $password, $profilepic){
+
+        if ($password != null){
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        } else {
+            $hashed_password = null;
+        }
         /* Delete old picture if it is not the default picture and there is a new profile picture */
+
         $old_picture = $this->returnPicture();
         if($old_picture && ($profilepic != null)) {
             if ($old_picture != 'https://propertymarketersllc.com/wp-content/uploads/2018/05/profile-picture-placeholder.png') {
@@ -65,9 +72,14 @@ class User
                 return false;
             }
 
-            $db->updateUser($uid, $name, $username, $password, $picture_path);
+            $db->updateUser($uid, $name, $username, $hashed_password, $picture_path);
+            header("Location: profile.php");
+
         } else {
-            $db->updateUser($uid, $name, $username, $password, $old_picture);
+
+            $db->updateUser($uid, $name, $username, $hashed_password, $old_picture);
+            header("Location: profile.php");
+
         }
     }
 
