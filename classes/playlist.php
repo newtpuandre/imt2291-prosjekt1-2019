@@ -42,7 +42,9 @@ class Playlist
 
             $lastPos = $temp['position'] + 1;
             
-            $this->db->addVideoToPlaylist($m_playlistid, $m_videoid, $lastPos);
+            $res = $this->db->addVideoToPlaylist($m_playlistid, $m_videoid, $lastPos);
+
+            return $res;
 
         } else {
             return false;
@@ -52,16 +54,17 @@ class Playlist
 
     public function deletePlaylist($m_playlistid, $m_ownerid) {
 
-        $this->db->deletePlaylist($m_playlistid, $m_ownerid);
+        return $this->db->deletePlaylist($m_playlistid, $m_ownerid);
 
     }
 
     public function deleteVideoFromPlaylist($m_playlistid, $m_videoid) {
 
+
         $pos = $this->db->returnPlaylistVideo($m_playlistid, $m_videoid);
         $temp = $this->db->returnPlaylistVideos($m_playlistid);
 
-        $this->db->deleteVideoFromPlaylist($m_playlistid, $m_videoid);
+        $res = $this->db->deleteVideoFromPlaylist($m_playlistid, $m_videoid);
 
         //find and edit all videoes with pos > removed && do pos-1 as long as pos > 1
 
@@ -83,7 +86,10 @@ class Playlist
 
         for ($j = $i; $j < count($temp); $j++) {
             $this->db->editPositionPlaylistVideo($m_playlistid, $temp[$j]['videoid'], $temp[$j]['position']-1); //Move selected item down one
+
         }
+
+        return $res;
 
     }
 
@@ -113,9 +119,9 @@ class Playlist
                 return false;
             }
 
-            $this->db->editPositionPlaylistVideo($m_playlistid, $m_videoid, $editedItem['position']+1); //Move selected item down one
+            $res1 = $this->db->editPositionPlaylistVideo($m_playlistid, $m_videoid, $editedItem['position']+1); //Move selected item down one
 
-            $this->db->editPositionPlaylistVideo($m_playlistid, $temp[$i+1]['videoid'], $temp[$i+1]['position']-1); //Move item "below" one up
+            $res2 = $this->db->editPositionPlaylistVideo($m_playlistid, $temp[$i+1]['videoid'], $temp[$i+1]['position']-1); //Move item "below" one up
 
         } else { //Move the pos towards the top (1)
 
@@ -135,11 +141,13 @@ class Playlist
                 return false;
             }
 
-            $this->db->editPositionPlaylistVideo($m_playlistid, $m_videoid, $editedItem['position']-1); //Move selected item up one
+            $res1 = $this->db->editPositionPlaylistVideo($m_playlistid, $m_videoid, $editedItem['position']-1); //Move selected item up one
 
-            $this->db->editPositionPlaylistVideo($m_playlistid, $temp[$i-1]['videoid'], $temp[$i-1]['position']+1); //Move item "above" one down
+            $res2 = $this->db->editPositionPlaylistVideo($m_playlistid, $temp[$i-1]['videoid'], $temp[$i-1]['position']+1); //Move item "above" one down
 
         }
+
+        return true;
 
     }
 
@@ -190,7 +198,7 @@ class Playlist
 
     public function updatePlaylist($m_id, $m_ownerId, $m_name, $m_description, $m_thumbnail){
 
-        if (!$m_thumbnail['name']) { //
+        if (!$m_thumbnail['name']) { 
             return $this->db->updatePlaylist($m_id, $m_ownerId, $m_name, $m_description);
         } else {
             $thumb_path = Playlist::$target_dir . basename($m_thumbnail["name"]);

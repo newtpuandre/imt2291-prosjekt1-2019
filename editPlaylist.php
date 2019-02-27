@@ -32,6 +32,10 @@ if (isset($_SESSION['user'])) { //User is logged in
     $playlist = new Playlist();
 }
 
+if (isset($_GET['status'])) {
+    $content['status'] = $_GET['status'];
+}
+
 if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playlist
     $content['mode'] = 1;
 
@@ -40,6 +44,8 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
         $res = $playlist->insertPlaylist($content['userid'], $_POST['name'], $_POST['description'], $_FILES['thumbnail_file']);
         if ($res) {
             header("Location: editPlaylist.php");
+        } else {
+            header("Location: editplaylist.php?status=feil");
         }
 
 
@@ -54,11 +60,16 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
         foreach ($_POST['videoids'] as &$value) {
 
             //Add videos to playlist
-            $playlist->addVideoToPlaylist($_POST['playlistId'], $value);
+            $res = $playlist->addVideoToPlaylist($_POST['playlistId'], $value);
 
         }
         
-        header("Location: editPlaylist.php?update=".$_POST['playlistId']);
+        if ($res) {
+            header("Location: editPlaylist.php?update=".$_POST['playlistId']);
+        } else {
+            header("Location: editplaylist.php?addVideos&status=feil");
+        }
+
 
     }
 
@@ -72,25 +83,33 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
     //$content['videos'] = $db->returnVideos($content['userid'], 0, 20); //Only show 20 at a time 
     $content['videos'] = $playlist->returnVideos($content['userid']);
 
-
-
 }  elseif (isset($_GET['update']) || isset($_POST['update'])) { //Update selected playlist
     $content['mode'] = 2;
 
     if(isset($_POST['update'])) {
 
         //Update playlist
-        $playlist->updatePlaylist($_POST['id'],$content['userid'],$_POST['name'],$_POST['description'], $_FILES['thumbnail_file']);
+        $res = $playlist->updatePlaylist($_POST['id'],$content['userid'],$_POST['name'],$_POST['description'], $_FILES['thumbnail_file']);
 
-        header("Location: editPlaylist.php?update=".$_POST['id']); //Refresh page to see changes
+        if ($res) {
+            header("Location: editPlaylist.php?update=".$_POST['id']); //Refresh page to see changes
+        } else {
+            header("Location: editPlaylist.php?update=".$_POST['id']."&status=feil");
+        }
     }
 
     if(isset($_GET['down'])){
 
         if ($_GET['down'] == "true") {
-            $playlist->editPosition($_GET['update'], $_GET['id'], true);
+            $res = $playlist->editPosition($_GET['update'], $_GET['id'], true);
         } else { //false
-            $playlist->editPosition($_GET['update'], $_GET['id'], false);
+            $res = $playlist->editPosition($_GET['update'], $_GET['id'], false);
+        }
+
+        if ($res) {
+            header("Location: editPlaylist.php?update=".$_GET['update']); //Refresh page to see changes
+        } else {
+            header("Location: editPlaylist.php?update=".$_GET['update']."&status=feil");
         }
 
     }
@@ -98,9 +117,14 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
     if(isset($_GET['delete'])) {
         
         //Delete video from playlist
-        $playlist->deleteVideoFromPlaylist($_GET['update'], $_GET['delete']);
-
-        header("Location: editPlaylist.php?update=".$_GET['update']);
+        $res = $playlist->deleteVideoFromPlaylist($_GET['update'], $_GET['delete']);
+        
+        if ($res) {
+            header("Location: editPlaylist.php?update=".$_GET['update']);
+        } else {
+            header("Location: editPlaylist.php?update=".$_GET['update']."&status=feil");
+        }
+        
 
     }
 
@@ -118,9 +142,13 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
 
 } elseif (isset($_GET['deletePlaylist'])) {
 
-    $playlist->deletePlaylist($_GET['deletePlaylist'], $content['userid']);
+    $res = $playlist->deletePlaylist($_GET['deletePlaylist'], $content['userid']);
 
-    header("Location: editPlaylist.php");
+    if ($res) {
+        header("Location: editPlaylist.php");   
+    } else {
+        header("Location: editPlaylist.php?status=feil");
+    }
 
 } else { //No params sent
 
@@ -128,8 +156,6 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
     $content['playlists'] = $playlist->returnPlaylists($content['userid']);
 
 }
-
-//Handle button delete logic..
 
 $loader = new Twig_Loader_Filesystem('./templates');
 $twig = new Twig_Environment($loader, array(

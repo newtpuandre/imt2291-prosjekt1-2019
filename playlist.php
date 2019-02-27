@@ -71,7 +71,6 @@ if (isset($_GET['show'])) {
     } else {
         $content['status'] = "feil";
     }
-    //$content['playlists'] = $playlist->returnAllPlaylists();
 }
 
 if (isset($_GET['status'])) {

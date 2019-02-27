@@ -1,6 +1,10 @@
 {% include 'header.html' %}
 <main role="main" class="container">
-
+  {% if status == "feil" %}
+  <div class="alert alert-danger" role="alert">
+      <strong>Noe gikk galt!</strong> Prøv igjen senere...
+    </div>
+  {% endif %}
     {% if mode == "" %}
     <!-- No params sent -->
     <a href="editPlaylist.php?createNew"><button type="button" class="btn btn-success btn-lg float-right">Opprett ny
@@ -62,7 +66,7 @@
 
         <div style="margin-bottom:10px">
           <p>Thumbnail</p>
-          <input id="thumbupload" name="thumbnail_file" type="file" /> 
+          <input id="thumbupload" name="thumbnail_file" type="file" required> 
         </div>
 
         <button type="submit" name="createNew" class="btn btn-primary">Lag spilleliste</button>
@@ -96,7 +100,7 @@
 
     {% for videoItem in playlistVideos %}
     <div class="media" style="margin-bottom:15px">
-        <img src="{{ videoItem.thumbnail }}" class="align-self-center mr-3">
+        <img src="{{ videoItem.thumbnail_path }}" class="align-self-center mr-3">
 
         <div class="media-body">
             <h4>{{ videoItem.title }}</h4>
@@ -153,8 +157,7 @@
             {% for videoItem in videos %}
             <li class="list-group-item">
                 <div class="media" style="margin-bottom:15px">
-                    <img src="http://via.placeholder.com/320x180" class="align-self-center mr-3">
-                    
+                    <img src="{{ videoItem.thumbnail_path }}" class="align-self-center mr-3">
                     <div class="media-body">
                         <h4>{{ videoItem.title }}</h4>
                         <p>Beskrivelse: {{ videoItem.description }}</p>
