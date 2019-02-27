@@ -3,7 +3,7 @@
 require_once 'db.php';
 
 /**
-  *  class Video
+  *  Class Video. Represents a single video.
   */
 
 class Video
