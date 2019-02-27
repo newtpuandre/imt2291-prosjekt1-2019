@@ -71,9 +71,6 @@ public function deleteComment($commentid){
     }
 }
 
-
 }
-
-
 
 ?>
