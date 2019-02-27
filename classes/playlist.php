@@ -52,6 +52,10 @@ class Playlist
 
     }
 
+    public function searchForPlaylists($m_search) {
+        return $this->db->searchForPlaylists($m_search);
+    }
+
     public function deletePlaylist($m_playlistid, $m_ownerid) {
 
         return $this->db->deletePlaylist($m_playlistid, $m_ownerid);

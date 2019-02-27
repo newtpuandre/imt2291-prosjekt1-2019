@@ -229,6 +229,21 @@ class DB
         }
     }
 
+    public function searchForPlaylists($m_search){
+        $sql = 'SELECT id, name, description, thumbnail FROM playlists WHERE name LIKE :prompt OR description LIKE :prompt';
+        $sth = $this->dbh->prepare ($sql);
+        $param = "%" . $m_search . "%";
+        $sth->bindParam(':prompt', $param);
+
+        $sth->execute();
+
+        if ($rows = $sth->fetchAll()) {
+            return $rows;
+        } else {
+            return false;
+        }
+    }
+
     public function returnAllCourses(){
         $sql = 'SELECT COUNT(*), course,id, topic, time FROM video GROUP BY course';
         $sth = $this->dbh->prepare($sql);

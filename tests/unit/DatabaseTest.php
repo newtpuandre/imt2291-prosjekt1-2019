@@ -217,6 +217,18 @@ class DatabaseTest extends \Codeception\Test\Unit
 
     }
 
+    public function testSearchForPlaylists()
+    {
+        //Add a user inorder for the relation to be correct
+        $this->tester->haveInDatabase('users',['name' => $this->name, 'email' => $this->email, 'password' => $this->password]);
+
+        $this->tester->haveInDatabase('playlists',['ownerid' =>  $this->ownerid, 'name' => $this->playName, 'description' => $this->playDesc, 'thumbnail' => $this->playThumb]);
+
+        $returnArray = $this->db->searchForPlaylists($this->playName);
+
+        $this->assertTrue($returnArray[0]['name'] == $this->playName);
+    }
+
     public function testReturnAllCourses()
     {
         //Add a user inorder for the relation to be correct

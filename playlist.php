@@ -65,12 +65,27 @@ if (isset($_GET['show'])) {
     }
 
 }  else {
-    $res = $playlist->returnAllPlaylists();
-    if ($res) {
-        $content['playlists'] = $res;
+    if (isset($_GET['search'])) {
+        $content['mode'] = "2";
+        $content['search'] = $_GET['search'];
+
+        $res = $playlist->searchForPlaylists($_GET['search']);
+
+        if ($res) {
+            $content['playlists'] = $res;
+        } else {
+            $content['status'] = "feil";
+        }
+
     } else {
-        $content['status'] = "feil";
+        $res = $playlist->returnAllPlaylists();
+        if ($res) {
+            $content['playlists'] = $res;
+        } else {
+            $content['status'] = "feil";
+        }
     }
+
 }
 
 if (isset($_GET['status'])) {
