@@ -12,4 +12,4 @@ Elisabeth Wåde-Bye
 Oppgaveteksten ligger i [Wikien til det originale repositoriet](https://bitbucket.org/okolloen/imt2291-prosjekt1-2019/wiki/Home).
 
 # Rapporten #
-Skriv en kort rapport som legges i readme.md. Hvem er med i prosjektet, hva har dere løst på en spesielt god måte. Om dere har gjort noe dere mener er spesielt bra så pass på å skrive om det i rapporten, dere ønsker å selge prosjektet deres. Om det er noe spesielt som må gjøres for å få prosjektet til å kjøre så skriv om det i rapporten (spesielt angående endringer i .htaccess (rewrite rules f.eks), eksterne programmer som brukes, installasjon av database, rettigheter på kataloger etc.) Prosjektet teller 20% og rapporten er deres mulighet til å påvirke hvordan det sensureres.
+Rapporten ligger [her](https://hackmd.io/s/S17UWw48E)
