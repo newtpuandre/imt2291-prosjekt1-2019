@@ -162,9 +162,8 @@ class Playlist
             return false;
         }
 
-        $thumb_path = Playlist::$target_dir . basename($m_thumbnail["name"]);
-
-        $thumb_file_type = strtolower(pathinfo($thumb_path, PATHINFO_EXTENSION));
+        $thumb_file_type = strtolower(pathinfo(Playlist::$target_dir . basename($m_thumbnail["name"]), PATHINFO_EXTENSION));
+        $thumb_path = Playlist::$target_dir . uniqid() . "." . $thumb_file_type;
 
         /* TODO : Return meaningful error for all of these, for now, debug echos */
         if (file_exists($thumb_path)) {
@@ -205,9 +204,9 @@ class Playlist
         if (!$m_thumbnail['name']) { 
             return $this->db->updatePlaylist($m_id, $m_ownerId, $m_name, $m_description);
         } else {
-            $thumb_path = Playlist::$target_dir . basename($m_thumbnail["name"]);
-
-            $thumb_file_type = strtolower(pathinfo($thumb_path, PATHINFO_EXTENSION));
+            
+            $thumb_file_type = strtolower(pathinfo(Playlist::$target_dir . basename($m_thumbnail["name"]), PATHINFO_EXTENSION));
+            $thumb_path = Playlist::$target_dir . uniqid() . "." . $thumb_file_type;
     
             /* TODO : Return meaningful error for all of these, for now, debug echos */
             if (file_exists($thumb_path)) {

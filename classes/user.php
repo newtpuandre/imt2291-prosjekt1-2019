@@ -44,8 +44,10 @@ class User
         /* Upload new image if provided */
         $db = new DB();
         if ($profilepic != null) {
-            $picture_path = User::$target_dir . basename($profilepic["name"]);
-            $picture_file_type = strtolower(pathinfo($picture_path, PATHINFO_EXTENSION));
+
+            $picture_file_type = strtolower(pathinfo(User::$target_dir . basename($profilepic["name"]), PATHINFO_EXTENSION));
+            $picture_path = User::$target_dir . uniqid() . "." . $picture_file_type;
+            
 
             /* TODO : Return meaningful error for all of these, for now, debug echos */
             if($picture_file_type != "jpg" && $picture_file_type != "png" && $picture_file_type != "jpeg" && $picture_file_type != "gif") {

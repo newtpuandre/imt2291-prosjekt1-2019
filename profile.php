@@ -47,9 +47,11 @@ if (isset($_POST['button_update'])) {
 
     if($_FILES['update_picture']['name'] == ""){
         $user->updateUser($content['uid'], $name, $username, $password, null);
+        header("Location: profile.php");
     } else {
         $profilepic = $_FILES['update_picture'];
         $user->updateUser($content['uid'], $name, $username, $password, $profilepic);
+        header("Location: profile.php");
     }
 }
 

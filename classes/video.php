@@ -9,14 +9,17 @@ class Video
     function __construct() { }
 
     public function upload($uid, $title, $description, $topic, $course, $video, $thumbnail) {
-        $video_path = Video::$target_dir . basename($video["name"]);
-        $thumb_path = Video::$target_dir . basename($thumbnail["name"]);
 
-        $video_file_type = strtolower(pathinfo($video_path, PATHINFO_EXTENSION));
-        $thumb_file_type = strtolower(pathinfo($thumb_path, PATHINFO_EXTENSION));
+        
+        $video_file_type = strtolower(pathinfo(Video::$target_dir . basename($video["name"]), PATHINFO_EXTENSION));
+        $thumb_file_type = strtolower(pathinfo(Video::$target_dir . basename($thumbnail["name"]), PATHINFO_EXTENSION));
 
+        $video_path = Video::$target_dir . uniqid() . "." . $video_file_type;
+        $thumb_path = Video::$target_dir . uniqid() . "." . $thumb_file_type;
+
+        print_r($thumb_path);
         /* TODO : Return meaningful error for all of these, for now, debug echos */
-        if (file_exists($video_path) || file_exists($thumb_path)) {
+        if (file_exists($video_path) || file_exists($thumb_path)) { //Should never happen with uniqid()
             echo "FILE EXISTS!\n";
             print_r($video_path);
             print_r($thumb_path);
