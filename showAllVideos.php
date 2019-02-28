@@ -38,7 +38,7 @@ $twig = new Twig_Environment($loader, array(
 
     $video = new Video();
     $res = $video->getAllVideosWithLecturers(); /* Get all videos with information about uploader */
-    $content['result'] = $res;
+    
 
     /* Only show parts of the description */
     if($res){
@@ -49,6 +49,7 @@ $twig = new Twig_Environment($loader, array(
     } elseif (!isset($_GET['status'])) {
         header("Location: showAllVideos.php?status=feil");
     } 
+    $content['result'] = $res;
     echo $twig->render('showAllVideos.html', $content);
 
 

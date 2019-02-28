@@ -52,7 +52,11 @@ if($res){
     if (isset($_POST['button_edit'])){ /* If the edit video button is pressed, redirect */
         echo $twig->render('editVideo.html', $content);
     }
-
+ 
+    foreach ($res as &$video) {
+        $new_desc = substr($video['description'], 0, 50) . " [...]";
+        $video['description'] = $new_desc;
+    }  
     $content['result'] = $res;
 } elseif (!isset($_GET['status'])){
     header("Location: showUserVideos.php?status=feil");
