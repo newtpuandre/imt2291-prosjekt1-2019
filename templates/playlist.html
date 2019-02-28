@@ -1,10 +1,6 @@
 {% include 'header.html' %}
 <main role="main" class="container">
-    {% if status == "feil" %}
-    <div class="alert alert-danger" role="alert">
-        <strong>Noe gikk galt!</strong> Prøv igjen senere...
-      </div>
-    {% endif %}
+    {% include 'errormsg.html %}
     {% if mode == "" %}
     <h3>Søk etter spillelister</h3>
     <p>
