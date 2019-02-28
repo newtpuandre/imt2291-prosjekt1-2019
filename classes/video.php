@@ -87,7 +87,7 @@ class Video
      * @return bool
      */
     
-     public function updateVideo($videoid, $title, $description, $topic, $course, $thumbnail){
+    public function updateVideo($videoid, $title, $description, $topic, $course, $thumbnail){
         //If there is no thumbnail to update
         if(!$thumbnail['name']){
 
@@ -137,7 +137,7 @@ class Video
         }
 
         return true;
-    }
+        }
     }  
 
  
