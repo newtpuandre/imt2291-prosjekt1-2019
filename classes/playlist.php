@@ -1,20 +1,28 @@
 <?php
 require_once 'db.php';
 
+/**
+  *  class Playlist. Represents a playlist.
+  */
+
 class Playlist
 {
     static private $target_dir = "uploads/";
 
     private $db = null;
 
+    /*Constructor*/
     function __construct() {
         //Initalize a new database connection
         $this->db = new DB();
     }
 
-    function __destruct() {
-    }
-
+     /**
+     * @function resolveVideos
+     * @brief Converts all videoids to video 'elements'
+     * @param int $m_playlistid
+     * @return array|false
+     */
     public function resolveVideos($m_playlistid){
 
         $idarray = $this->db->returnPlaylistVideos($m_playlistid);
@@ -33,6 +41,13 @@ class Playlist
 
     }
 
+     /**
+     * @function addVideoToPlaylist
+     * @brief adds a video to a playlist
+     * @param int $m_playlistid
+     * @param int $m_videoid
+     * @return array|false
+     */
     public function addVideoToPlaylist($m_playlistid, $m_videoid){
 
         //Check if video is already in playlist
@@ -52,16 +67,37 @@ class Playlist
 
     }
 
+    /**
+     * @function searchForPlaylists
+     * @brief searches for a playlist
+     * @param string $m_search
+     * @return array|false
+     */
+
     public function searchForPlaylists($m_search) {
         return $this->db->searchForPlaylists($m_search);
     }
 
+     /**
+     * @function deletePlaylist
+     * @brief deletes a playlist
+     * @param int $m_playlistid
+     * @param int $m_ownerid
+     * @return boolean
+     */
     public function deletePlaylist($m_playlistid, $m_ownerid) {
 
         return $this->db->deletePlaylist($m_playlistid, $m_ownerid);
 
     }
 
+     /**
+     * @function deleteVideoFromPlaylist
+     * @brief deletes a video from a playlist
+     * @param int $m_playlistid
+     * @param int $m_videoid
+     * @return boolean
+     */
     public function deleteVideoFromPlaylist($m_playlistid, $m_videoid) {
 
 
@@ -97,6 +133,14 @@ class Playlist
 
     }
 
+     /**
+     * @function editPosition
+     * @brief moves a video up/down in the playlist
+     * @param int $m_playlistid
+     * @param int $m_videoid
+     * @param boolean $m_down
+     * @return boolean
+     */
     public function editPosition($m_playlistid,$m_videoid, $m_down){
         $temp = $this->db->returnPlaylistVideos($m_playlistid);
         $editedItem = $this->db->returnPlaylistVideo($m_playlistid, $m_videoid);
@@ -155,6 +199,15 @@ class Playlist
 
     }
 
+     /**
+     * @function insertPlaylist
+     * @brief creates a playlist
+     * @param int $m_ownerid
+     * @param string $m_name
+     * @param string $m_description
+     * @param string $m_thumbnail
+     * @return boolean
+     */
     public function insertPlaylist($m_ownerId, $m_name, $m_description, $m_thumbnail){
 
         if(!$m_thumbnail['name']) {
@@ -183,22 +236,56 @@ class Playlist
         return $this->db->insertPlaylist($m_ownerId, $m_name, $m_description, $thumb_path);
     }
 
+     /**
+     * @function returnPlaylist
+     * @brief returns a single playlist with a specific id
+     * @param int $m_id
+     * @return array|false
+     */
     public function returnPlaylist($m_id){
         return $this->db->returnPlaylist($m_id);
     }
 
+     /**
+     * @function returnPlaylists
+     * @brief returns all playlist from one user
+     * @param int $m_id
+     * @return array|false
+     */
     public function returnPlaylists($m_id){
         return $this->db->returnPlaylists($m_id);
     }
 
+     /**
+     * @function returnVideos
+     * @brief returns all videos from one user
+     * @param int $m_userid
+     * @return array|false
+     */
     public function returnVideos($m_userid){
         return $this->db->returnVideos($m_userid);
     }
 
+    /**
+     * @function returnPlaylistVideos
+     * @brief returns all videos in a playlist
+     * @param int $m_playlistid
+     * @return array|false
+     */
     public function returnPlaylistVideos($m_playlistId){
         return $this->db->returnPlaylistVideos($m_playlistId);
     }
 
+     /**
+     * @function updatePlaylist
+     * @brief updates a playlist
+     * @param int $m_id
+     * @param int $m_ownerid
+     * @param string $m_name
+     * @param string $m_description
+     * @param string $m_thumbnail
+     * @return boolean
+     */
     public function updatePlaylist($m_id, $m_ownerId, $m_name, $m_description, $m_thumbnail){
 
         if (!$m_thumbnail['name']) { 
@@ -231,14 +318,32 @@ class Playlist
         
     }
 
+     /**
+     * @function returnAllPlaylists
+     * @brief returns all playlists
+     * @return array|false
+     */
     public function returnAllPlaylists(){ //Should only be used on sites where all playlists should be shown!
         return $this->db->returnAllPlaylists();
     }
 
+     /**
+     * @function countSubscribers
+     * @brief counts subscribers for one playlist
+     * @param int $m_playlistd
+     * @return array|false
+     */
     public function countSubscribers($m_playlistid){
         return $this->db->countSubscribers($m_playlistid);
     }
 
+     /**
+     * @function returnSubscriptionStatus
+     * @brief return if a user is subscribed to a playlist
+     * @param int $m_playlistid
+     * @param int $m_userid
+     * @return boolean
+     */
     public function returnSubscriptionStatus($m_playlistid, $m_userid){
         $temp = $this->db->returnSubscriptionStatus($m_playlistid, $m_userid);
         if ($temp['userid'] == $m_userid) {
@@ -248,14 +353,34 @@ class Playlist
         }
     }
 
+     /**
+     * @function subscribeToPlaylist
+     * @brief subscribes a user to a playlist
+     * @param int $m_playlistid
+     * @param int $m_userid
+     * @return boolean
+     */
     public function subscribeToPlaylist($m_playlistid, $m_userid){
         return $this->db->subscribeToPlaylist($m_playlistid, $m_userid);
     }
 
+     /**
+     * @function unsubscribeToPlaylist
+     * @brief unsubscribes a user to a playlist
+     * @param int $m_playlistid
+     * @param int $m_userid
+     * @return boolean
+     */
     public function unsubscribeToPlaylist($m_playlistid, $m_userid){
         return $this->db->unsubscribeToPlaylist($m_playlistid, $m_userid);
     }
 
+     /**
+     * @function getSubscribedPlaylists
+     * @brief returns all playlist a user is subscribed to
+     * @param int $m_userid
+     * @return array|false
+     */
     public function getSubscribedPlaylists($m_userid){
         $temp = $this->db->getSubscribedPlaylists($m_userid);
         
@@ -274,6 +399,14 @@ class Playlist
 
     }
 
+     /**
+     * @function thumbnailResize
+     * @brief resizes a thumbnail and stores it
+     * @param string $thumbnail
+     * @param int $new_width
+     * @param int $new_height
+     * @param string $output_path
+     */
     public function thumbnailResize($thumbnail, $new_width, $new_height, $output_path){
         $content = file_get_contents($thumbnail["tmp_name"]);
         
