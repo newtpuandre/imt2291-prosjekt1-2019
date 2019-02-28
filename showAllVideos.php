@@ -46,11 +46,10 @@ $twig = new Twig_Environment($loader, array(
         $new_desc = substr($video['description'], 0, 80) . " [...]";
         $video['description'] = $new_desc;
         }  
-        echo $twig->render('showAllVideos.html', $content);
-    }  else {
+    } elseif (!isset($_GET['status'])) {
         header("Location: showAllVideos.php?status=feil");
     } 
-
+    echo $twig->render('showAllVideos.html', $content);
 
 
 

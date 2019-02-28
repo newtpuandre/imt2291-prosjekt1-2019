@@ -39,7 +39,7 @@ $twig = new Twig_Environment($loader, array(
 if (isset($_GET['status'])) { /*Get the status.*/
     $content['status'] = $_GET['status'];
     $content['status_message'] = "Finner ingen videoer. ";
-}
+} 
 
 $user = new User($_SESSION['user']);
 $uid = $user->returnId();
@@ -49,12 +49,13 @@ $res = $video->getAllUserVideos($uid); /* Get this $uid's videos*/
 
 if($res){
 
-if (isset($_POST['button_edit'])){ /* If the edit video button is pressed, redirect */
-    echo $twig->render('editVideo.html', $content);
-}
+    if (isset($_POST['button_edit'])){ /* If the edit video button is pressed, redirect */
+        echo $twig->render('editVideo.html', $content);
+    }
 
-$content['result'] = $res;
-echo $twig->render('showUserVideos.html', $content);
-}else{
+    $content['result'] = $res;
+} elseif (!isset($_GET['status'])){
     header("Location: showUserVideos.php?status=feil");
 }
+
+echo $twig->render('showUserVideos.html', $content);
