@@ -33,13 +33,19 @@ if (isset($_SESSION['user'])) { /*User is logged in && is admin*/
 
 if (isset($_POST['updateUser'])) { /*Update privileges of the selected user*/
     //Check if this went OK
-    $admin->updatePrivileges($_POST['email'],$_POST['privileges']);
+    $res = $admin->updatePrivileges($_POST['email'],$_POST['privileges']);
+    if(!$res){
+        header("Location: admin.php?status=feil");
+    }
     header("Location: admin.php"); /*Refresh the page inorder for the list to update*/
 
 }
 
 if (isset($_GET['remove'])) {
-    $admin->removeIAmTeacher($_GET['remove']);
+    $res = $admin->removeIAmTeacher($_GET['remove']);
+    if(!$res){
+        header("Location: admin.php?status=feil");
+    }
     header("Location: admin.php"); /*Refresh the page inorder for the list to update*/
 }
 

@@ -31,6 +31,11 @@ if (isset($_SESSION['user'])) { /*User is logged in*/
 
 $videoid = -1;
 
+if (isset($_GET['status'])) { /*Get the status.*/
+    $content['status'] = $_GET['status'];
+    $content['status_message'] = "Oppdateringsfeil. ";
+}
+
 if (isset($_POST['button_edit'])) {
     $video = new Video();
     $videoid = $_POST['video_id'];   
@@ -55,7 +60,10 @@ if (isset($_POST['button_update'])) {
     }
     
     
-    $video->updateVideo($videoid, $title, $description, $topic, $course, $thumbnail);
+    $res = $video->updateVideo($videoid, $title, $description, $topic, $course, $thumbnail);
+    if(!$res){
+        header("Location: editVideo.php?status=feil");  
+    }
 
     header("Location: showUserVideos.php"); 
 }

@@ -11,6 +11,10 @@ require_once 'classes/admin.php';
 $content = array();
 
 session_start();
+if (isset($_GET['status'])) { /*Get the status.*/
+    $content['status'] = $_GET['status'];
+    $content['status_message'] = "Finner ingen videoer.";
+}
 
 if (isset($_SESSION['user'])) { /*User is logged in*/
 
@@ -32,11 +36,15 @@ if (isset($_POST['button_search'])){
 
     $prompt = $_POST['search_prompt'];
 
-    $content['result'] = $video->searchVideoCourse($prompt);
+    $res = $content['result'] = $video->searchVideoCourse($prompt);
 
 
 } else {
-    $content['result'] = $video->getAllVideoCourses();
+    $res = $content['result'] = $video->getAllVideoCourses();
+}
+
+if(!$res){
+    header("Location: course.php?status=feil");
 }
 
 

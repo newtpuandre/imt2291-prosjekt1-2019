@@ -36,6 +36,11 @@ $twig = new Twig_Environment($loader, array(
     //'cache' => './compilation_cache', /* Only enable cache when everything works correctly */
 ));
 
+if (isset($_GET['status'])) { /*Get the status.*/
+    $content['status'] = $_GET['status'];
+    $content['status_message'] = "Finner ingen videoer. ";
+}
+
 $user = new User($_SESSION['user']);
 $uid = $user->returnId();
 

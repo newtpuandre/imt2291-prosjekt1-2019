@@ -24,6 +24,7 @@ if (isset($_SESSION['user'])) { //User is logged in && is admin
 }
 if (isset($_GET['status'])) { /*Get the status.*/
     $content['status'] = $_GET['status'];
+    $content['status_message'] = "Finner ingen videoer. ";
 }
 
 

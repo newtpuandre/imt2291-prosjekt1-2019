@@ -33,6 +33,7 @@ $twig = new Twig_Environment($loader, array(
 ));
     if (isset($_GET['status'])) { /*Get the status.*/
         $content['status'] = $_GET['status'];
+        $content['status_message'] = "Finner ingen videoer. ";
     }
 
     $video = new Video();

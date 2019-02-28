@@ -43,6 +43,7 @@ $twig = new Twig_Environment($loader, array(
 
 if (isset($_GET['status'])) { /*Get the status.*/
     $content['status'] = $_GET['status'];
+    $content['status_message'] = "Opplastningsfeil.";
 }
 
 /* If the upload video button isn't pressed */
