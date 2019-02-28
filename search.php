@@ -30,7 +30,6 @@ $prompt = $content['search'];
 $video = new Video();
 $content['result'] = $video->search($prompt);
 
-
 $loader = new Twig_Loader_Filesystem('./templates');
 $twig = new Twig_Environment($loader, array(
     //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
