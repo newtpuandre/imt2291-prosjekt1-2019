@@ -26,7 +26,7 @@
 
     <!-- Video player-->
 
-    {% if userprivileges == 0 %} {# Only students can rate videos #}
+    {% if userprivileges == 0 and userinfo != "" %} {# Only students can rate videos #}
         <!-- Ratings -->
     <form action="playVideo.php" method="post">
         <div class="row align-self-center">
