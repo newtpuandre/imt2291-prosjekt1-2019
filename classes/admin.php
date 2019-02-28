@@ -11,7 +11,7 @@ class Admin
     private $db = null;
     private $dbh = null;
 
-    //Constructor
+    /*Constructor*/
     function __construct() {
         $this->db = new DB();
 
@@ -36,7 +36,7 @@ class Admin
      * @param string $m_privlevel 
      * @return bool
      */
-    public function updatePrivileges($m_email, $m_privlevel){ //Updates a specific users privilege
+    public function updatePrivileges($m_email, $m_privlevel){ 
         if($this->db->updatePrivileges($m_email,$m_privlevel)) {
             return true;
         } else {

@@ -18,12 +18,12 @@ class User
 
     private $db = null;
 
-    //Constructor
+    /* Constructor */
     public function __construct($m_email) {
-        //Initalize a new database connection
+        /* Initalize a new database connection */
         $this->db = new DB();
 
-        //Find user in DB and store info in class variables
+        /* Find user in DB and store info in class variables */
         $userArray = $this->db->findUser($m_email);
         $this->id = $userArray['id'];
         $this->email = $userArray['email'];
@@ -32,7 +32,7 @@ class User
         $this->picture = $userArray['picture_path'];
     }
 
-    //Destructor
+    /* Destructor */
     function __destruct() {}
 
     /**
@@ -49,44 +49,44 @@ class User
      */
     public function updateUser($uid, $name, $username, $password, $profilepic){
 
-        //If there is a password to update
+        /* If there is a password to update */
         if ($password != null){
-            //Hash it
+            /* Hash it */
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         } else {
             $hashed_password = null;
         }
 
-        //Delete old picture if it is not the default picture and there is a new profile picture
+        /* Delete old picture if it is not the default picture and there is a new profile picture */
         $old_picture = $this->returnPicture();
         if($old_picture && ($profilepic != null)) {
-            //If the old picture is not the standard picture
+            /* If the old picture is not the standard picture */
             if ($old_picture != 'https://propertymarketersllc.com/wp-content/uploads/2018/05/profile-picture-placeholder.png') {
                 unlink($old_picture);
             }
         }
     
-        //Upload new image if provided
+        /* Upload new image if provided */
         $db = new DB();
         if ($profilepic != null) {
 
             $picture_file_type = strtolower(pathinfo(User::$target_dir . basename($profilepic["name"]), PATHINFO_EXTENSION));
             $picture_path = User::$target_dir . uniqid() . "." . $picture_file_type;
             
-            //If correct filetype
+            /* If correct filetype */
             if($picture_file_type != "jpg" && $picture_file_type != "png" && $picture_file_type != "jpeg" && $picture_file_type != "gif") {
                 return false;
             }
            
-            //Resize profile picture
+            /* Resize profile picture */
             $this->pictureResize($profilepic, 180, 180, $picture_path);
 
-            //If the file wasn't uploaded
+            /* If the file wasn't uploaded */
             if(!(move_uploaded_file($profilepic["tmp_name"], $picture_path))){
                 return false;
             }
             
-            //Update user
+            /* Update user */
             $db->updateUser($uid, $name, $username, $hashed_password, $picture_path);
             header("Location: profile.php");
 
