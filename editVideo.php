@@ -21,11 +21,12 @@ if (isset($_SESSION['user'])) { //User is logged in
         header("Location: index.php");
     }
 
-    if ($content['userprivileges'] == "2") {
+    if ($content['userprivileges'] == "2") { //Check for admin privileges
         $admin = new Admin();
         $return = $admin->countIAmTeacher();
         $content['isTeacherCount'] = $return['num'];
     }
+
 }
 
 $videoid = -1;

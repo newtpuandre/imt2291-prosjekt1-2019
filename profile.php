@@ -24,7 +24,7 @@ if (isset($_SESSION['user'])) { //User is logged in
     //$content['password'] = $user->returnPassword();
     $content['picture'] = $user->returnPicture();
 
-    if ($content['userprivileges'] == "2") {
+    if ($content['userprivileges'] == "2") { //Check for admin privileges
         $admin = new Admin();
         $return = $admin->countIAmTeacher();
         $content['isTeacherCount'] = $return['num'];

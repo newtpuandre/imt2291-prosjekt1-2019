@@ -43,7 +43,7 @@ if (isset($_GET['remove'])) {
     header("Location: admin.php"); //Refresh the page inorder for the list to update
 }
 
-if (isset($_GET['status'])) {
+if (isset($_GET['status'])) { //Something went wrong.
     $content['status'] = "feil";
 }
 //

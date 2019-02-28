@@ -20,7 +20,7 @@ if (isset($_SESSION['user'])) { //User is logged in
     $content['userinfo'] = $user->returnEmail();
     $content['userprivileges'] = $user->getPrivileges();   
     
-    if ($content['userprivileges'] == "2") {
+    if ($content['userprivileges'] == "2") { //Check for admin privileges
         $admin = new Admin();
         $return = $admin->countIAmTeacher();
         $content['isTeacherCount'] = $return['num'];

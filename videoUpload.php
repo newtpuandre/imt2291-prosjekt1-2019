@@ -29,7 +29,7 @@ if (isset($_SESSION['user'])) {
         header("Location: index.php");
     }
 
-    if ($content['userprivileges'] == "2") {
+    if ($content['userprivileges'] == "2") { //Check for admin privileges
         $admin = new Admin();
         $return = $admin->countIAmTeacher();
         $content['isTeacherCount'] = $return['num'];
@@ -55,7 +55,6 @@ if(isset($_POST['upload_btn'])) {
     $videofile = $_FILES['upload_video'];
     $thumbnail = $_FILES['upload_thumbnail'];
     
-    $user = new User($_SESSION['user']);
     $uid = $user->returnId();
     
     $video = new Video();

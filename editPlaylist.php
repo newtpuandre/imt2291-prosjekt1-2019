@@ -1,5 +1,4 @@
 <?php
-//REMEMBER TO CHECK IF USER CAN EDIT SELECTED PLAYLIST
 
 require_once 'vendor/autoload.php';
 require_once 'classes/user.php';
@@ -30,7 +29,7 @@ if (isset($_SESSION['user'])) { //User is logged in
         header("Location: index.php");
     }
 
-    if ($content['userprivileges'] == "2") {
+    if ($content['userprivileges'] == "2") { //Check for admin privileges
         $admin = new Admin();
         $return = $admin->countIAmTeacher();
         $content['isTeacherCount'] = $return['num'];
@@ -39,7 +38,7 @@ if (isset($_SESSION['user'])) { //User is logged in
     $playlist = new Playlist();
 }
 
-if (isset($_GET['status'])) {
+if (isset($_GET['status'])) { //Get the status.
     $content['status'] = $_GET['status'];
 }
 
@@ -55,8 +54,6 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
             header("Location: editplaylist.php?status=feil");
         }
 
-
-
     }
 
 }  elseif (isset($_GET['addVideos']) || isset($_POST['addVideos'])) { //Add videos to playlist
@@ -68,7 +65,6 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
 
             //Add videos to playlist
             $res = $playlist->addVideoToPlaylist($_POST['playlistId'], $value);
-
         }
         
         if ($res) {
@@ -76,7 +72,6 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
         } else {
             header("Location: editplaylist.php?addVideos&status=feil");
         }
-
 
     }
 
@@ -131,8 +126,7 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
         } else {
             header("Location: editPlaylist.php?update=".$_GET['update']."&status=feil");
         }
-        
-
+    
     }
 
     $content['playlistItem'] = $playlist->returnPlaylist($_GET['update']);
@@ -142,9 +136,7 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
     $temp = $playlist->resolveVideos($_GET['update']);
 
     if ($temp) {
-
         $content['playlistVideos'] = $temp;
-
     }
 
 } elseif (isset($_GET['deletePlaylist'])) {
@@ -161,7 +153,6 @@ if (isset($_GET['createNew']) || isset($_POST['createNew'])){ //Create new playl
 
     //Load playlists
     $content['playlists'] = $playlist->returnPlaylists($content['userid']);
-
 }
 
 $loader = new Twig_Loader_Filesystem('./templates');
