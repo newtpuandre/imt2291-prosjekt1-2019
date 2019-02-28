@@ -38,7 +38,7 @@ if (isset($_GET['id'])) { /* Get videoid */
     $res = $content['videoinfo'] = $video->getVideo($videoid);
 
     /* If there is no video to get, error */
-    if(!$res){
+    if(!$res && !isset($_GET['status'])){
         header("Location: playVideo.php?status=feil");
     }
 
@@ -52,7 +52,7 @@ if(isset($_POST['submit_btn'])) {
     $videoid = $_POST['video_id'];   
     $res = $content['videoinfo'] = $video->getVideo($videoid);
 
-    if(!$res){
+    if(!$res && !isset($_GET['status'])){
         header("Location: playVideo.php?status=feil");
     }
 
@@ -70,7 +70,7 @@ if(isset($_POST['submit_rating'])) {
     $videoid = $_POST['video_id'];   
     $res = $content['videoinfo'] = $video->getVideo($videoid);
 
-    if(!$res){
+    if(!$res && !isset($_GET['status'])){
         header("Location: playVideo.php?status=feil");
     }
 

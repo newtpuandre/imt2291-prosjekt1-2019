@@ -43,7 +43,7 @@ if (isset($_POST['button_search'])){ /* Search for a course */
     $res = $content['result'] = $video->getAllVideoCourses();
 }
 
-if(!$res){
+if(!$res && !isset($_GET['status'])){
     header("Location: course.php?status=feil");
 }
 

@@ -41,7 +41,7 @@ if(isset($_GET['search'])){ /* Handle search */
     $video = new Video();
     $res = $content['result'] = $video->search($prompt); /* Querry database for search */
 
-    if(!$res){ /* If error */
+    if(!$res && !isset($_GET['status'])){ /* If error */
         header("Location: search.php?status=feil");  
     }
 } 

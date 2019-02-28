@@ -38,7 +38,7 @@ if (isset($_GET['course'])){
 
     $content['result'] = $video->searchVideoCourse($content['course'] ); /* Get all videos within given course*/
 
-} else { /* Something went wrong*/
+} elseif (!isset($_GET['status'])) { /* Something went wrong*/
     header("Location: topics.php?status=feil");
 }
 
