@@ -7,11 +7,11 @@ class VideoCest
     {
         //Log the user in
         $I->amOnPage('/login.php');
-        $I->seeCurrentUrlEquals('/imt2291-prosjekt1-2019/login.php');
+        $I->seeCurrentUrlMatches('~login.php~');
         $I->fillField('email', 'test@test.test'); //Change to something that exists
         $I->fillField('password', 'test123'); //Change to something that exists
         $I->click('Log inn');
-        $I->seeCurrentUrlEquals('/imt2291-prosjekt1-2019/index.php');
+        $I->seeCurrentUrlMatches('~index.php~');
 
         $I->dontSee('Noe gikk galt!');
     }
@@ -20,7 +20,7 @@ class VideoCest
     public function uploadVideo(FunctionalTester $I)
     {
             $I->amOnPage('videoUpload.php');
-            $I->seeCurrentUrlEquals('/imt2291-prosjekt1-2019/videoUpload.php');
+            $I->seeCurrentUrlMatches('~videoUpload.php~');
             $I->fillField('upload_title','test_video');
             $I->fillField('upload_desc','test_video');
             $I->fillField('upload_course', 'test_course');
@@ -31,7 +31,7 @@ class VideoCest
             $I->dontSee('Noe gikk galt!');
 
             $I->amOnPage('videoUpload.php');
-            $I->seeCurrentUrlEquals('/imt2291-prosjekt1-2019/videoUpload.php');
+            $I->seeCurrentUrlMatches('~videoUpload.php~');
             $I->fillField('upload_title','test_video');
             $I->fillField('upload_desc','test_video');
             $I->fillField('upload_course', 'test_course');
@@ -42,7 +42,7 @@ class VideoCest
             $I->dontSee('Noe gikk galt!');
 
             $I->amOnPage('videoUpload.php');
-            $I->seeCurrentUrlEquals('/imt2291-prosjekt1-2019/videoUpload.php');
+            $I->seeCurrentUrlMatches('~videoUpload.php~');
             $I->fillField('upload_title','test_video');
             $I->fillField('upload_desc','test_video');
             $I->fillField('upload_course', 'test_course');
