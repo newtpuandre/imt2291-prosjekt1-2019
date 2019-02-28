@@ -1,7 +1,7 @@
 {% include 'header.html' %}
 <main role="main" class="container">
     {% include 'errormsg.html' %}
-    {% if mode == "" %}
+    {% if mode == "" %} {# Default overview #}
     <h3>Søk etter spillelister</h3>
     <p>
         <form class="form-inline my-2 my-lg-0" action="playlist.php" method="GET">
@@ -15,9 +15,9 @@
         <strong>Det finnes ingen spillelister. Sjekk igjen senere</strong>
         {% else %}
 
-            {% for item in playlists %}
+            {% for item in playlists %} {# loop over array of playlists #}
 
-                {% if loop.index % 3 == 1 %}
+                {% if loop.index % 3 == 1 %} {# insert div every thrid element #}
                 <div class="row" style="margin-top:30px">
                 {% endif %}
 
@@ -33,14 +33,14 @@
                         </div>
                     </div>
 
-                {% if loop.index % 3 == 0 or loop.last %}
+                {% if loop.index % 3 == 0 or loop.last %} {# insert div every third element #}
                 </div>
                 {% endif %}
 
             {% endfor %}
         {% endif %}
 
-    {% elseif mode == 1 %}
+    {% elseif mode == 1 %} {# Show videos in playlist #}
         <a href="playlist.php">← Tilbake</a>
         <h1 class="display-4" style="margin-top:15px">Videoer i spilleliste : {{ playlistInfo.name }}</h1>
         <p> Spilleliste abonnementer: {{ subscriberNum.numSubs }}</br>
@@ -54,7 +54,7 @@
         {% if currentPlaylist == "" %}
         <strong>Det finnes ingen videoer i denne spillelisten...</strong>
         {% else %}
-            {% for videoItem in currentPlaylist %}
+            {% for videoItem in currentPlaylist %} {# loop over videos in the playlist #}
     <div class="media" style="margin-bottom:15px">
         <a href = "playVideo.php?id={{ videoItem.id }}"><img src="{{ videoItem.thumbnail_path }}" class="align-self-center mr-3"></a>
 
@@ -70,12 +70,12 @@
 
         {% endif %}
 
-    {% elseif mode == 2 %}
+    {% elseif mode == 2 %} {# Search for playlists #}
     <a href="playlist.php">← Tilbake</a>
     <h1 class="display-4" style="margin-top:15px">Søk etter : {{ search }}</h1>
-    {% for item in playlists %}
+    {% for item in playlists %} {# Loop over results #}
 
-    {% if loop.index % 3 == 1 %}
+    {% if loop.index % 3 == 1 %} {# insert div every third element #}
     <div class="row" style="margin-top:30px">
     {% endif %}
 
@@ -90,7 +90,7 @@
             </div>
         </div>
 
-    {% if loop.index % 3 == 0 or loop.last %}
+    {% if loop.index % 3 == 0 or loop.last %} {# insert div close every third element #}
     </div>
     {% endif %}
 

@@ -4,7 +4,7 @@
 
         <h1 class="display-4" style="margin-top:15px;margin-bottom:15px">Resultater for søk: {{ search }}</h1>
 
-        {% for video in result %}
+        {% for video in result %} {# loop over results #}
     <div class="card flex-row flex-wrap">
       <div class="card-header border-0">
           <a href ="playVideo.php?id={{ video.id }}"><img src="{{ video.thumbnail_path }}" alt=""></a>

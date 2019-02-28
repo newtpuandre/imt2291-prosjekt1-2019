@@ -20,7 +20,7 @@
 <body class="text-center">
 
   <form class="form-signin" name="login" action="login.php" method="post">
-    {% if code == "feil" %}
+    {% if code == "feil" %} {# Something went wrong #}
     <div class="alert alert-danger">
       <strong>Feil!</strong> Brukernavnet, Epost eller passordet er feil.
     </div>

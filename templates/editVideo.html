@@ -10,7 +10,7 @@
     </div>
     <div class="row">
       <!-- Video information row -->
-      {% for info in videoinfo %}
+      {% for info in videoinfo %} {# Show selected video #}
       <div class="col-sm-8">
         <form action="editVideo.php" method="POST" enctype="multipart/form-data">
           <input type="hidden" name="video_id" value="{{ info.id }}">

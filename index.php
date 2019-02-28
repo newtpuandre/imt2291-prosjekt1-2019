@@ -15,7 +15,7 @@ session_start();
 $video = new Video();
 $playlist = new Playlist();
 
-if (isset($_SESSION['user'])) { //User is logged in
+if (isset($_SESSION['user'])) { /*User is logged in*/
 
     $user = new User($_SESSION['user']);
 
@@ -23,7 +23,7 @@ if (isset($_SESSION['user'])) { //User is logged in
     $content['userprivileges'] = $user->getPrivileges();
     $content['userid'] = $user->returnId();
 
-    if ($content['userprivileges'] == "2") { //Check for admin privileges
+    if ($content['userprivileges'] == "2") { /*Check for admin privileges*/
         $admin = new Admin();
         $return = $admin->countIAmTeacher();
         $content['isTeacherCount'] = $return['num'];
@@ -39,7 +39,7 @@ $content['newVideos'] = $video->getNewVideos();
 
 $loader = new Twig_Loader_Filesystem('./templates');
 $twig = new Twig_Environment($loader, array(
-    //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
+    //'cache' => './compilation_cache', /* Only enable cache when everything works correctly */
 ));
 
 echo $twig->render('index.html', $content);

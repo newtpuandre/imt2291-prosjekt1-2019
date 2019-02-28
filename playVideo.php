@@ -12,14 +12,14 @@ $content = array();
 
 session_start();
 
-if (isset($_SESSION['user'])) { //User is logged in
+if (isset($_SESSION['user'])) { /*User is logged in*/
 
     $user = new User($_SESSION['user']);
     $content['userinfo'] = $user->returnEmail();
     $content['userprivileges'] = $user->getPrivileges();
     $content['uid'] = $user->returnId();
     
-    if ($content['userprivileges'] == "2") { //Check for admin privileges
+    if ($content['userprivileges'] == "2") { /*Check for admin privileges*/
         $admin = new Admin();
         $return = $admin->countIAmTeacher();
         $content['isTeacherCount'] = $return['num'];
@@ -108,7 +108,7 @@ if(isset($_POST['button_delete'])){
         $ratings += $value[0];
     }
 
-    $avgRating = $ratings/(float)$totalRatings; //TODO: CALCULATE THIS
+    $avgRating = $ratings/(float)$totalRatings; /*TODO: CALCULATE THIS*/
     $avgRating = number_format((float)$avgRating, 2, '.', '');
     $content['avg_rating'] = $avgRating;
     $content['total_rating'] = $totalRatings;
@@ -120,7 +120,7 @@ if(isset($_POST['button_delete'])){
 
 
 /* If id was not set in GET or POST */
-if ($videoid == -1) { //Need a video id inorder for the site to have any purpose..
+if ($videoid == -1) { /*Need a video id inorder for the site to have any purpose..*/
     header("Location: index.php");
 }
 

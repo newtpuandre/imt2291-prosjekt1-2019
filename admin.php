@@ -14,14 +14,14 @@ session_start();
 $admin = new Admin();
 $content['userlist'] = $admin->gatherUsers();
 
-if (isset($_SESSION['user'])) { //User is logged in && is admin
+if (isset($_SESSION['user'])) { /*User is logged in && is admin*/
 
     $user = new User($_SESSION['user']);
 
     $content['userinfo'] = $user->returnEmail();
     $content['userprivileges'] = $user->getPrivileges();
 
-    if ($content['userprivileges'] != 2) { //Redirect if user isnt authorized
+    if ($content['userprivileges'] != 2) { /*Redirect if user isnt authorized*/
         header("Location: index.php");
     } else {
         $admin = new Admin();
@@ -31,19 +31,19 @@ if (isset($_SESSION['user'])) { //User is logged in && is admin
 
 }
 
-if (isset($_POST['updateUser'])) { //Update privileges of the selected user
+if (isset($_POST['updateUser'])) { /*Update privileges of the selected user*/
     //Check if this went OK
     $admin->updatePrivileges($_POST['email'],$_POST['privileges']);
-    header("Location: admin.php"); //Refresh the page inorder for the list to update
+    header("Location: admin.php"); /*Refresh the page inorder for the list to update*/
 
 }
 
 if (isset($_GET['remove'])) {
     $admin->removeIAmTeacher($_GET['remove']);
-    header("Location: admin.php"); //Refresh the page inorder for the list to update
+    header("Location: admin.php"); /*Refresh the page inorder for the list to update*/
 }
 
-if (isset($_GET['status'])) { //Something went wrong.
+if (isset($_GET['status'])) { /*Something went wrong.*/
     $content['status'] = "feil";
 }
 //
@@ -51,7 +51,7 @@ if (isset($_GET['status'])) { //Something went wrong.
 
 $loader = new Twig_Loader_Filesystem('./templates');
 $twig = new Twig_Environment($loader, array(
-    //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
+    //'cache' => './compilation_cache', /* Only enable cache when everything works correctly */
 ));
 
 echo $twig->render('admin.html', $content);

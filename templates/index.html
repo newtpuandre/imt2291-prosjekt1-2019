@@ -17,9 +17,9 @@
     {% if newVideos == "" %}
     <strong>Ingen videoer er lastet opp</strong>
     {% else %}
-    {% for item in newVideos %}
+    {% for item in newVideos %} {# Show the 8 newest videos #}
 
-    {% if loop.index % 4 == 1 %}
+    {% if loop.index % 4 == 1 %} {# Insert div every fourth element #}
     <div class="row" style="margin-top:15px">
     {% endif %}
 
@@ -29,7 +29,7 @@
         <a href = "playVideo.php?id={{ item.id }}"><img src="{{ item.thumbnail_path }}" class="img-fluid"></a><strong>{{ item.title }} - {{ item.course }}</strong></div>
     </div>
 </div>
-    {% if loop.index % 4 == 0 or loop.last %}
+    {% if loop.index % 4 == 0 or loop.last %} {# Insert div close every fourth element #}
     </div>
     {% endif %}
     {% endfor %}
@@ -38,9 +38,9 @@
     {% if subscribedPlaylists == "" %}
     <strong>Du har ikke abonnerte på noen spillelister enda. Trykk <a href="playlist.php">HER</a> For å abonnere til en / flere spillelister.</strong>
     {% else %}
-    {% for subItem in subscribedPlaylists %}
+    {% for subItem in subscribedPlaylists %} {# Loop over all subscribedPlaylists #}
 
-    {% if loop.index % 4 == 1 %}
+    {% if loop.index % 4 == 1 %} {# Insert div every fourth element #}
     <div class="row" style="margin-top:15px">
     {% endif %}
     <div class="col-sm-3">
@@ -50,7 +50,7 @@
     </div>
     </div>
 
-    {% if loop.index % 4 == 0 or loop.last %}
+    {% if loop.index % 4 == 0 or loop.last %} {# Insert div close every fourth element #}
     </div>
     {% endif %}
     {% endfor %}

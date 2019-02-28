@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    {% for video in result %}
+    {% for video in result %} {# loop over all videos #}
     <div class="card flex-row flex-wrap">
       <div class="card-header border-0">
           <a href ="playVideo.php?id={{ video.id }}"><img src="{{ video.thumbnail_path }}" alt=""></a>

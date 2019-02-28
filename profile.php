@@ -14,17 +14,17 @@ $content = array();
 
 session_start();
 
-if (isset($_SESSION['user'])) { //User is logged in
+if (isset($_SESSION['user'])) { /*User is logged in*/
     $user = new User($_SESSION['user']);
 
     $content['userinfo'] = $user->returnEmail();
     $content['userprivileges'] = $user->getPrivileges();  
     $content['uid'] = $user->returnId();
     $content['name'] = $user->returnName();
-    //$content['password'] = $user->returnPassword();
+    /*$content['password'] = $user->returnPassword();*/
     $content['picture'] = $user->returnPicture();
 
-    if ($content['userprivileges'] == "2") { //Check for admin privileges
+    if ($content['userprivileges'] == "2") { /*Check for admin privileges*/
         $admin = new Admin();
         $return = $admin->countIAmTeacher();
         $content['isTeacherCount'] = $return['num'];
@@ -33,7 +33,7 @@ if (isset($_SESSION['user'])) { //User is logged in
 
 $loader = new Twig_Loader_Filesystem('./templates');
 $twig = new Twig_Environment($loader, array(
-    //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
+    //'cache' => './compilation_cache', /* Only enable cache when everything works correctly */
 ));
 
 
@@ -52,11 +52,11 @@ if (isset($_POST['button_update'])) {
 
     if($_FILES['update_picture']['name'] == ""){
         $user->updateUser($content['uid'], $name, $username, $password, null);
-        //header("Location: profile.php");
+        header("Location: profile.php");
     } else {
         $profilepic = $_FILES['update_picture'];
         $user->updateUser($content['uid'], $name, $username, $password, $profilepic);
-        //header("Location: profile.php");
+        header("Location: profile.php");
     }
 }
 

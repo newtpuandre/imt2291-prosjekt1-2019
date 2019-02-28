@@ -8,7 +8,7 @@ $content = array();
 
 session_start();
 
-if (isset($_SESSION['user'])) { //User is logged in
+if (isset($_SESSION['user'])) { /*User is logged in*/
 
     $user = new User($_SESSION['user']);
 
@@ -16,7 +16,7 @@ if (isset($_SESSION['user'])) { //User is logged in
     $content['userprivileges'] = $user->getPrivileges();
     $content['userid'] = $user->returnId();
     
-    if ($content['userprivileges'] == "2") { //Check for admin privileges
+    if ($content['userprivileges'] == "2") { /*Check for admin privileges*/
         $admin = new Admin();
         $return = $admin->countIAmTeacher();
         $content['isTeacherCount'] = $return['num'];
@@ -27,6 +27,7 @@ if (isset($_SESSION['user'])) { //User is logged in
 MODE Variable:
 $content['mode'] is not set : Default overview of playlists
 $content['mode'] = 1; : Show videos in the playlists
+$content['mode'] = 2; : Search for playlists
 */
 
 $playlist = new Playlist();
@@ -38,10 +39,10 @@ if (isset($_GET['show'])) {
     $content['currentPlaylist'] = $playlist->resolveVideos($_GET['show']);
     $content['playlistInfo'] = $playlist->returnPlaylist($_GET['show']);
 
-    //Get subscription number
+    /*Get subscription number*/
     $content['subscriberNum'] = $playlist->countSubscribers($_GET['show']);
 
-    //Get subscription status
+    /*Get subscription status*/
     $content['subscribed'] = $playlist->returnSubscriptionStatus($_GET['show'], $content['userid']);
 
 

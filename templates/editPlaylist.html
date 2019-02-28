@@ -1,7 +1,7 @@
 {% include 'header.html' %}
 <main role="main" class="container">
     {% include 'errormsg.html' %}
-    {% if mode == "" %}
+    {% if mode == "" %} {# Default overview of playlists #}
     <!-- No params sent -->
     <a href="editPlaylist.php?createNew"><button name="create" id="create" class="btn btn-success btn-lg float-right">Opprett ny spilleliste</button></a>
     <h1 class="display-4" style="margin-top:15px">Mine spillelister</h1>
@@ -9,7 +9,7 @@
     <h3>Du har ingen spillelister</h3>
     {% else %}
     <ul class="list-group">
-        {% for item in playlists %}
+        {% for item in playlists %} {# Loops over all playlists a user owns #}
         <li class="list-group-item">
             <a href="editPlaylist.php?update={{ item.id }}"><button type="button"
               class="btn btn-primary float-right">Endre</button></a>
@@ -45,7 +45,7 @@
     </ul>
     {% endif %}
 
-    {% elseif mode == "1" %}
+    {% elseif mode == "1" %} {# Create new playlist #}
     <!-- Create new playlist -->
     <a href="editPlaylist.php">← Tilbake</a>
     <h1 class="display-4" style="margin-top:15px">Opprett ny spilleliste</h1>
@@ -67,7 +67,7 @@
         <button type="submit" name="createNew" class="btn btn-primary">Lag spilleliste</button>
     </form>
 
-    {% elseif mode == "2" %}
+    {% elseif mode == "2" %} {# Edit current playlist #}
     <!-- Edit playlist by id -->
     <a href="editPlaylist.php">← Tilbake</a>
     <h1 class="display-4" style="margin-top:15px">Endre spilleliste</h1>
@@ -93,7 +93,7 @@
     <strong>Det er ingen videoer i denne spillelisten</strong>
     {% else %}
 
-    {% for videoItem in playlistVideos %}
+    {% for videoItem in playlistVideos %} {# Loops over all videos in the selected playlist #}
     <div class="media" style="margin-bottom:15px">
         <img src="{{ videoItem.thumbnail_path }}" class="align-self-center mr-3">
 
@@ -137,7 +137,7 @@
     <a href="editPlaylist.php?update={{ playlistItem.id }}&addVideos"><button class="btn btn-success float-right">Legg
             til videoer i spilleliste</button></a>
 
-    {% elseif mode == "3" %}
+    {% elseif mode == "3" %} {# Add videos to playlist #}
 
     <a href="editPlaylist.php?update={{ playlistItem.id }}">← Tilbake</a>
     <h1 class="display-4" style="margin-top:15px">Legg til videoer i spilleliste : {{ playlistItem.name }}</h1>
@@ -145,11 +145,11 @@
     {% if videos == "" %}
     <strong>Du har ingen videoer lastet opp..</strong>
 
-    {% else %}
+    {% else %} {# Show all videos uploaded by the user #}
     <form action="editPlaylist.php" method="POST">
         <input type="hidden" id="playlistId" name="playlistId" value="{{ playlistItem.id }}">
         <ul class="list-group">
-            {% for videoItem in videos %}
+            {% for videoItem in videos %} {# Loops over all videos uploaded by the user #}
             <li class="list-group-item">
                 <div class="media" style="margin-bottom:15px">
                     <img src="{{ videoItem.thumbnail_path }}" class="align-self-center mr-3">

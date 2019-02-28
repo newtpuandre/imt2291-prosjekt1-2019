@@ -3,7 +3,7 @@
       {% include 'errormsg.html' %}
       <h1 class="display-4" style="margin-top:15px">Brukeroversikt</h1>
         <ul class="list-group">
-          {% for user in userlist %}
+          {% for user in userlist %} {# Loops over all users #}
           <li class="list-group-item">{{ user.email }}
             <form action="admin.php" method="post">
             <input type="hidden" id="email" name="email" value="{{ user.email }}">

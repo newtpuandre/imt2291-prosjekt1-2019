@@ -2,7 +2,7 @@
 
 <main role="main" class="container">
     {% include 'errormsg.html' %}
-    {% for info in videoinfo %}
+    {% for info in videoinfo %} {# loop over videos #}
     <h1 class="display-4" style="margin-top:15px">{{ info.title }}</h1>
     <video style="display:block; margin: 0 auto;" poster="{{ info.thumbnail_path }}" id="player" height="720"
         width="1280" playsinline controls>
@@ -26,7 +26,7 @@
 
     <!-- Video player-->
 
-    {% if userprivileges == 0 %}
+    {% if userprivileges == 0 %} {# Only students can rate videos #}
         <!-- Ratings -->
     <form action="playVideo.php" method="post">
         <div class="row align-self-center">
@@ -67,7 +67,7 @@
 
 
     <ul class="list-group">
-        {% for comment in comments %}
+        {% for comment in comments %} {# Loop over comments for this video #}
         <form action="playVideo.php" method="POST">
             <input type="hidden" name="video_id" value="{{ video_id }}">
             <input type="hidden" name="comment_id" value="{{ comment.id }}">

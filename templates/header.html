@@ -48,14 +48,14 @@
         </ul>
 
         <ul class = "navbar-nav ml-auto">
-            {% if userinfo == "" %} <!-- Is user logged in? -->
+            {% if userinfo == "" %} {# is user logged in #}
             <a href= "login.php"><button class="btn btn-success" type="submit">Log inn</button></a>
 
             <a href= "register.php"><button class="btn btn-success" type="submit" style="margin-left:15px">Register</button></a>
 
             {% else %}
 
-              {% if userprivileges == 2 %} <!-- Is user admin? -->
+              {% if userprivileges == 2 %} {# Is user admin #}
                 <a href= "videoUpload.php"><button class="btn btn-success" type="submit" style="margin-right:15px">Last opp video</button></a>
                 <a href= "showUserVideos.php"><button class="btn btn-success" type="submit" style="margin-right:15px">Mine videoer</button></a>
                 <a href= "editPlaylist.php"><button class="btn btn-success" type="submit" style="margin-right:15px">Mine spillelister</button></a>
@@ -65,7 +65,7 @@
                   {{ isTeacherCount }}
                   </span>
                   {% endif %}</button></a>
-              {% elseif userprivileges == 1%} <!-- Is user Teacher? -->
+              {% elseif userprivileges == 1%} {# is user teacher #}
                 <a href= "videoUpload.php"><button class="btn btn-success" type="submit" style="margin-right:15px">Last opp video</button></a>
                 <a href= "showUserVideos.php"><button class="btn btn-success" type="submit" style="margin-right:15px">Mine videoer</button></a>
                 <a href= "editPlaylist.php"><button class="btn btn-success" type="submit" style="margin-right:15px">Mine spillelister</button></a>
@@ -73,7 +73,7 @@
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                 {{ userinfo }} <!-- Prints users login name -->
+                 {{ userinfo }} {# prints users login name #}
                 </a>
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="profile.php">Min profil</a>
