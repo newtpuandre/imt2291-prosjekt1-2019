@@ -41,6 +41,10 @@ $twig = new Twig_Environment($loader, array(
     //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
 ));
 
+if (isset($_GET['status'])) { /*Get the status.*/
+    $content['status'] = $_GET['status'];
+}
+
 /* If the upload video button isn't pressed */
 if (!isset($_FILES['upload_video'])){
     echo $twig->render('upload.html', $content);
@@ -60,10 +64,12 @@ if(isset($_POST['upload_btn'])) {
     $video = new Video();
     $res = $video->upload($uid, $title, $description, $topic, $course, $videofile, $thumbnail);
 
+   
+
     if($res) {
         echo $twig->render('index.html', $content);
     } else {
-        header("Location: videoUpload.php?" . "&status=feil");
+        header("Location: videoUpload.php?status=feil");
     } 
 
 }

@@ -42,10 +42,14 @@ $uid = $user->returnId();
 $video = new Video();
 $res = $video->getAllUserVideos($uid);
 
+if($res){
+
 if (isset($_POST['button_edit'])){
     echo $twig->render('editVideo.html', $content);
 }
 
 $content['result'] = $res;
 echo $twig->render('showUserVideos.html', $content);
-
+}else{
+    header("Location: showUserVideos.php?status=feil");
+}

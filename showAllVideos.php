@@ -31,6 +31,9 @@ $loader = new Twig_Loader_Filesystem('./templates');
 $twig = new Twig_Environment($loader, array(
     //'cache' => './compilation_cache', /* Only enable cache when everything works correctly */
 ));
+    if (isset($_GET['status'])) { /*Get the status.*/
+        $content['status'] = $_GET['status'];
+    }
 
     $video = new Video();
     $res = $video->getAllVideosWithLecturers();
@@ -42,12 +45,9 @@ $twig = new Twig_Environment($loader, array(
         $new_desc = substr($video['description'], 0, 80) . " [...]";
         $video['description'] = $new_desc;
         }  
-    } 
-
-    if($res) {
-       echo $twig->render('showAllVideos.html', $content);
-    } else {
-       echo("Ingen videoer å vise.");
+        echo $twig->render('showAllVideos.html', $content);
+    }  else {
+        header("Location: showAllVideos.php?status=feil");
     } 
 
 

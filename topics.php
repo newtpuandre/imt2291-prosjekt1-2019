@@ -25,6 +25,9 @@ if (isset($_SESSION['user'])) { /*User is logged in */
         $content['isTeacherCount'] = $return['num'];
     }
 }
+if (isset($_GET['status'])) { /*Get the status.*/
+    $content['status'] = $_GET['status'];
+}
 
 if (isset($_GET['course'])){
 
@@ -35,7 +38,7 @@ if (isset($_GET['course'])){
     $content['result'] = $video->searchVideoCourse($content['course'] );
 
 } else {
-    print_r("Ingen tema tilgjengelige.");
+    header("Location: topics.php?status=feil");
 }
 
 
