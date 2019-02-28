@@ -84,7 +84,7 @@ class Rating
         if($res) {
             return $res;
         }else {
-            return $null;
+            return null;
         }
            
     }
