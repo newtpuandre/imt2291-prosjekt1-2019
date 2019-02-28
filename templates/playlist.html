@@ -41,9 +41,10 @@
         {% endif %}
 
     {% elseif mode == 1 %} {# Show videos in playlist #}
-        <a href="playlist.php">← Tilbake</a>
-        <h1 class="display-4" style="margin-top:15px">Videoer i spilleliste : {{ playlistInfo.name }}</h1>
-        <p> Spilleliste abonnementer: {{ subscriberNum.numSubs }}</br>
+    <a href="playlist.php">← Tilbake</a>
+    <h1 class="display-4" style="margin-top:15px">Videoer i spilleliste : {{ playlistInfo.name }}</h1>
+    <p> Spilleliste abonnementer: {{ subscriberNum.numSubs }}</br>
+        {% if userinfo != "" %} {# Is the user logged in? #}
             {% if subscribed == "true" %}
             <a href="playlist.php?show={{ playlistInfo.id }}&unsubscribe={{ playlistInfo.id }}" class="btn btn-danger">Avslutt abonnement</a>
             {% else %}
@@ -51,6 +52,7 @@
             {% endif %}
 
         </p>
+        {% endif %}
         {% if currentPlaylist == "" %}
         <strong>Det finnes ingen videoer i denne spillelisten...</strong>
         {% else %}
