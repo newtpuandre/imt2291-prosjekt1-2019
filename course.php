@@ -28,14 +28,14 @@ if (isset($_SESSION['user'])) { /*User is logged in*/
     $video = new Video();
 }
 
-if (isset($_POST['button_search'])){
+if (isset($_POST['button_search'])){ /* Search for a course */
 
     $prompt = $_POST['search_prompt'];
 
     $content['result'] = $video->searchVideoCourse($prompt);
 
 
-} else {
+} else { /* Load default page */
     $content['result'] = $video->getAllVideoCourses();
 }
 

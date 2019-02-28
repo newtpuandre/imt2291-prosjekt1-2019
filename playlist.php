@@ -32,12 +32,12 @@ $content['mode'] = 2; : Search for playlists
 
 $playlist = new Playlist();
 
-if (isset($_GET['show'])) {
+if (isset($_GET['show'])) { /* Show playlist with specific id */
 
     $content['mode'] = 1;
 
-    $content['currentPlaylist'] = $playlist->resolveVideos($_GET['show']);
-    $content['playlistInfo'] = $playlist->returnPlaylist($_GET['show']);
+    $content['currentPlaylist'] = $playlist->resolveVideos($_GET['show']); /* Resolve videos in playlist */ 
+    $content['playlistInfo'] = $playlist->returnPlaylist($_GET['show']);   /* Get information about current playlist */
 
     /*Get subscription number*/
     $content['subscriberNum'] = $playlist->countSubscribers($_GET['show']);
@@ -46,24 +46,22 @@ if (isset($_GET['show'])) {
     $content['subscribed'] = $playlist->returnSubscriptionStatus($_GET['show'], $content['userid']);
 
 
-    if(isset($_GET['subscribe'])) {
+    if(isset($_GET['subscribe'])) { /* Subscribe user */
 
         $res = $playlist->subscribeToPlaylist($_GET['show'], $content['userid']);
 
-        print_r($res);
-        if ($res) {
+        if ($res) { /* Was it succesful? */
             header("Location: playlist.php?show=".$_GET['show']);
         } else{
             header("Location: playlist.php?show=".$_GET['show']."&status=feil");
         }
 
 
-    } elseif (isset($_GET['unsubscribe'])) { 
+    } elseif (isset($_GET['unsubscribe'])) { /* Unsubscribe user */
 
         $res = $playlist->unsubscribeToPlaylist($_GET['show'], $content['userid']);
 
-        print_r($res);
-        if ($res) {
+        if ($res) {/* Was it succesful? */
             header("Location: playlist.php?show=".$_GET['show']);
         } else {
             header("Location: playlist.php?show=".$_GET['show']."&status=feil");
@@ -71,22 +69,22 @@ if (isset($_GET['show'])) {
 
     }
 
-}  else {
-    if (isset($_GET['search'])) {
+}  else { /* Show all playlists */
+    if (isset($_GET['search'])) { /* Search for a playlist */
         $content['mode'] = "2";
         $content['search'] = $_GET['search'];
 
         $res = $playlist->searchForPlaylists($_GET['search']);
 
-        if ($res) {
+        if ($res) {/* Was it succesful? */
             $content['playlists'] = $res;
         } else {
             $content['status'] = "feil";
         }
 
-    } else {
+    } else { /* Return all playlists*/
         $res = $playlist->returnAllPlaylists();
-        if ($res) {
+        if ($res) {/* Was it succesful? */
             $content['playlists'] = $res;
         } else {
             $content['status'] = "feil";
@@ -95,7 +93,7 @@ if (isset($_GET['show'])) {
 
 }
 
-if (isset($_GET['status'])) {
+if (isset($_GET['status'])) { /* Pass status to user */
     $content['status'] = $_GET['status'];
 }
 

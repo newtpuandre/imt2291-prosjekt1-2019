@@ -6,5 +6,5 @@ session_destroy();
 
 $_SESSION = array();  /* Removes content of $_SESSION*/
 
-header("Location: index.php");
+header("Location: index.php"); /* Redirect user to index */
 ?>
