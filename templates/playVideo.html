@@ -51,7 +51,7 @@
     {% endif %}
     {% endfor %}
 
-
+    {% if status != "feil" %}
     <!-- Comments -->
     <h2 style="margin-top:10px">Kommentarer</h2>
     <form class="form-group" action="playVideo.php" method="POST">
@@ -64,7 +64,7 @@
             </div>
         </div>
     </form>
-
+    {% endif %}
 
     <ul class="list-group">
         {% for comment in comments %} {# Loop over comments for this video #}

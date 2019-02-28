@@ -22,17 +22,27 @@ if (isset($_SESSION['user'])) { //User is logged in && is admin
     }
 
 }
+if (isset($_GET['status'])) { /*Get the status.*/
+    $content['status'] = $_GET['status'];
+}
 
-$content['search'] = $_GET['search'];
-
-$prompt = $content['search'];
-
-$video = new Video();
-$content['result'] = $video->search($prompt);
 
 $loader = new Twig_Loader_Filesystem('./templates');
 $twig = new Twig_Environment($loader, array(
     //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
 ));
+
+if(isset($_GET['search'])){
+    $content['search'] = $_GET['search'];
+
+    $prompt = $content['search'];
+
+    $video = new Video();
+    $res = $content['result'] = $video->search($prompt);
+
+    if(!$res){
+        header("Location: search.php?status=feil");  
+    }
+} 
 
 echo $twig->render('search.html', $content);
