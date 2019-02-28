@@ -42,8 +42,10 @@ if (isset($_GET['show'])) { /* Show playlist with specific id */
     /*Get subscription number*/
     $content['subscriberNum'] = $playlist->countSubscribers($_GET['show']);
 
-    /*Get subscription status*/
-    $content['subscribed'] = $playlist->returnSubscriptionStatus($_GET['show'], $content['userid']);
+    if(isset($content['userinfo'])){ /* Is user logged in? */
+        /*Get subscription status*/
+        $content['subscribed'] = $playlist->returnSubscriptionStatus($_GET['show'], $content['userid']);
+    }
 
 
     if(isset($_GET['subscribe'])) { /* Subscribe user */
