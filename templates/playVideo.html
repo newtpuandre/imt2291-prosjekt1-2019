@@ -1,6 +1,7 @@
 {% include 'header.html' %}
 
 <main role="main" class="container">
+    {% include 'errormsg.html' %}
     {% for info in videoinfo %}
     <h1 class="display-4" style="margin-top:15px">{{ info.title }}</h1>
     <video style="display:block; margin: 0 auto;" poster="{{ info.thumbnail_path }}" id="player" height="720"
