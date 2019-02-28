@@ -12,4 +12,4 @@ Elisabeth Wåde-Bye
 Oppgaveteksten ligger i [Wikien til det originale repositoriet](https://bitbucket.org/okolloen/imt2291-prosjekt1-2019/wiki/Home).
 
 # Rapporten #
-Rapporten ligger [her](https://hackmd.io/s/S17UWw48E)
+Rapporten vår ligger på hackmd. [https://hackmd.io/s/S17UWw48E](https://hackmd.io/s/S17UWw48E)
