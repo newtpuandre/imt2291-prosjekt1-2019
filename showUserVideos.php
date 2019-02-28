@@ -45,11 +45,11 @@ $user = new User($_SESSION['user']);
 $uid = $user->returnId();
 
 $video = new Video();
-$res = $video->getAllUserVideos($uid);
+$res = $video->getAllUserVideos($uid); /* Get this $uid's videos*/
 
 if($res){
 
-if (isset($_POST['button_edit'])){
+if (isset($_POST['button_edit'])){ /* If the edit video button is pressed, redirect */
     echo $twig->render('editVideo.html', $content);
 }
 

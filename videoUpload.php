@@ -29,7 +29,7 @@ if (isset($_SESSION['user'])) {
         header("Location: index.php");
     }
 
-    if ($content['userprivileges'] == "2") { //Check for admin privileges
+    if ($content['userprivileges'] == "2") { /*Check for admin privileges */
         $admin = new Admin();
         $return = $admin->countIAmTeacher();
         $content['isTeacherCount'] = $return['num'];
@@ -67,7 +67,7 @@ if(isset($_POST['upload_btn'])) {
 
    
 
-    if($res) {
+    if($res) { /* Was it successful? */
         echo $twig->render('index.html', $content);
     } else {
         header("Location: videoUpload.php?status=feil");

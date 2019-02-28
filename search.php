@@ -33,15 +33,15 @@ $twig = new Twig_Environment($loader, array(
     //'cache' => './compilation_cache', // Only enable cache when everything works correctly 
 ));
 
-if(isset($_GET['search'])){
-    $content['search'] = $_GET['search'];
+if(isset($_GET['search'])){ /* Handle search */
+    $content['search'] = $_GET['search']; /* Search input*/
 
-    $prompt = $content['search'];
+    $prompt = $content['search']; /* Set variable prompt for further use*/
 
     $video = new Video();
-    $res = $content['result'] = $video->search($prompt);
+    $res = $content['result'] = $video->search($prompt); /* Querry database for search */
 
-    if(!$res){
+    if(!$res){ /* If error */
         header("Location: search.php?status=feil");  
     }
 } 

@@ -37,7 +37,7 @@ $twig = new Twig_Environment($loader, array(
     }
 
     $video = new Video();
-    $res = $video->getAllVideosWithLecturers();
+    $res = $video->getAllVideosWithLecturers(); /* Get all videos with information about uploader */
     $content['result'] = $res;
 
     /* Only show parts of the description */
