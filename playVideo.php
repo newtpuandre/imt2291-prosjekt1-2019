@@ -28,10 +28,19 @@ if (isset($_SESSION['user'])) { /*User is logged in*/
 
 $videoid = -1;
 
+if (isset($_GET['status'])) { /*Get the status.*/
+    $content['status'] = $_GET['status'];
+}
+
 if (isset($_GET['id'])) {
     $video = new Video();
     $videoid = $_GET['id'];   
-    $content['videoinfo'] = $video->getVideo($videoid);
+    $res = $content['videoinfo'] = $video->getVideo($videoid);
+
+    if(!$res){
+        header("Location: playVideo.php?status=feil");
+    }
+
     $content['lecturer'] = $video->getVideoLecturer($videoid);
     $content['lecturer'] = $content['lecturer'][0]['name'];
 }
@@ -39,7 +48,11 @@ if (isset($_GET['id'])) {
 if(isset($_POST['submit_btn'])) {
     $video = new Video();
     $videoid = $_POST['video_id'];   
-    $content['videoinfo'] = $video->getVideo($videoid);
+    $res = $content['videoinfo'] = $video->getVideo($videoid);
+
+    if(!$res){
+        header("Location: playVideo.php?status=feil");
+    }
 
     $comment_txt = $_POST['comment_text'];
 
@@ -51,7 +64,11 @@ if(isset($_POST['submit_btn'])) {
 if(isset($_POST['submit_rating'])) {
     $video = new Video();
     $videoid = $_POST['video_id'];   
-    $content['videoinfo'] = $video->getVideo($videoid);
+    $res = $content['videoinfo'] = $video->getVideo($videoid);
+
+    if(!$res){
+        header("Location: playVideo.php?status=feil");
+    }
 
     if ($content['userprivileges'] > 0) { /* Only students can rate videos */
         unset($_POST);
@@ -119,10 +136,6 @@ if(isset($_POST['button_delete'])){
     }
 
 
-/* If id was not set in GET or POST */
-if ($videoid == -1) { /*Need a video id inorder for the site to have any purpose..*/
-    header("Location: index.php");
-}
 
 $loader = new Twig_Loader_Filesystem('./templates');
 $twig = new Twig_Environment($loader, array(
