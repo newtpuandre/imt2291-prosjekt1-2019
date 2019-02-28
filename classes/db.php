@@ -229,7 +229,7 @@ class DB
 
     
     public function searchVideo($m_prompt){
-        $sql = 'SELECT * FROM video WHERE title LIKE :prompt OR description LIKE :prompt OR topic LIKE :prompt OR course LIKE :prompt';
+        $sql = 'SELECT video.*, users.name FROM video JOIN users ON video.userid = users.id WHERE users.name LIKE :prompt OR video.title LIKE :prompt OR video.description LIKE :prompt OR video.topic LIKE :prompt OR video.course LIKE :prompt';
         $sth = $this->dbh->prepare ($sql);
         $param = "%" . $m_prompt . "%";
         $sth->bindParam(':prompt', $param);
