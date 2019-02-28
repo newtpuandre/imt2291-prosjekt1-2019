@@ -24,13 +24,13 @@
 
 
     <!-- Video player-->
-    <!-- Ratings -->
 
-
+    {% if userprivileges == 0 %}
+        <!-- Ratings -->
     <form action="playVideo.php" method="post">
         <div class="row align-self-center">
                 <!-- https://codepen.io/yaworek/pen/JJpEaZ -->
-                <div class="starrating d-flex justify-content-center flex-row-reverse" style="margin-left:15px">
+                <div class="starrating d-flex justify-content-center flex-row-reverse" style="margin-left:15px; margin-top:10px">
                     <div class="col align-self-center">
                         <button type="submit" name="submit_rating" class="btn btn-success">Stem</button>
                     </div>
@@ -47,12 +47,12 @@
         </div>
     </form>
 
-
+    {% endif %}
     {% endfor %}
 
 
     <!-- Comments -->
-    <h2>Kommentarer</h2>
+    <h2 style="margin-top:10px">Kommentarer</h2>
     <form class="form-group" action="playVideo.php" method="POST">
         <div>
             <input type="hidden" name="video_id" value="{{ video_id }}">

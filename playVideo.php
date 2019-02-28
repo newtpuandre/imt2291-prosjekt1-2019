@@ -53,6 +53,11 @@ if(isset($_POST['submit_rating'])) {
     $videoid = $_POST['video_id'];   
     $content['videoinfo'] = $video->getVideo($videoid);
 
+    if ($content['userprivileges'] > 0) { /* Only students can rate videos */
+        unset($_POST);
+        header("Location: playVideo.php?id=".$videoid);
+    }
+
     if(isset($_POST['rating'])){
         $video_rating = $_POST['rating'];
     } else {
