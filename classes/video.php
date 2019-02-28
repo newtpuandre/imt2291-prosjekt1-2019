@@ -27,49 +27,49 @@ class Video
 
     public function upload($uid, $title, $description, $topic, $course, $video, $thumbnail) {
         
-        //Get file types
+        /*Get file types*/
         $video_file_type = strtolower(pathinfo(Video::$target_dir . basename($video["name"]), PATHINFO_EXTENSION));
         $thumb_file_type = strtolower(pathinfo(Video::$target_dir . basename($thumbnail["name"]), PATHINFO_EXTENSION));
 
-        //Set video and thumbnail filepath
+        /* Set video and thumbnail filepath */
         $video_path = Video::$target_dir . uniqid() . "." . $video_file_type;
         $thumb_path = Video::$target_dir . uniqid() . "." . $thumb_file_type;
 
-        //Should never happen with uniqid()
+        /* Should never happen with uniqid() */
         if (file_exists($video_path) || file_exists($thumb_path)) { 
             return false;
         }
 
-        //Check for correct thumbnail file format
+        /* Check for correct thumbnail file format */
         if ($thumb_file_type != "jpg" && $thumb_file_type != "png" && $thumb_file_type != "jpeg" && $thumb_file_type != "gif") {
             return false;
         }
 
-        //Check for correct video file format
+        /* Check for correct video file format */
         if ($video_file_type != "mp4") {
             return false;
         }
 
-        //Resize Thumbnail to 320x180
+        /* Resize Thumbnail to 320x180 */
         $this->thumbnailResize($thumbnail, 320, 180, $thumb_path);
 
-        //If the file uploaded successfully
+        /* If the file uploaded successfully */
         if(move_uploaded_file($video["tmp_name"], $video_path)) {
           
-            //Insert into database
+            /* Insert into database */
             $db = new DB();
             $res = $db->newVideo($uid, $title, $description, $topic, $course, $thumb_path, $video_path);
 
             if ($res) {
                 return true;
             } else {
-                //Make sure we delete uploaded files if database could not be updated!
+                /*Make sure we delete uploaded files if database could not be updated! */
                 unlink($video_path);
                 unlink($thumb_path);
                 return false;
             }
         } else {
-            //If files didnt upload successfully
+            /* If files didnt upload successfully */
             return false;
         }        
     }   
@@ -88,7 +88,7 @@ class Video
      */
     
     public function updateVideo($videoid, $title, $description, $topic, $course, $thumbnail){
-        //If there is no thumbnail to update
+        /* If there is no thumbnail to update */
         if(!$thumbnail['name']){
 
             $db = new DB();
@@ -103,41 +103,41 @@ class Video
         }
 
         else {
-        //Get the original thumbnail
+        /* Get the original thumbnail */
         $old_thumb = $this->getVideo($videoid);
 
         if($old_thumb){
-            //Delete original thumbnail
+            /* Delete original thumbnail */
             unlink($old_thumb[0]['thumbnail_path']);
         }
 
         $thumb_file_type = strtolower(pathinfo(Video::$target_dir . basename($thumbnail["name"]), PATHINFO_EXTENSION));
 
-        //Set video and thumbnail filepath
+        /* Set video and thumbnail filepath */
         $thumb_path = Video::$target_dir . uniqid() . "." . $thumb_file_type;
 
-       //Check thumbnail filetype
+       /* Check thumbnail filetype */
         if ($thumb_file_type != "jpg" && $thumb_file_type != "png" && $thumb_file_type != "jpeg" && $thumb_file_type != "gif") {
             return false;
         }
     
            
-        //Resize thumbnail
+        /* Resize thumbnail */
         $this->thumbnailResize($thumbnail, 320, 180, $thumb_path);
         
         $db = new DB();
 
-        //Update 
+        /* Update */
         $res = $db->updateVideo($videoid, $title, $description, $topic, $course);
         $thumbres = $db->updateThumbnail($videoid, $thumb_path);
     
-        //If unsuccessful
+        /* If unsuccessful */
         if (!($res && $thumbres)){
             return false;
         }
 
         return true;
-        }
+        } 
     }  
 
  
