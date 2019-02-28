@@ -166,7 +166,7 @@
                     </div>
 
                     <div class="form-check float-right">
-                            <input class="form-check-input" type="checkbox" name="videoids[]" value="{{ videoItem.id }}" id="checkbox">
+                            <input class="form-check-input" type="checkbox" name="videoids[]" value="{{ videoItem.id }}" id="checkbox{{ loop.index }}">
                             <label class="form-check-label" for="checkbox">
                               <strong>Legg til i spillelisten</strong>
                             </label>

@@ -1,0 +1,9 @@
+Run the tests in this order.
+
+./vendor/bin/codecept run unit
+
+./vendor/bin/codecept run functional CreateUserCest //Creates a user that the functional tests use.
+
+./vendor/bin/codecept run functional VideoCest  //Uploads 3 videos.
+
+./vendor/bin/codecept run functional PlaylistCest   //Creates a playlist, Adds 3 videos to it and changes the order of them.
